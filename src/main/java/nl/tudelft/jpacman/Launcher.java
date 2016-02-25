@@ -52,19 +52,39 @@ public class Launcher {
 	}
 
 	/**
-	 * Creates a new level. By default this method will use the map parser to
-	 * parse the default board stored in the <code>board.txt</code> resource.
-	 * 
-	 * @return A new level.
+	 * Creates a new game using the level from {@link #makeLevel()}.
+	 * @return A new Game.
+     */
+	public Game makeMultiPlayerGame() {
+		GameFactory gf = getGameFactory();
+		Level level = makeLevel("/boardmulti.txt");
+		return gf.createMultiPlayerWithoutPacmanGame(4, level);
+	}
+
+	/**
+	 * Creates a new level using resource located at path.
+	 *
+	 * @param path - The path to the map.
+	 * @return A new level built from the resource.
 	 */
-	public Level makeLevel() {
+	public Level makeLevel(String path) {
 		MapParser parser = getMapParser();
 		try (InputStream boardStream = Launcher.class
-				.getResourceAsStream("/board.txt")) {
+				.getResourceAsStream(path)) {
 			return parser.parseMap(boardStream);
 		} catch (IOException e) {
 			throw new PacmanConfigurationException("Unable to create level.", e);
 		}
+	}
+
+	/**
+	 * Creates a new level. By default this method will use the map parser to
+	 * parse the default board stored in the <code>board.txt</code> resource.
+	 *
+	 * @return A new level.
+	 */
+	public Level makeLevel() {
+		return makeLevel("board.txt");
 	}
 
 	/**
@@ -201,7 +221,7 @@ public class Launcher {
 		Direction[] directions = { Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST};
 		for(int i = 0; i<keys.length; i++) {
 			final int j = i;
-			builder.addKey(keys[i], () -> game.move(ghost, directions[j]));
+			builder.addKey(keys[j], () -> game.move(ghost, directions[j]));
 		}
 	}
 
@@ -226,6 +246,17 @@ public class Launcher {
 	}
 
 	/**
+	 * Creates and starts a Multi-player Wihtout Pacman game.
+	 */
+	public void launchMultiPlayer(){
+		game = makeMultiPlayerGame();
+		PacManUiBuilder builder = new PacManUiBuilder().withDefaultButtons();
+		addMultiPlayerKeys(builder, game);
+		pacManUI = builder.build(game);
+		pacManUI.start();
+	}
+
+	/**
 	 * Disposes of the UI. For more information see {@link javax.swing.JFrame#dispose()}.
 	 */
 	public void dispose() {
@@ -241,6 +272,6 @@ public class Launcher {
 	 *             When a resource could not be read.
 	 */
 	public static void main(String[] args) throws IOException {
-		new Launcher().launch();
+		new Launcher().launchMultiPlayer();//.launch();
 	}
 }
