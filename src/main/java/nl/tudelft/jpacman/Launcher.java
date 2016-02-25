@@ -9,11 +9,7 @@ import nl.tudelft.jpacman.board.BoardFactory;
 import nl.tudelft.jpacman.board.Direction;
 import nl.tudelft.jpacman.game.Game;
 import nl.tudelft.jpacman.game.GameFactory;
-import nl.tudelft.jpacman.level.Level;
-import nl.tudelft.jpacman.level.LevelFactory;
-import nl.tudelft.jpacman.level.MapParser;
-import nl.tudelft.jpacman.level.Player;
-import nl.tudelft.jpacman.level.PlayerFactory;
+import nl.tudelft.jpacman.level.*;
 import nl.tudelft.jpacman.npc.ghost.GhostFactory;
 import nl.tudelft.jpacman.sprite.PacManSprites;
 import nl.tudelft.jpacman.ui.Action;
@@ -57,7 +53,7 @@ public class Launcher {
      */
 	public Game makeMultiPlayerGame() {
 		GameFactory gf = getGameFactory();
-		Level level = makeLevel("/boardmulti.txt");
+		Level level = makeMultiPlayerLevel("/boardmulti.txt");
 		return gf.createMultiPlayerWithoutPacmanGame(4, level);
 	}
 
@@ -69,6 +65,23 @@ public class Launcher {
 	 */
 	public Level makeLevel(String path) {
 		MapParser parser = getMapParser();
+		try (InputStream boardStream = Launcher.class
+				.getResourceAsStream(path)) {
+			return parser.parseMap(boardStream);
+		} catch (IOException e) {
+			throw new PacmanConfigurationException("Unable to create level.", e);
+		}
+	}
+
+	/**
+	 * Creates a new level using resource located at path.
+	 *
+	 * @param path - The path to the map.
+	 * @return A new level built from the resource for multi-player games.
+	 */
+	public Level makeMultiPlayerLevel(String path) {
+		MapParser parser = getMapParser();
+		parser.setCollisionMap(new MultiPlayerCollisions());
 		try (InputStream boardStream = Launcher.class
 				.getResourceAsStream(path)) {
 			return parser.parseMap(boardStream);

@@ -31,6 +31,11 @@ public class MapParser {
 	private final BoardFactory boardCreator;
 
 	/**
+	 * The collision map to create levels.
+	 */
+	private CollisionMap collisionMap;
+
+	/**
 	 * Creates a new map parser.
 	 * 
 	 * @param levelFactory
@@ -41,6 +46,17 @@ public class MapParser {
 	public MapParser(LevelFactory levelFactory, BoardFactory boardFactory) {
 		this.levelCreator = levelFactory;
 		this.boardCreator = boardFactory;
+		// By default use PlayerCollision
+		this.collisionMap = new PlayerCollisions();
+	}
+
+	/**
+	 * Set the collision map to create levels.
+	 * @param collisionMap
+	 * 			  The collision map to create level.
+	 */
+	public void setCollisionMap(CollisionMap collisionMap) {
+		this.collisionMap = collisionMap;
 	}
 
 	/**
@@ -72,7 +88,7 @@ public class MapParser {
 		makeGrid(map, width, height, grid, ghosts, startPositions);
 		
 		Board board = boardCreator.createBoard(grid);
-		return levelCreator.createLevel(board, ghosts, startPositions);
+		return levelCreator.createLevel(board, ghosts, startPositions, this.collisionMap);
 	}
 
 	private void makeGrid(char[][] map, int width, int height,
