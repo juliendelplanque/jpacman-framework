@@ -159,6 +159,52 @@ public class Launcher {
 
 	}
 
+	/**
+	 * Initialize keys for a multiplayer game.
+	 * Ghost1: Arrows
+	 * Ghost2: Z,S,Q,D
+	 * Ghost3: T,G,F,H
+	 * Ghost5: I,K,J,L
+	 * @param builder - The builder needed to set up keys.
+	 * @param game - The game needed to access players.
+     */
+	protected void addMultiPlayerKeys(final PacManUiBuilder builder, final Game game){
+		// There are at least 2 ghosts
+		final Player ghost1 = game.getPlayers().get(0);
+		initializeKeysForPlayer(ghost1, builder, game,
+				new int[]{KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT});
+		final Player ghost2 = game.getPlayers().get(1);
+		initializeKeysForPlayer(ghost2, builder, game,
+				new int[]{KeyEvent.VK_Z, KeyEvent.VK_S, KeyEvent.VK_Q, KeyEvent.VK_D});
+
+		if(game.getPlayers().size() >= 3){
+			final Player ghost3 = game.getPlayers().get(2);
+			initializeKeysForPlayer(ghost3, builder, game,
+					new int[]{KeyEvent.VK_T, KeyEvent.VK_G, KeyEvent.VK_F, KeyEvent.VK_H});
+		}
+		if(game.getPlayers().size() == 4){
+			final Player ghost4 = game.getPlayers().get(3);
+			initializeKeysForPlayer(ghost4, builder, game,
+					new int[]{KeyEvent.VK_I, KeyEvent.VK_K, KeyEvent.VK_J, KeyEvent.VK_L});
+		}
+	}
+
+	/**
+	 * Initialize the key-mapping for the player given as paramter.
+	 * @param ghost - The ghost which needs a key-binding.
+	 * @param builder - The ui builder.
+	 * @param game - The game.
+	 * @param keys - The keys to set, first is north, second is south,
+	 *               third is west and last is east.
+	 */
+	private void initializeKeysForPlayer(final Player ghost, PacManUiBuilder builder, final Game game, int[] keys) {
+		Direction[] directions = { Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST};
+		for(int i = 0; i<keys.length; i++) {
+			final int j = i;
+			builder.addKey(keys[i], () -> game.move(ghost, directions[j]));
+		}
+	}
+
 	private Player getSinglePlayer(final Game game) {
 		List<Player> players = game.getPlayers();
 		if (players.isEmpty()) {
