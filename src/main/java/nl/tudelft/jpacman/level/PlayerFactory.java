@@ -1,5 +1,6 @@
 package nl.tudelft.jpacman.level;
 
+import nl.tudelft.jpacman.npc.ghost.GhostColor;
 import nl.tudelft.jpacman.sprite.PacManSprites;
 
 /**
@@ -31,6 +32,16 @@ public class PlayerFactory {
 	 */
 	public Player createPacMan() {
 		return new Player(sprites.getPacmanSprites(),
+				sprites.getPacManDeathAnimation());
+	}
+
+    /**
+     * Creates a new player with a ghost skin.
+     * @param color - The color of the ghost.
+     * @return A new player.
+     */
+	public Player createGhost(GhostColor color) {
+		return new Player(sprites.getGhostSprite(color),
 				sprites.getPacManDeathAnimation());
 	}
 }
