@@ -27,6 +27,8 @@ public class MultiplayerWithoutPacmanGame extends Game {
     protected MultiplayerWithoutPacmanGame(ArrayList<Player> players, Level level){
         this.level = level;
         this.players = players;
+        for(Player player : this.players)
+            level.registerPlayer(player);
     }
 
     @Override
