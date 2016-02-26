@@ -42,6 +42,7 @@ public class PlayerFactory {
      */
 	public Hunter createGhost(GhostColor color) {
 		return new Hunter(sprites.getGhostSprite(color),
+				sprites.getPacmanSprites(),
 				sprites.getPacManDeathAnimation());
 	}
 }

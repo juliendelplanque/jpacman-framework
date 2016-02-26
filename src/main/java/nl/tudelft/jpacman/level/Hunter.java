@@ -10,6 +10,7 @@ import java.util.Map;
  * Created by julien on 25/02/16.
  */
 public class Hunter extends Player {
+    private final Map<Direction, Sprite> huntingSpriteMap;
     private boolean isHunting;
 
     /**
@@ -21,9 +22,18 @@ public class Hunter extends Player {
      * @param deathAnimation
      *            The sprite to be shown when this player dies.
      */
-    Hunter(Map<Direction, Sprite> spriteMap, AnimatedSprite deathAnimation){
+    Hunter(Map<Direction, Sprite> spriteMap, Map<Direction, Sprite> huntingSpriteMap, AnimatedSprite deathAnimation){
         super(spriteMap, deathAnimation);
         this.isHunting = false;
+        this.huntingSpriteMap = huntingSpriteMap;
+    }
+
+    @Override
+    public Sprite getSprite(){
+        if (this.isAlive() && this.isHunting()){
+            return huntingSpriteMap.get(getDirection());
+        }
+        return super.getSprite();
     }
 
     /**
