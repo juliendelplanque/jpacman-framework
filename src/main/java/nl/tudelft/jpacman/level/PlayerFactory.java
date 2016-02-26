@@ -40,7 +40,7 @@ public class PlayerFactory {
      * @param color - The color of the ghost.
      * @return A new player.
      */
-	public Hunter createGhost(GhostColor color) {
+	public Player createGhost(GhostColor color) {
 		return new Hunter(sprites.getGhostSprite(color),
 				sprites.getPacmanSprites(),
 				sprites.getPacManDeathAnimation());
