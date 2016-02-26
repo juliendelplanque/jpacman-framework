@@ -29,4 +29,10 @@ public class MultiPlayerCollisions extends PlayerCollisions {
         if(hunter2.isHunting() && hunter1.isAlive())
             hunter1.setAlive(false);
     }
+
+    @Override
+    public void playerVersusPellet(Player player, Pellet pellet) {
+        if(!((Hunter) player).isHunting())
+            super.playerVersusPellet(player, pellet);
+    }
 }
