@@ -1,17 +1,21 @@
 package nl.tudelft.jpacman.game;
 
 import com.google.common.collect.ImmutableList;
+import nl.tudelft.jpacman.board.Board;
+import nl.tudelft.jpacman.board.Square;
 import nl.tudelft.jpacman.level.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Timer;
 import java.util.stream.Collectors;
 
 /**
- * Created by julien on 25/02/16.
+ * A Game specialized to play multi-players without Pacman game.
+ * @author Julien Delplanque
  */
-public class MultiplayerWithoutPacmanGame extends Game {
+public class MultiplayerWithoutPacmanGame extends Game implements RespawnListener {
     /**
      * The total period of time, this is divided between
      * players to be the hunter.
@@ -35,8 +39,10 @@ public class MultiplayerWithoutPacmanGame extends Game {
     protected MultiplayerWithoutPacmanGame(ArrayList<Player> players, Level level){
         this.level = level;
         this.players = players;
-        for(Player player : this.players)
+        for(Player player : this.players){
             level.registerPlayer(player);
+            ((Hunter) player).addRespawnListener(this);
+        }
         this.isTimerRunning = false;
         this.hunterSelectorTimer = new Timer("Hunter selector");
         this.hunterSelector = new HunterSelector(this.getPlayers()
@@ -89,5 +95,30 @@ public class MultiplayerWithoutPacmanGame extends Game {
         this.resetTimer();
         this.isTimerRunning = false;
         super.stop();
+    }
+
+    /**
+     * Returns a random location where a Hunter can be put.
+     * @return A random location where a Hunter can be put.
+     */
+    private Square randomFreeLocation(){
+        Board board = this.level.getBoard();
+        Random r = new Random();
+        Square randomLocation;
+        do {
+            randomLocation = board.squareAt(r.nextInt(board.getWidth()), r.nextInt(board.getHeight()));
+        }while(randomLocation.getOccupants().size() == 0);
+        return randomLocation;
+    }
+
+    /**
+     * Method called by the Hunters I am listening to.
+     * I make the hunter concerned respawn at a new random location.
+     * @param hunter
+     *          The hunter to respawn.
+     */
+    @Override
+    public void hunterNeedRespawn(Hunter hunter) {
+        hunter.respawnAt(this.randomFreeLocation());
     }
 }

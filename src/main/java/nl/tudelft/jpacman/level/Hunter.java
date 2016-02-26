@@ -1,17 +1,21 @@
 package nl.tudelft.jpacman.level;
 
 import nl.tudelft.jpacman.board.Direction;
+import nl.tudelft.jpacman.board.Square;
 import nl.tudelft.jpacman.sprite.AnimatedSprite;
 import nl.tudelft.jpacman.sprite.Sprite;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 /**
- * Created by julien on 25/02/16.
+ * Special player to play a multi-players game.
+ * @author Julien Delplanque
  */
 public class Hunter extends Player {
     private final Map<Direction, Sprite> huntingSpriteMap;
     private boolean isHunting;
+    private ArrayList<RespawnListener> respawnListeners;
 
     /**
      * Creates a new hunter with a score of 0 points. After instantiation,
@@ -26,6 +30,7 @@ public class Hunter extends Player {
         super(spriteMap, deathAnimation);
         this.isHunting = false;
         this.huntingSpriteMap = huntingSpriteMap;
+        this.respawnListeners = new ArrayList<>();
     }
 
     @Override
@@ -52,5 +57,73 @@ public class Hunter extends Player {
      */
     public void setHunting(boolean hunting) {
         isHunting = hunting;
+    }
+
+    /**
+     * Override so it sends {@link NeedRespawnEvent} to RespawnListeners.
+     * @param isAlive
+     *          The boolean determinating if the Hunter is alive or not.
+     */
+    @Override
+    public void setAlive(boolean isAlive){
+        super.setAlive(isAlive);
+        if (!isAlive)
+            this.informRespawnListeners();
+    }
+
+    /**
+     * Add a RespawnListener to the RespawnListeners list.
+     * @param respawnListener
+     *          The object implementing {@link RespawnListener} to add.
+     */
+    public void addRespawnListener(RespawnListener respawnListener){
+        this.respawnListeners.add(respawnListener);
+    }
+
+    /**
+     * Inform RespawnListeners that this Hunter need to respawn.
+     */
+    private void informRespawnListeners(){
+        for(RespawnListener listener : this.respawnListeners)
+            listener.hunterNeedRespawn(this);
+    }
+
+    /**
+     * Respawn myself at the location specified.
+     * @param newLocation
+     *          The location to respawn on.
+     */
+    public void respawnAt(Square newLocation) {
+        this.leaveSquare();
+        this.occupy(newLocation);
+        this.setAlive(true);
+    }
+
+    /**
+     * Event telling the hunter need to respawn.
+     * @author Julien Delplanque
+     */
+    public class NeedRespawnEvent {
+        /**
+         * The hunter needing to respawn.
+         */
+        private final Hunter hunter;
+
+        /**
+         * Constructor of the event for the hunter in parameter
+         * @param hunter
+         *          The hunter who needs to respawn.
+         */
+        public NeedRespawnEvent(Hunter hunter){
+            this.hunter = hunter;
+        }
+
+        /**
+         * Accessor for the hunter who need to respawn.
+         * @return The hunter.
+         */
+        public Hunter getHunter() {
+            return hunter;
+        }
     }
 }
