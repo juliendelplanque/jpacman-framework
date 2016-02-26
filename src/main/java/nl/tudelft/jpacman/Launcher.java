@@ -55,10 +55,11 @@ public class Launcher {
 	 * Creates a new game using the level from {@link #makeLevel()}.
 	 * @return A new Game.
      */
-	public Game makeMultiPlayerGame() {
+	public Game makeMultiPlayerGame(int playerCount) {
 		GameFactory gf = getGameFactory();
-		Level level = makeMultiPlayerLevel("/boardmulti.txt");
-		return gf.createMultiPlayerWithoutPacmanGame(4, level);
+		assert (playerCount > 4 || playerCount < 2);
+		Level level = makeMultiPlayerLevel("/boardmulti"+playerCount+".txt");
+		return gf.createMultiPlayerWithoutPacmanGame(playerCount, level);
 	}
 
 	/**
@@ -266,7 +267,7 @@ public class Launcher {
 	 * Creates and starts a Multi-player Wihtout Pacman game.
 	 */
 	public void launchMultiPlayer(){
-		game = makeMultiPlayerGame();
+		game = makeMultiPlayerGame(4);
 		PacManUiBuilder builder = new PacManUiBuilder().withDefaultButtons();
 		addMultiPlayerKeys(builder, game);
 		pacManUI = builder.build(game);
