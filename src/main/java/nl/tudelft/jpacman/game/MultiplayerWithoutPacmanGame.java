@@ -1,13 +1,10 @@
 package nl.tudelft.jpacman.game;
 
 import com.google.common.collect.ImmutableList;
-import nl.tudelft.jpacman.board.Board;
-import nl.tudelft.jpacman.board.Square;
 import nl.tudelft.jpacman.level.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.Timer;
 import java.util.stream.Collectors;
 
@@ -98,20 +95,6 @@ public class MultiplayerWithoutPacmanGame extends Game implements RespawnListene
     }
 
     /**
-     * Returns a random location where a Hunter can be put.
-     * @return A random location where a Hunter can be put.
-     */
-    private Square randomFreeLocation(){
-        Board board = this.level.getBoard();
-        Random r = new Random();
-        Square randomLocation;
-        do {
-            randomLocation = board.squareAt(r.nextInt(board.getWidth()), r.nextInt(board.getHeight()));
-        }while(randomLocation.getOccupants().size() == 0);
-        return randomLocation;
-    }
-
-    /**
      * Method called by the Hunters I am listening to.
      * I make the hunter concerned respawn at a new random location.
      * @param hunter
@@ -119,6 +102,6 @@ public class MultiplayerWithoutPacmanGame extends Game implements RespawnListene
      */
     @Override
     public void hunterNeedRespawn(Hunter hunter) {
-        hunter.respawnAt(this.randomFreeLocation());
+        hunter.respawn();
     }
 }

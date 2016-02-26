@@ -18,6 +18,7 @@ public class Hunter extends Player {
      */
     public static final int EAT_HUNTER_SCORE = 50;
     private final Map<Direction, Sprite> huntingSpriteMap;
+    private Square initialPosition;
     private boolean isHunting;
     private ArrayList<RespawnListener> respawnListeners;
 
@@ -35,6 +36,7 @@ public class Hunter extends Player {
         this.isHunting = false;
         this.huntingSpriteMap = huntingSpriteMap;
         this.respawnListeners = new ArrayList<>();
+        this.initialPosition = this.getSquare();
     }
 
     @Override
@@ -43,6 +45,22 @@ public class Hunter extends Player {
             return huntingSpriteMap.get(getDirection());
         }
         return super.getSprite();
+    }
+
+    public Square getInitialPosition() {
+        return initialPosition;
+    }
+
+    /**
+     * Override to set the initial position if it is not already set.
+     * @param target
+     *          The position to occupy.
+     */
+    @Override
+    public void occupy(Square target) {
+        super.occupy(target);
+        if(this.initialPosition == null)
+            this.initialPosition = target;
     }
 
     /**
@@ -81,13 +99,11 @@ public class Hunter extends Player {
     }
 
     /**
-     * Respawn myself at the location specified.
-     * @param newLocation
-     *          The location to respawn on.
+     * Respawn myself at the initial position.
      */
-    public void respawnAt(Square newLocation) {
+    public void respawn() {
         this.leaveSquare();
-        this.occupy(newLocation);
+        this.occupy(this.getInitialPosition());
         this.setAlive(true);
     }
 
