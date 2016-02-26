@@ -13,6 +13,10 @@ import java.util.Map;
  * @author Julien Delplanque
  */
 public class Hunter extends Player {
+    /**
+     * The score to add/remove to the player who kill/is killed.
+     */
+    public static final int EAT_HUNTER_SCORE = 50;
     private final Map<Direction, Sprite> huntingSpriteMap;
     private boolean isHunting;
     private ArrayList<RespawnListener> respawnListeners;
@@ -60,18 +64,6 @@ public class Hunter extends Player {
     }
 
     /**
-     * Override so it sends {@link NeedRespawnEvent} to RespawnListeners.
-     * @param isAlive
-     *          The boolean determinating if the Hunter is alive or not.
-     */
-    @Override
-    public void setAlive(boolean isAlive){
-        super.setAlive(isAlive);
-        if (!isAlive)
-            this.informRespawnListeners();
-    }
-
-    /**
      * Add a RespawnListener to the RespawnListeners list.
      * @param respawnListener
      *          The object implementing {@link RespawnListener} to add.
@@ -97,6 +89,39 @@ public class Hunter extends Player {
         this.leaveSquare();
         this.occupy(newLocation);
         this.setAlive(true);
+    }
+
+    /**
+     * Kills this hunter and sends {@link NeedRespawnEvent} to RespawnListeners.
+     */
+    public void kill(){
+        this.setAlive(false);
+        this.informRespawnListeners();
+    }
+
+    /**
+     * Kill the other Hunter in parameter.
+     * @param toKill
+     *          The hunter to kill.
+     */
+    public void kill(Hunter toKill) {
+        toKill.kill();
+        toKill.loosePoints(EAT_HUNTER_SCORE);
+        this.addPoints(EAT_HUNTER_SCORE);
+    }
+
+    /**
+     * Make the hunter loose points given as parameter.
+     * If the number of points to loose is greater than the number
+     * points it has, set its score to 0.
+     * @param points
+     *          The number of points to loose.
+     */
+    public void loosePoints(int points){
+        if(this.getScore() >= points)
+            this.addPoints(-points);
+        else
+            this.addPoints(-this.getScore());
     }
 
     /**

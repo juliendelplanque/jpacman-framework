@@ -1,7 +1,6 @@
 package nl.tudelft.jpacman.level;
 
 import nl.tudelft.jpacman.board.Unit;
-import nl.tudelft.jpacman.npc.ghost.Ghost;
 
 /**
  * Manage collisions for a multi-players game.
@@ -24,10 +23,10 @@ public class MultiPlayerCollisions extends PlayerCollisions {
 
     private void hunterVersusHunter(Hunter hunter1, Hunter hunter2) {
         if(hunter1.isHunting() && hunter2.isAlive())
-            hunter2.setAlive(false);
+            hunter1.kill(hunter2);
 
         if(hunter2.isHunting() && hunter1.isAlive())
-            hunter1.setAlive(false);
+            hunter2.kill(hunter1);
     }
 
     @Override
