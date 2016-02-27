@@ -1,9 +1,6 @@
 package nl.tudelft.jpacman.level;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -38,6 +35,10 @@ public class Level {
 	 * other.
 	 */
 	private final Object startStopLock = new Object();
+
+	public Set<NPC> getNpcs() {
+		return npcs.keySet();
+	}
 
 	/**
 	 * The NPCs of this level and, if they are running, their schedules.

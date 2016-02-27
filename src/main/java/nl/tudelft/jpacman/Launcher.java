@@ -13,6 +13,7 @@ import nl.tudelft.jpacman.board.BoardFactory;
 import nl.tudelft.jpacman.board.Direction;
 import nl.tudelft.jpacman.game.Game;
 import nl.tudelft.jpacman.game.GameFactory;
+import nl.tudelft.jpacman.game.MultiplayerWithoutPacmanGame;
 import nl.tudelft.jpacman.level.*;
 import nl.tudelft.jpacman.npc.ghost.GhostFactory;
 import nl.tudelft.jpacman.sprite.PacManSprites;
@@ -85,7 +86,7 @@ public class Launcher {
 	 * @return A new level built from the resource for multi-player games.
 	 */
 	public Level makeMultiPlayerLevel(String path) {
-		MapParser parser = getMapParser();
+		MapParser parser = getMultiplayerMapParser();
 		parser.setCollisionMap(new MultiPlayerCollisions());
 		try (InputStream boardStream = Launcher.class
 				.getResourceAsStream(path)) {
@@ -111,6 +112,14 @@ public class Launcher {
 	 */
 	protected MapParser getMapParser() {
 		return new MapParser(getLevelFactory(), getBoardFactory());
+	}
+
+	/**
+	 * @return A new map parser for multiplayer using the factories from
+	 *         {@link #getLevelFactory()} and {@link #getBoardFactory()}.
+	 */
+	protected MultiPlayerMapParser getMultiplayerMapParser(){
+		return new MultiPlayerMapParser(getLevelFactory(), getBoardFactory());
 	}
 
 	/**
@@ -267,7 +276,7 @@ public class Launcher {
 	 * Creates and starts a Multi-player Wihtout Pacman game.
 	 */
 	public void launchMultiPlayer(){
-		game = makeMultiPlayerGame(4);
+		game = makeMultiPlayerGame(2);
 		PacManUiBuilder builder = new PacManUiBuilder().withDefaultButtons();
 		addMultiPlayerKeys(builder, game);
 		pacManUI = builder.build(game);

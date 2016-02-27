@@ -1,6 +1,8 @@
 package nl.tudelft.jpacman.level;
 
 import nl.tudelft.jpacman.board.Unit;
+import nl.tudelft.jpacman.npc.ghost.Ghost;
+import nl.tudelft.jpacman.npc.ghost.HunterBot;
 
 /**
  * Manage collisions for a multi-players game.
@@ -22,16 +24,21 @@ public class MultiPlayerCollisions extends PlayerCollisions {
     }
 
     private void hunterVersusHunter(Hunter hunter1, Hunter hunter2) {
-        if(hunter1.isHunting() && hunter2.isAlive())
+        if (hunter1.isHunting() && hunter2.isAlive())
             hunter1.kill(hunter2);
 
-        if(hunter2.isHunting() && hunter1.isAlive())
+        if (hunter2.isHunting() && hunter1.isAlive())
             hunter2.kill(hunter1);
     }
 
     @Override
     public void playerVersusPellet(Player player, Pellet pellet) {
-        if(!((Hunter) player).isHunting())
+        if (!((Hunter) player).isHunting())
             super.playerVersusPellet(player, pellet);
+    }
+
+    @Override
+    public void playerVersusGhost(Player player, Ghost ghost) {
+        // Do nothing, only HunterPlayers and HunterBots should be managed.
     }
 }

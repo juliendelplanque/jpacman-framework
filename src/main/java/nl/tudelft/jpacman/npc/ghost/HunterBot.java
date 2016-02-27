@@ -1,38 +1,46 @@
-package nl.tudelft.jpacman.level;
+package nl.tudelft.jpacman.npc.ghost;
 
 import nl.tudelft.jpacman.board.Direction;
 import nl.tudelft.jpacman.board.Square;
-import nl.tudelft.jpacman.sprite.AnimatedSprite;
+import nl.tudelft.jpacman.level.Hunter;
+import nl.tudelft.jpacman.level.HunterPlayer;
+import nl.tudelft.jpacman.level.RespawnListener;
 import nl.tudelft.jpacman.sprite.Sprite;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Random;
 
 /**
- * Special player to play a multi-players game.
+ * A bot that can play a multi-player game.
  * @author Julien Delplanque
  */
-public class HunterPlayer extends Player implements Hunter {
+public class HunterBot extends Ghost implements Hunter {
     /**
-     * The score to add/remove to the player who kill/is killed.
+     * The variation in intervals, this makes the ghosts look more dynamic and
+     * less predictable.
      */
-    public static final int EAT_HUNTER_SCORE = 50;
+    private static final int INTERVAL_VARIATION = 50;
+
+    /**
+     * The base movement interval.
+     */
+    private static final int MOVE_INTERVAL = 250;
     private final Map<Direction, Sprite> huntingSpriteMap;
+
+    private boolean isAlive;
     private Square initialPosition;
     private boolean isHunting;
     private ArrayList<RespawnListener> respawnListeners;
 
     /**
-     * Creates a new hunterPlayer with a score of 0 points. After instantiation,
-     * it is not hunting directly.
+     * Creates a new ghost.
      *
-     * @param spriteMap
-     *            A map containing a sprite for this player for every direction.
-     * @param deathAnimation
-     *            The sprite to be shown when this player dies.
+     * @param spriteMap The sprites for every direction.
      */
-    HunterPlayer(Map<Direction, Sprite> spriteMap, Map<Direction, Sprite> huntingSpriteMap, AnimatedSprite deathAnimation){
-        super(spriteMap, deathAnimation);
+    protected HunterBot(Map<Direction, Sprite> spriteMap,  Map<Direction, Sprite> huntingSpriteMap) {
+        super(spriteMap);
+        this.setAlive(true);
         this.setHunting(false);
         this.huntingSpriteMap = huntingSpriteMap;
         this.respawnListeners = new ArrayList<>();
@@ -44,11 +52,6 @@ public class HunterPlayer extends Player implements Hunter {
             return huntingSpriteMap.get(getDirection());
         }
         return super.getSprite();
-    }
-
-    @Override
-    public Square getInitialPosition() {
-        return initialPosition;
     }
 
     /**
@@ -64,22 +67,32 @@ public class HunterPlayer extends Player implements Hunter {
     }
 
     @Override
+    public long getInterval() {
+        return MOVE_INTERVAL + new Random().nextInt(INTERVAL_VARIATION);
+    }
+
+    @Override
+    public Direction nextMove() {
+        return new Direction[]{Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST}[new Random().nextInt(4)];
+    }
+
+    @Override
     public boolean isHunting() {
-        return isHunting;
+        return this.isHunting;
     }
 
     @Override
     public void setHunting(boolean hunting) {
-        isHunting = hunting;
+        this.isHunting = hunting;
     }
 
     @Override
-    public void addRespawnListener(RespawnListener respawnListener){
+    public void addRespawnListener(RespawnListener respawnListener) {
         this.respawnListeners.add(respawnListener);
     }
 
     @Override
-    public void informRespawnListeners(){
+    public void informRespawnListeners() {
         for(RespawnListener listener : this.respawnListeners)
             listener.hunterNeedRespawn(this);
     }
@@ -92,7 +105,7 @@ public class HunterPlayer extends Player implements Hunter {
     }
 
     @Override
-    public void kill(){
+    public void kill() {
         this.setAlive(false);
         this.informRespawnListeners();
     }
@@ -100,14 +113,24 @@ public class HunterPlayer extends Player implements Hunter {
     @Override
     public void kill(Hunter toKill) {
         toKill.kill();
-        toKill.loosePoints(EAT_HUNTER_SCORE);
-        this.addPoints(EAT_HUNTER_SCORE);
+        toKill.loosePoints(HunterPlayer.EAT_HUNTER_SCORE);
     }
 
-    public void loosePoints(int points){
-        if(this.getScore() >= points)
-            this.addPoints(-points);
-        else
-            this.addPoints(-this.getScore());
+    @Override
+    public void loosePoints(int points) {
+        // A bot does not have points, do nothing.
+    }
+
+    @Override
+    public boolean isAlive() {
+        return isAlive;
+    }
+
+    public void setAlive(boolean alive) {
+        isAlive = alive;
+    }
+
+    public Square getInitialPosition(){
+        return this.initialPosition;
     }
 }

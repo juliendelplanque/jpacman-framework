@@ -1,5 +1,6 @@
 package nl.tudelft.jpacman.npc.ghost;
 
+import nl.tudelft.jpacman.npc.NPC;
 import nl.tudelft.jpacman.sprite.PacManSprites;
 
 /**
@@ -61,5 +62,14 @@ public class GhostFactory {
 	 */
 	public Ghost createClyde() {
 		return new Clyde(sprites.getGhostSprite(GhostColor.ORANGE));
+	}
+
+	/**
+	 * Creates a new Hunter.
+	 *
+	 * @return A new Hunter.
+     */
+	public NPC createHunter() {
+		return new HunterBot(sprites.getGhostSprite(GhostColor.RED), sprites.getPacmanSprites());
 	}
 }

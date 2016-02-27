@@ -23,12 +23,12 @@ public class MapParser {
 	/**
 	 * The factory that creates the levels.
 	 */
-	private final LevelFactory levelCreator;
+	protected final LevelFactory levelCreator;
 
 	/**
 	 * The factory that creates the squares and board.
 	 */
-	private final BoardFactory boardCreator;
+	protected final BoardFactory boardCreator;
 
 	/**
 	 * The collision map to create levels.
@@ -130,7 +130,7 @@ public class MapParser {
 		}
 	}
 
-	private Square makeGhostSquare(List<NPC> ghosts) {
+	protected Square makeGhostSquare(List<NPC> ghosts) {
 		Square ghostSquare = boardCreator.createGround();
 		NPC ghost = levelCreator.createGhost();
 		ghosts.add(ghost);

@@ -129,6 +129,14 @@ public class LevelFactory {
 	}
 
 	/**
+	 * Creates a new hunter.
+	 * @return A new hunter.
+     */
+	NPC createHunter() {
+		return ghostFact.createHunter();
+	}
+
+	/**
 	 * Implementation of an NPC that wanders around randomly.
 	 * 
 	 * @author Jeroen Roosen 

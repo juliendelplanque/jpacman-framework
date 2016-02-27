@@ -1,5 +1,7 @@
 package nl.tudelft.jpacman.level;
 
+import nl.tudelft.jpacman.board.Square;
+
 /**
  * Interface common to all Hunters.
  * @author Julien Delplanque
@@ -62,4 +64,10 @@ public interface Hunter {
      * @return true if it is alive else false.
      */
     boolean isAlive();
+
+    /**
+     * Returns the initial position of the hunter as set in the map.
+     * @return A square that is the initial position of the ghost.
+     */
+    Square getInitialPosition();
 }

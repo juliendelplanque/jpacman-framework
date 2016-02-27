@@ -2,6 +2,7 @@ package nl.tudelft.jpacman.game;
 
 import com.google.common.collect.ImmutableList;
 import nl.tudelft.jpacman.level.*;
+import nl.tudelft.jpacman.npc.NPC;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,7 @@ public class MultiplayerWithoutPacmanGame extends Game implements RespawnListene
      */
     private final Level level;
     private final ArrayList<Player> players;
+    private final ArrayList<Hunter> hunters;
     private Timer hunterSelectorTimer;
     private boolean isTimerRunning;
     private HunterSelector hunterSelector;
@@ -36,16 +38,21 @@ public class MultiplayerWithoutPacmanGame extends Game implements RespawnListene
     protected MultiplayerWithoutPacmanGame(ArrayList<Player> players, Level level){
         this.level = level;
         this.players = players;
-        for(Player player : this.players){
+        this.hunters = new ArrayList<>();
+        for(Player player : players){
+            Hunter hunter = (Hunter) player;
             level.registerPlayer(player);
-            ((Hunter) player).addRespawnListener(this);
+            hunter.addRespawnListener(this);
+            this.hunters.add(hunter);
+        }
+        for(NPC npc : this.level.getNpcs()){
+            Hunter hunter = (Hunter) npc;
+            hunter.addRespawnListener(this);
+            this.hunters.add(hunter);
         }
         this.isTimerRunning = false;
         this.hunterSelectorTimer = new Timer("HunterPlayer selector");
-        this.hunterSelector = new HunterSelector(this.getPlayers()
-                .stream()
-                .map(p -> (Hunter) p)
-                .collect(Collectors.toList()));
+        this.hunterSelector = new HunterSelector(this.hunters);
     }
 
     /**
@@ -56,10 +63,7 @@ public class MultiplayerWithoutPacmanGame extends Game implements RespawnListene
         this.hunterSelectorTimer.purge();
         this.hunterSelectorTimer = new Timer("HunterPlayer selector");
         this.hunterSelector.currentHunter().setHunting(false);
-        this.hunterSelector = new HunterSelector(this.getPlayers()
-                                                        .stream()
-                                                        .map(p -> (Hunter) p)
-                                                        .collect(Collectors.toList()));
+        this.hunterSelector = new HunterSelector(this.hunters);
     }
 
     @Override
