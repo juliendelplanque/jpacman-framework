@@ -1,7 +1,7 @@
 package nl.tudelft.jpacman.level;
 
 /**
- * Interface for object who wants to liten to {@link Hunter.NeedRespawnEvent}.
+ * Interface for object who wants to listen to {@link HunterPlayer}.
  */
 public interface RespawnListener {
     /**

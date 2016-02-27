@@ -41,7 +41,7 @@ public class MultiplayerWithoutPacmanGame extends Game implements RespawnListene
             ((Hunter) player).addRespawnListener(this);
         }
         this.isTimerRunning = false;
-        this.hunterSelectorTimer = new Timer("Hunter selector");
+        this.hunterSelectorTimer = new Timer("HunterPlayer selector");
         this.hunterSelector = new HunterSelector(this.getPlayers()
                 .stream()
                 .map(p -> (Hunter) p)
@@ -54,7 +54,7 @@ public class MultiplayerWithoutPacmanGame extends Game implements RespawnListene
     public void resetTimer(){
         this.hunterSelectorTimer.cancel();
         this.hunterSelectorTimer.purge();
-        this.hunterSelectorTimer = new Timer("Hunter selector");
+        this.hunterSelectorTimer = new Timer("HunterPlayer selector");
         this.hunterSelector.currentHunter().setHunting(false);
         this.hunterSelector = new HunterSelector(this.getPlayers()
                                                         .stream()
