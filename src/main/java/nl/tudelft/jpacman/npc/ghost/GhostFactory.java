@@ -1,6 +1,5 @@
 package nl.tudelft.jpacman.npc.ghost;
 
-import nl.tudelft.jpacman.npc.NPC;
 import nl.tudelft.jpacman.sprite.PacManSprites;
 
 /**
