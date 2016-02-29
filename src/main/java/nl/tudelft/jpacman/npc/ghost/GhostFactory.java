@@ -69,7 +69,7 @@ public class GhostFactory {
 	 *
 	 * @return A new Hunter.
      */
-	public NPC createHunter() {
+	public Ghost createHunterBot() {
 		return new HunterBot(sprites.getGhostSprite(GhostColor.RED), sprites.getPacmanSprites());
 	}
 }

@@ -133,7 +133,7 @@ public class LevelFactory {
 	 * @return A new hunter.
      */
 	NPC createHunter() {
-		return ghostFact.createHunter();
+		return ghostFact.createHunterBot();
 	}
 
 	/**
