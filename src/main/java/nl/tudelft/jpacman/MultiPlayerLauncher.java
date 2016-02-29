@@ -14,17 +14,17 @@ import java.io.InputStream;
  * Launcher for a multi-players game.
  * @author Julien Delplanque
  */
-public class MultiplayerLauncher extends Launcher {
+public class MultiPlayerLauncher extends Launcher {
     /**
      * @return A new map parser for multiplayer using the factories from
      *         {@link #getLevelFactory()} and {@link #getBoardFactory()}.
      */
-    private MultiPlayerMapParser getMultiplayerMapParser(){
+    private MultiPlayerMapParser getMultiPlayerMapParser(){
         return new MultiPlayerMapParser(getLevelFactory(), getBoardFactory());
     }
 
     /**
-     * Creates a new game using the level from {@link #makeLevel()}.
+     * Creates a new game using the level from {@link #makeMultiPlayerLevel(String path)}.
      * @return A new Game.
      */
     public Game makeMultiPlayerGame(int playerCount) {
@@ -41,7 +41,7 @@ public class MultiplayerLauncher extends Launcher {
      * @return A new level built from the resource for multi-player games.
      */
     public Level makeMultiPlayerLevel(String path) {
-        MapParser parser = getMultiplayerMapParser();
+        MapParser parser = getMultiPlayerMapParser();
         parser.setCollisionMap(new MultiPlayerCollisions());
         try (InputStream boardStream = Launcher.class
                 .getResourceAsStream(path)) {
@@ -109,7 +109,7 @@ public class MultiplayerLauncher extends Launcher {
     }
 
     /**
-     * Main execution method for the MultiplayerLauncher.
+     * Main execution method for the MultiPlayerLauncher.
      *
      * @param args
      *            The command line arguments - which are ignored.
@@ -117,6 +117,6 @@ public class MultiplayerLauncher extends Launcher {
      *             When a resource could not be read.
      */
     public static void main(String[] args) throws IOException {
-        new MultiplayerLauncher().launchMultiPlayer();
+        new MultiPlayerLauncher().launchMultiPlayer();
     }
 }
