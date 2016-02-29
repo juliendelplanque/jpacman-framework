@@ -33,7 +33,7 @@ public class MapParser {
 	/**
 	 * The collision map to create levels.
 	 */
-	private CollisionMap collisionMap;
+	protected CollisionMap collisionMap;
 
 	/**
 	 * Creates a new map parser.

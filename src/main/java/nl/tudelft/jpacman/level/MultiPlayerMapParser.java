@@ -19,6 +19,7 @@ public class MultiPlayerMapParser extends MapParser {
      */
     public MultiPlayerMapParser(LevelFactory levelFactory, BoardFactory boardFactory) {
         super(levelFactory, boardFactory);
+        this.collisionMap = new MultiPlayerCollisions();
     }
 
     protected Square makeGhostSquare(List<NPC> ghosts) {

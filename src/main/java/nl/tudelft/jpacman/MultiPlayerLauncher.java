@@ -42,7 +42,6 @@ public class MultiPlayerLauncher extends Launcher {
      */
     public Level makeMultiPlayerLevel(String path) {
         MapParser parser = getMultiPlayerMapParser();
-        parser.setCollisionMap(new MultiPlayerCollisions());
         try (InputStream boardStream = Launcher.class
                 .getResourceAsStream(path)) {
             return parser.parseMap(boardStream);
