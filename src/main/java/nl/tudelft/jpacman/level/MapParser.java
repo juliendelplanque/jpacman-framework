@@ -51,15 +51,6 @@ public class MapParser {
 	}
 
 	/**
-	 * Set the collision map to create levels.
-	 * @param collisionMap
-	 * 			  The collision map to create level.
-	 */
-	public void setCollisionMap(CollisionMap collisionMap) {
-		this.collisionMap = collisionMap;
-	}
-
-	/**
 	 * Parses the text representation of the board into an actual level.
 	 * 
 	 * <ul>
