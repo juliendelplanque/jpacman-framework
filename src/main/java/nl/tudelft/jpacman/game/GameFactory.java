@@ -66,5 +66,5 @@ public class GameFactory {
             default:
                 throw new BadNumberOfPlayersException();
         }
-        return new MultiplayerWithoutPacmanGame(players, level); }
+        return new MultiPlayerWithoutPacmanGame(players, level); }
 }

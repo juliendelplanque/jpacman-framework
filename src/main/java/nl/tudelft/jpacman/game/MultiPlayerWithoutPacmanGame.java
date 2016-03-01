@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
  * A Game specialized to play multi-players without Pacman game.
  * @author Julien Delplanque
  */
-public class MultiplayerWithoutPacmanGame extends Game implements RespawnListener {
+public class MultiPlayerWithoutPacmanGame extends Game implements RespawnListener {
     /**
      * The total period of time, this is divided between
      * players to be the hunter.
@@ -35,7 +35,7 @@ public class MultiplayerWithoutPacmanGame extends Game implements RespawnListene
      * @param players - The players list for the game.
      * @param level - The level to use for the game.
      */
-    protected MultiplayerWithoutPacmanGame(ArrayList<Player> players, Level level){
+    protected MultiPlayerWithoutPacmanGame(ArrayList<Player> players, Level level){
         this.level = level;
         this.players = players;
         this.hunters = new ArrayList<>();
@@ -66,11 +66,19 @@ public class MultiplayerWithoutPacmanGame extends Game implements RespawnListene
         this.hunterSelector = new HunterSelector(this.hunters);
     }
 
+    /**
+     * Returns the list of players in this game.
+     * @return The list of players.
+     */
     @Override
     public List<Player> getPlayers() {
         return ImmutableList.copyOf(this.players);
     }
 
+    /**
+     * Returns the level of this game.
+     * @return The level.
+     */
     @Override
     public Level getLevel() {
         return this.level;
@@ -100,7 +108,7 @@ public class MultiplayerWithoutPacmanGame extends Game implements RespawnListene
 
     /**
      * Method called by the Hunters I am listening to.
-     * I make the hunter concerned respawn at a new random location.
+     * I make the hunter concerned respawn using its respawn() method.
      * @param hunter
      *          The hunter to respawn.
      */
