@@ -38,14 +38,21 @@ public class HunterPlayer extends Player implements Hunter {
         this.respawnListeners = new ArrayList<>();
     }
 
+    /**
+     * Override to change the sprites returned when hunting.
+     * @return The sprite to use.
+     */
     @Override
     public Sprite getSprite(){
-        if (this.isAlive() && this.isHunting()){
+        if (this.isAlive() && this.isHunting())
             return huntingSpriteMap.get(getDirection());
-        }
         return super.getSprite();
     }
 
+    /**
+     * Returns the position set at the creation of the HunterPlayer.
+     * @return The initial position as a Square.
+     */
     @Override
     public Square getInitialPosition() {
         return initialPosition;
@@ -59,31 +66,52 @@ public class HunterPlayer extends Player implements Hunter {
     @Override
     public void occupy(Square target) {
         super.occupy(target);
+        // If initialPosition is nil, it means occupy() has never been called before.
         if(this.initialPosition == null)
             this.initialPosition = target;
     }
 
+    /**
+     * Returns true if hunting, else false.
+     * @return True if hunting, else false.
+     */
     @Override
     public boolean isHunting() {
         return isHunting;
     }
 
+    /**
+     * Set the status of the hunterPlayer, if true it hunts, else it is hunted.
+     * @param hunting
+     *          Make the hunterPlayer hunt if true, else the hunterPlayer can
+     */
     @Override
     public void setHunting(boolean hunting) {
         isHunting = hunting;
     }
 
+    /**
+     * Add a RespawnListener. It will be notified when the HunterPlayer has been
+     * killed and needs to respawn.
+     * @param respawnListener
+     */
     @Override
     public void addRespawnListener(RespawnListener respawnListener){
         this.respawnListeners.add(respawnListener);
     }
 
+    /**
+     * Inform RespawnListeners that the HunterPlayer needs to respawn.
+     */
     @Override
     public void informRespawnListeners(){
         for(RespawnListener listener : this.respawnListeners)
             listener.hunterNeedRespawn(this);
     }
 
+    /**
+     * Respawn the HunterPlayer at its initial position.
+     */
     @Override
     public void respawn() {
         this.leaveSquare();
@@ -91,12 +119,20 @@ public class HunterPlayer extends Player implements Hunter {
         this.setAlive(true);
     }
 
+    /**
+     * Kill the HunterPlayer.
+     */
     @Override
     public void kill(){
         this.setAlive(false);
         this.informRespawnListeners();
     }
 
+    /**
+     * Kill the Hunter given as parameter.
+     * @param toKill
+     *          The Hunter to kill.
+     */
     @Override
     public void kill(Hunter toKill) {
         toKill.kill();
@@ -104,6 +140,13 @@ public class HunterPlayer extends Player implements Hunter {
         this.addPoints(EAT_HUNTER_SCORE);
     }
 
+    /**
+     * Remove the number of points given as parameter from the score
+     * of this HunterPlayer.
+     * @param points
+     *          The number of points to remove.
+     */
+    @Override
     public void loosePoints(int points){
         if(this.getScore() >= points)
             this.addPoints(-points);
