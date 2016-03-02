@@ -30,12 +30,12 @@ import javax.swing.JFrame;
 /**
  * Created by Jannou on 2/03/16.
  */
-public class ScorePanel extends JPanel {
+public class MyScorePanel extends JPanel {
 
     /**
      * Create the menu panel.
      */
-    public ScorePanel(){
+    public MyScorePanel(){
         initialize();
     }
 

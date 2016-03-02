@@ -36,7 +36,7 @@ public class ScoreUI extends JFrame {
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(new BorderLayout(0, 0));
         setContentPane(contentPane);
-        // getContentPane().add(new ScorePanel(this), BorderLayout.NORTH);
+        // getContentPane().add(new MyScorePanel(this), BorderLayout.NORTH);
         //Dimension dim = getContentPane().getComponent(0).getPreferredSize();
         //setBounds(100, 100, dim.width + 30, dim.height + 45);
         //setVisible(true);
