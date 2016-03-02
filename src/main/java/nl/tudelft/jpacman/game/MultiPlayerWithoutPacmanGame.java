@@ -91,7 +91,7 @@ public class MultiPlayerWithoutPacmanGame extends Game implements RespawnListene
     public void start() {
         super.start();
         if (!this.isTimerRunning) {
-            this.hunterSelectorTimer.scheduleAtFixedRate(this.hunterSelector, 0, PERIOD / this.players.size());
+            this.hunterSelectorTimer.scheduleAtFixedRate(this.hunterSelector, 0, PERIOD / this.hunters.size());
             this.isTimerRunning = true;
         }
     }
