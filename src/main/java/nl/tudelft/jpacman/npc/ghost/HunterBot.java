@@ -73,7 +73,7 @@ public class HunterBot extends Ghost implements Hunter {
 
     @Override
     public Direction nextMove() {
-        return new Direction[]{Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST}[new Random().nextInt(4)];
+        return randomMove();
     }
 
     @Override
