@@ -28,6 +28,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.swing.JFrame;
 /**
+ * hall of fame panel
  * Created by Jannou on 2/03/16.
  */
 public class MyScorePanel extends JPanel {
@@ -44,14 +45,11 @@ public class MyScorePanel extends JPanel {
      * Initialize the panel.
      */
     private void initialize() {
-
+        //charger les scores
+        //ajouer boutons rest + popup de confirmation
         JPanel cont = new JPanel();
-        //cont.setBackground(Color.white);
-        //history = new HistoryPanel();
-        //display = DisplayPanel.getInstance();
+        cont.setBackground(Color.white);
         setLayout(new BorderLayout(0, 0));
-        //cont.add(history, BorderLayout.NORTH);
-        //this.add(cont);
         this.setBackground(Color.white);
     }
 }

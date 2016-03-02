@@ -8,6 +8,7 @@ import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 /**
+ * JFrame Hall of Frame
  * Created by Jannou on 2/03/16.
  */
 public class ScoreUI extends JFrame {
@@ -30,16 +31,16 @@ public class ScoreUI extends JFrame {
      */
     private void initialize(){
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Settings");
-        // setBounds(100, 100, 450, 400);
+        setTitle("Hall of Fame");
+        setBounds(100, 100, 450, 400);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(new BorderLayout(0, 0));
         setContentPane(contentPane);
-        // getContentPane().add(new MyScorePanel(this), BorderLayout.NORTH);
-        //Dimension dim = getContentPane().getComponent(0).getPreferredSize();
-        //setBounds(100, 100, dim.width + 30, dim.height + 45);
-        //setVisible(true);
+        //getContentPane().add(new MyScorePanel(this), BorderLayout.NORTH);
+        Dimension dim = getContentPane().getComponent(0).getPreferredSize();
+        setBounds(100, 100, dim.width + 30, dim.height + 45);
+        setVisible(true);
     }
 
 }

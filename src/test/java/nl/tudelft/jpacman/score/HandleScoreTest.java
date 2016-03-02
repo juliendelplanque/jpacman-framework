@@ -17,23 +17,15 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * Tests various aspects of score.
- *import static org.mockito.Mockito.mock;
- import static org.mockito.Mockito.times;
- import static org.mockito.Mockito.verify;
- import static org.mockito.Mockito.when;
+ *
  * Created by Jannou on 2/03/16.
  */
 public class HandleScoreTest {
-   // private final GameFactory gf = new GameFactory(new PlayerFactory(new PacManSprites()));
-    //private final Level level = makeLevel();
-
     private Launcher launcher;
     private Game game1;
     private Game game2;
 
-    /**
-     * Launch the user interface.
-     */
+
     @Before
     public void setUpTest() {
         launcher = new Launcher();
@@ -44,12 +36,9 @@ public class HandleScoreTest {
     @After
     public void tearDown() {
         launcher.dispose();
-    }
-
-    @After public void deleteFile(){
         File f = new File("./src/main/resources/scores.txt");
         if(f.exists()){
-            f.delete();
+            boolean succes = f.delete();
         }
     }
 
@@ -64,7 +53,6 @@ public class HandleScoreTest {
         assertFalse(!handleScore1.equals(handleScore2));
         assertTrue(handleScore1.equals(HandleScore.getInstance(game1)));
         assertEquals(handleScore1, HandleScore.getInstance(game1));
-
     }
 
     /**
@@ -83,7 +71,6 @@ public class HandleScoreTest {
     @Test
     @SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
     public void test3(){
-
         HandleScore handleScore = HandleScore.getInstance(game1);
         HandleScore.historyExist();
         assertTrue(HandleScore.getLowestScore() == 0);
@@ -103,6 +90,5 @@ public class HandleScoreTest {
         assertTrue(HandleScore.getLowestScore() == 2);
         handleScore.rest();
         assertTrue(HandleScore.loadScores().size()==0);
-
     }
 }
