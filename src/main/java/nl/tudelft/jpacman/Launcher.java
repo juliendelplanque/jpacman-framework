@@ -20,6 +20,8 @@ import nl.tudelft.jpacman.ui.Action;
 import nl.tudelft.jpacman.ui.PacManUI;
 import nl.tudelft.jpacman.ui.PacManUiBuilder;
 
+import nl.tudelft.jpacman.score.ScoreUIBuilder;
+
 /**
  * Creates and launches the JPacMan UI.
  * 
@@ -173,6 +175,8 @@ public class Launcher {
 	 */
 	public void launch() {
 		game = makeGame();
+		ScoreUIBuilder scoB = new ScoreUIBuilder(game);
+		scoB.createScoreUI();
 		PacManUiBuilder builder = new PacManUiBuilder().withDefaultButtons();
 		addSinglePlayerKeys(builder, game);
 		pacManUI = builder.build(game);
