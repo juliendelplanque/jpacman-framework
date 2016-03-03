@@ -25,7 +25,7 @@ public class HandleScore {
 
     /**
      * getInstance
-     * @param Game game
+     * @param game  /Game
      * @return HandleScore instance
      */
     public static HandleScore getInstance(final Game game){
@@ -35,7 +35,7 @@ public class HandleScore {
 
     /**
      * Factory
-     * @param Gmae game
+     * @param game  /Game
      */
     private static void ScoreFactory(final Game game){
         assert game != null ;
@@ -47,7 +47,7 @@ public class HandleScore {
     }
     /**
      * new HandleScore
-     * @param Game game
+     * @param game  /Game
      */
     private HandleScore(final Game game){
         this.game = game;
@@ -78,7 +78,7 @@ public class HandleScore {
      * @return ArrayList<ScorePlayer> of player's and player's score
      */
     public static ArrayList<ScorePlayer> loadScores() {
-        ArrayList<ScorePlayer> retour = new ArrayList<ScorePlayer>();
+        ArrayList<ScorePlayer> retour = new ArrayList<>();
         Scanner sc;
         try {
             sc = new Scanner(new File("./src/main/resources/scores.txt"));
@@ -143,7 +143,7 @@ public class HandleScore {
             e.printStackTrace();
         }
     }
-    public void rest(){
+    public static void rest(){
         File f = new File("./src/main/resources/scores.txt");
         if(f.exists()){
             boolean succes = f.delete();
