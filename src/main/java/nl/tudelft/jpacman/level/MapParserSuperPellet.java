@@ -47,7 +47,7 @@ public class MapParserSuperPellet extends MapParser {
      */
     @Override
     public Level parseMap(char[][] map) {
-        return parseMap(map);
+        return super.parseMap(map);
     }
 
     @Override
