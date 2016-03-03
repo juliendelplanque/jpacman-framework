@@ -36,6 +36,12 @@ public class PacManSprites extends SpriteStore {
 	 * The amount of frames in the pacman dying animation.
 	 */
 	private static final int PACMAN_DEATH_FRAMES = 11;
+
+
+	/**
+	 * The amount of frames in the superPellet animation.
+	 */
+	private static final int SUPERPELLET_FRAMES = 11;
 	
 	/**
 	 * The amount of frames in the ghost animation.
@@ -123,10 +129,24 @@ public class PacManSprites extends SpriteStore {
 	}
 
 	/**
-	 * @return The sprite for the
+	 * @return The sprite for the pellet.
 	 */
 	public Sprite getPelletSprite() {
 		return loadSprite("/sprite/pellet.png");
+	}
+
+	/**
+	 * @return The animation of a the superPelet.
+	 */
+	public AnimatedSprite getSuperPelletSprite() {
+		String resource = "/sprite/superpellet.png";
+
+		Sprite baseImage = loadSprite(resource);
+		AnimatedSprite animation = createAnimatedSprite(baseImage, SUPERPELLET_FRAMES,
+				ANIMATION_DELAY, true);
+		animation.setAnimating(true);
+
+		return animation;
 	}
 
 	/**
