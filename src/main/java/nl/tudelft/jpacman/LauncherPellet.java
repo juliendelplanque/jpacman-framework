@@ -1,6 +1,7 @@
 package nl.tudelft.jpacman;
 
 import nl.tudelft.jpacman.level.Level;
+import nl.tudelft.jpacman.level.LevelFactorySuperPellet;
 import nl.tudelft.jpacman.level.MapParserSuperPellet;
 
 import java.io.IOException;
@@ -38,5 +39,13 @@ public class LauncherPellet extends Launcher {
         } catch (IOException e) {
             throw new PacmanConfigurationException("Unable to create level.", e);
         }
+    }
+
+    /**
+     * @return A new factory using the sprites from {@link #getSpriteStore()}
+     *         and the ghosts from {@link #getGhostFactory()}.
+     */
+    protected LevelFactorySuperPellet getLevelFactory() {
+        return new LevelFactorySuperPellet(getSpriteStore(), getGhostFactory());
     }
 }
