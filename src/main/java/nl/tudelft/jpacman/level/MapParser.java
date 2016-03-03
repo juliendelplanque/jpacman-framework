@@ -6,11 +6,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import nl.tudelft.jpacman.PacmanConfigurationException;
 import nl.tudelft.jpacman.board.Board;
 import nl.tudelft.jpacman.board.BoardFactory;
 import nl.tudelft.jpacman.board.Square;
+import nl.tudelft.jpacman.board.Unit;
 import nl.tudelft.jpacman.npc.NPC;
 
 /**
@@ -23,12 +25,12 @@ public class MapParser {
 	/**
 	 * The factory that creates the levels.
 	 */
-	private final LevelFactory levelCreator;
+	protected final LevelFactory levelCreator;
 
 	/**
 	 * The factory that creates the squares and board.
 	 */
-	private final BoardFactory boardCreator;
+	protected final BoardFactory boardCreator;
 
 	/**
 	 * Creates a new map parser.
@@ -85,7 +87,7 @@ public class MapParser {
 		}
 	}
 
-	private void addSquare(Square[][] grid, List<NPC> ghosts,
+	protected void addSquare(Square[][] grid, List<NPC> ghosts,
 			List<Square> startPositions, int x, int y, char c) {
 		switch (c) {
 		case ' ':
@@ -114,7 +116,7 @@ public class MapParser {
 		}
 	}
 
-	private Square makeGhostSquare(List<NPC> ghosts) {
+	protected Square makeGhostSquare(List<NPC> ghosts) {
 		Square ghostSquare = boardCreator.createGround();
 		NPC ghost = levelCreator.createGhost();
 		ghosts.add(ghost);
