@@ -10,7 +10,7 @@ import java.io.InputStream;
 /**
  * Created by neosw on 3/03/16.
  */
-public class LauncherPellet extends Launcher {
+public class LauncherSuperPellet extends Launcher {
 
     /**
      * Main execution method for the Launcher.
@@ -21,7 +21,7 @@ public class LauncherPellet extends Launcher {
      *             When a resource could not be read.
      */
     public static void main(String[] args) throws IOException {
-        new LauncherPellet().launch();
+        new LauncherSuperPellet().launch();
     }
 
     /**
