@@ -27,17 +27,13 @@ public class PlayerCollisions implements CollisionMap {
 		}
 	}
 	
-	private void playerColliding(Player player, Unit collidedOn) {
+	protected void playerColliding(Player player, Unit collidedOn) {
 		if (collidedOn instanceof Ghost) {
 			playerVersusGhost(player, (Ghost) collidedOn);
 		}
 
 		if (collidedOn instanceof Pellet) {
 			playerVersusPellet(player, (Pellet) collidedOn);
-		}
-
-		if (collidedOn instanceof SuperPellet) {
-			playerVersusSuperPellet(player, (SuperPellet) collidedOn);
 		}
 	}
 	
@@ -70,16 +66,5 @@ public class PlayerCollisions implements CollisionMap {
 	}
 
 
-	/**
-	 * Actual case of player consuming a superPellet.
-	 *
-	 * @param player The player involved in the collision.
-	 * @param superPellet The superPellet involved in the collision.
-	 */
-	public void playerVersusSuperPellet(Player player, SuperPellet superPellet) {
-		superPellet.leaveSquare();
-		player.addPoints(superPellet.getValue());
-		//todo changer le mode de jeu
-	}
 
 }
