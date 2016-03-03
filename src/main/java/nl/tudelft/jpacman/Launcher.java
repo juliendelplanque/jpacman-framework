@@ -54,7 +54,7 @@ public class Launcher {
 	 * @return A new level.
 	 */
 	public Level makeLevel() {
-		MapParserSuperPellet parser = getMapParserSuperPellet();
+		MapParser parser = getMapParser();
 		try (InputStream boardStream = Launcher.class
 				.getResourceAsStream("/board.txt")) {
 			return parser.parseMap(boardStream);
