@@ -45,5 +45,6 @@ public class PlayerCollisionsSuperPellet extends PlayerCollisions{
         player.addPoints(superPellet.getValue());
         //todo changer le mode de jeu
         level.startFlee();
+        // todo deux classes une en mode fuite et l'autre en mode normal
     }
 }

@@ -38,14 +38,14 @@ public class LevelSuperPellet extends Level {
 
 
     /**
-     * Stops or pauses flee mode
+     * Start flee mode
      */
     public void startFlee() {
         synchronized (startStopLock) {
             for (Map.Entry<NPC, ScheduledExecutorService> e : this.getNpcs().entrySet()) {
                 e.getValue().shutdownNow(); //stop running ghost
                 //e.getKey().setFleeMode();
-                //todo
+                //todo changer sprint fantomes
             }
 
         }
