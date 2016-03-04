@@ -9,7 +9,7 @@ import nl.tudelft.jpacman.sprite.PacManSprites;
 import java.util.List;
 
 /**
- * Created by neosw on 3/03/16.
+ * Created by Maximilien Charlier on 3/03/16.
  */
 public class LevelFactorySuperPellet extends LevelFactory {
 
@@ -41,8 +41,11 @@ public class LevelFactorySuperPellet extends LevelFactory {
                              List<Square> startPositions) {
 
         // We'll adopt the simple collision map for now.
-        CollisionMap collisionMap = new PlayerCollisionsSuperPellet();
 
-        return new Level(board, ghosts, startPositions, collisionMap);
+        PlayerCollisionsSuperPellet collisionMap = new PlayerCollisionsSuperPellet();
+
+        Level level = new Level(board, ghosts, startPositions, collisionMap);
+        collisionMap.addLevel(level);
+        return level;
     }
 }

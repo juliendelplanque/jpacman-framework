@@ -8,6 +8,8 @@ import nl.tudelft.jpacman.npc.ghost.Ghost;
  */
 public class PlayerCollisionsSuperPellet extends PlayerCollisions{
 
+    private Level level;
+
     @Override
     protected void playerColliding(Player player, Unit collidedOn) {
         if (collidedOn instanceof Ghost) {
@@ -21,6 +23,15 @@ public class PlayerCollisionsSuperPellet extends PlayerCollisions{
         if (collidedOn instanceof SuperPellet) {
             playerVersusSuperPellet(player, (SuperPellet) collidedOn);
         }
+    }
+
+    /**
+     * Add level l in the player collision to add support of ghost IA and scheduler
+     * @param l a level
+     */
+    public void addLevel(Level l){
+        assert(l != null);
+        this.level = l;
     }
 
     /**
