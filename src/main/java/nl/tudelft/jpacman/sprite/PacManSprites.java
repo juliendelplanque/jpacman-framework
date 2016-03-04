@@ -101,7 +101,7 @@ public class PacManSprites extends SpriteStore {
 
 	/**
 	 * Returns a map of animated ghost sprites for all directions.
-	 * 
+	 *
 	 * @param color
 	 *            The colour of the ghost.
 	 * @return The Sprite for the ghost.
@@ -111,6 +111,17 @@ public class PacManSprites extends SpriteStore {
 
 		String resource = "/sprite/ghost_" + color.name().toLowerCase()
 				+ ".png";
+		return directionSprite(resource, GHOST_ANIMATION_FRAMES);
+	}
+
+	/**
+	 * Returns a map of animated ghost sprites for all directions.
+	 *
+	 * @return The Sprite for the ghost in flee mode.
+	 */
+	public Map<Direction, Sprite> getGhostFleeSprite() {
+
+		String resource = "/sprite/ghost_vul_blue.png";
 		return directionSprite(resource, GHOST_ANIMATION_FRAMES);
 	}
 
