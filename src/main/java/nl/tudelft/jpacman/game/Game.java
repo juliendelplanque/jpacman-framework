@@ -7,6 +7,7 @@ import nl.tudelft.jpacman.level.Level;
 import nl.tudelft.jpacman.level.Level.LevelObserver;
 import nl.tudelft.jpacman.level.Player;
 
+import nl.tudelft.jpacman.score.ScoreUIBuilder;
 /**
  * A basic implementation of a Pac-Man game.
  * 
@@ -94,12 +95,16 @@ public abstract class Game implements LevelObserver {
 	}
 	
 	@Override
-	public void levelWon() {
+	public void levelWon(){
 		stop();
+		ScoreUIBuilder scoB = new ScoreUIBuilder(this);
+		scoB.createScoreUI();
 	}
 	
 	@Override
 	public void levelLost() {
 		stop();
+		ScoreUIBuilder scoB = new ScoreUIBuilder(this);
+		scoB.createScoreUI();
 	}
 }
