@@ -8,7 +8,7 @@ import nl.tudelft.jpacman.npc.ghost.Ghost;
  */
 public class PlayerCollisionsSuperPellet extends PlayerCollisions{
 
-    private Level level;
+    private LevelSuperPellet level;
 
     @Override
     protected void playerColliding(Player player, Unit collidedOn) {
@@ -29,7 +29,7 @@ public class PlayerCollisionsSuperPellet extends PlayerCollisions{
      * Add level l in the player collision to add support of ghost IA and scheduler
      * @param l a level
      */
-    public void addLevel(Level l){
+    public void addLevel(LevelSuperPellet l){
         assert(l != null);
         this.level = l;
     }
@@ -44,5 +44,6 @@ public class PlayerCollisionsSuperPellet extends PlayerCollisions{
         superPellet.leaveSquare();
         player.addPoints(superPellet.getValue());
         //todo changer le mode de jeu
+        level.startFlee();
     }
 }

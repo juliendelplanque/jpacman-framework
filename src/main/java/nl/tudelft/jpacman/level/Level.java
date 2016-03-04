@@ -288,6 +288,13 @@ public class Level {
 	}
 
 	/**
+	 * @return The NPCs of this level and, if they are running, their schedules.
+     */
+	public Map<NPC, ScheduledExecutorService> getNpcs() {
+		return npcs;
+	}
+
+	/**
 	 * Counts the pellets remaining on the board.
 	 * 
 	 * @return The amount of pellets remaining on the board.

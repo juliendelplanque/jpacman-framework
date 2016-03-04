@@ -44,7 +44,7 @@ public class LevelFactorySuperPellet extends LevelFactory {
 
         PlayerCollisionsSuperPellet collisionMap = new PlayerCollisionsSuperPellet();
 
-        Level level = new Level(board, ghosts, startPositions, collisionMap);
+        LevelSuperPellet level = new LevelSuperPellet(board, ghosts, startPositions, collisionMap);
         collisionMap.addLevel(level);
         return level;
     }

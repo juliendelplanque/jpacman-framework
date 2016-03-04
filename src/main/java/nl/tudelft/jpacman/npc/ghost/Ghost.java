@@ -57,4 +57,5 @@ public abstract class Ghost extends NPC {
 		int i = new Random().nextInt(directions.size());
 		return directions.get(i);
 	}
+
 }
