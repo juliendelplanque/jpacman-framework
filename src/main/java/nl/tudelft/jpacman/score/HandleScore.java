@@ -1,6 +1,7 @@
 package nl.tudelft.jpacman.score;
 
 import nl.tudelft.jpacman.game.Game;
+import nl.tudelft.jpacman.level.Player;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -9,8 +10,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Scanner;
-
+import java.io.FileReader;
+import java.io.BufferedReader;
 /**
  * manipuler le fichier scoreH
  * recuperer score jouer
@@ -18,6 +19,7 @@ import java.util.Scanner;
  * Created by Jannou on 2/03/16.
  */
 public class HandleScore {
+    private static final String path = "./src/main/resources/scores.txt";
 
     private static HandleScore instance = null;
 
@@ -31,6 +33,24 @@ public class HandleScore {
     public static HandleScore getInstance(final Game game){
         ScoreFactory(game);
         return instance;
+    }
+
+
+    private HandleScore(final Game game){
+        this.game = game;
+    }
+    public boolean equals(HandleScore handleScore){
+        return instance == handleScore;
+    }
+
+    protected void addHighScore(){
+        for(Player e : game.getPlayers()){
+            HandleScore.addHighScore(e.getScore(), "Jannou"); // changer jannou par e.getprof.getname
+        }
+    }
+
+    protected ArrayList<ScorePlayer> loadScores() {
+        return HandleScore.loadScore();
     }
 
     /**
@@ -49,19 +69,13 @@ public class HandleScore {
      * new HandleScore
      * @param game  /Game
      */
-    private HandleScore(final Game game){
-        this.game = game;
-    }
-    public boolean equals(HandleScore handleScore){
-        return instance == handleScore;
-    }
 
     /**
      * creat scores.txt if it doesn't exist an return false, return true otherwise
      * @return true if file exist false otherwise
      */
-    public static boolean historyExist(){
-        File f = new File("./src/main/resources/scores.txt");
+    protected static boolean historyExist(){
+        File f = new File(path);
         if ( !f.exists() ) {
             try {
                 boolean succes = f.createNewFile();
@@ -77,21 +91,33 @@ public class HandleScore {
      * load all high scores
      * @return ArrayList<ScorePlayer> of player's and player's score
      */
-    public static ArrayList<ScorePlayer> loadScores() {
-        ArrayList<ScorePlayer> retour = new ArrayList<>();
-        Scanner sc;
-        try {
-            sc = new Scanner(new File("./src/main/resources/scores.txt"));
-            while (sc.hasNext()) {
-                String line = sc.nextLine();
-                String[] data = line.split(" :: ");
-                if (data.length == 2) {
-                    retour.add(new ScorePlayer(Integer.parseInt(data[0]),data[1]));
+    private static ArrayList<ScorePlayer> loadScore() {
+        ArrayList<ScorePlayer> retour = new ArrayList<ScorePlayer>();
+        try{
+            File f = new File (path);
+            FileReader fr = new FileReader (f);
+            BufferedReader br = new BufferedReader (fr);
+            try
+            {
+                String line = br.readLine();
+                while (line != null)
+                {
+                    String[] data = line.split(" :: ");
+                    if (data.length == 2) {
+                        ScorePlayer tp = new ScorePlayer(Integer.parseInt(data[0]),data[1]);
+                        retour.add(tp);
+                    }
+                    line = br.readLine();
                 }
+                br.close();
+                fr.close();
             }
-            sc.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            catch (IOException exception)
+            {
+                System.out.println ("Erreur lors de la lecture : " + exception.getMessage());
+            }
+        }catch (FileNotFoundException exception){
+            System.out.println ("Le fichier n'a pas été trouvé");
         }
         return retour;
     }
@@ -100,10 +126,10 @@ public class HandleScore {
      * get lowest high score
      * @return the lowest score
      */
-    public static int getLowestScore(){
-        ArrayList<ScorePlayer> retour = loadScores();
+    private static int getLowestScore(){
+        ArrayList<ScorePlayer> retour = loadScore();
         if (retour.size() ==0) {
-            return 0;
+            return -1;
         }
         return retour.get(retour.size()-1).getScore();
 
@@ -114,25 +140,29 @@ public class HandleScore {
      * @param score of player
      * @param name of player
      */
-    public void addHighScore(int score , String name){
-        ArrayList<ScorePlayer> retour =loadScores();
-        ScorePlayer temp1 = new ScorePlayer(score, name);
-        ScorePlayer temp2 = null ;
-        if( retour.size() == 0 ){
-            retour.add(0 ,temp1.copy());
+    private static void addHighScore(int score , String name){
+        ArrayList<ScorePlayer> retour =loadScore();
+        int size =retour.size();
+        assert size<=0;
+        if(size == 0){
+            retour.add(0 ,new ScorePlayer(score,name));
         }
-        else{
-            int i=0;
-
-            while(retour.get(i).getScore() > score){
+        else if(size<9){
+            int i = 0;
+            while((i<=size-1) && (retour.get(i).getScore() >= score)){
                 i+=1;
             }
-            retour.add(i, temp1);
-            if(retour.size()>10){
-                retour.remove(10);
-            }
+            retour.add(i, new ScorePlayer(score,name));
         }
-        File f = new File("./src/main/resources/scores.txt");
+        else if(score >getLowestScore()){
+            int i = 0;
+            while(retour.get(i).getScore() >= score){
+                i+=1;
+            }
+            retour.add(i,new ScorePlayer(score, name));
+            retour.remove(10);
+        }
+        File f = new File(path);
         try {
             PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(f)));
             for (ScorePlayer p : retour) {
@@ -143,12 +173,16 @@ public class HandleScore {
             e.printStackTrace();
         }
     }
-    public static void rest(){
-        File f = new File("./src/main/resources/scores.txt");
+    protected static boolean reset(){
+        File f = new File(path);
+        boolean succes = false;
         if(f.exists()){
-            boolean succes = f.delete();
+            succes = f.delete();
         }
-        historyExist();
+        if(succes){
+            return !HandleScore.historyExist();
+        }
+        return false;
     }
 
 
