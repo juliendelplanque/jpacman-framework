@@ -27,6 +27,6 @@ public class ScorePlayer {
         this.player= pa;
     }
     public String toString() {
-        return  getPlayer() + " had score " + getScore() ;
+        return  getPlayer() + " has scored " + getScore() ;
     }
 }
