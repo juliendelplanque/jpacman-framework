@@ -7,6 +7,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 import java.io.File;
 import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
@@ -70,25 +73,40 @@ public class HandleScoreTest {
      */
     @Test
     @SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
-    public void test3(){
+    public void test3()throws NoSuchMethodException, SecurityException,
+            IllegalAccessException, IllegalArgumentException,
+            InvocationTargetException{
+        Method getL = HandleScore.class.getDeclaredMethod("getLowestScore", new Class<?>[0]);
+        getL.setAccessible(true);
+        Class[] paramTypes = new Class[2];
+        paramTypes[0]= int.class;
+        paramTypes[1]= String.class;
+        Method addH = HandleScore.class.getDeclaredMethod("addHighScore", paramTypes);
+        addH.setAccessible(true);
+        Method load = HandleScore.class.getDeclaredMethod("loadScore",new Class<?>[0]);
+        load.setAccessible(true);
+        Method reset = HandleScore.class.getDeclaredMethod("reset", new Class<?>[0]);
+        reset.setAccessible(true);
         HandleScore handleScore = HandleScore.getInstance(game1);
         HandleScore.historyExist();
-        assertTrue(HandleScore.getLowestScore() == 0);
-        handleScore.addHighScore(1, "testplayer");
-        handleScore.addHighScore(2, "testplayer1");
-        handleScore.addHighScore(3, "testplayer2");
-        handleScore.addHighScore(4, "testplayer3");
-        handleScore.addHighScore(5, "testplayer4");
-        handleScore.addHighScore(6, "testplayer5");
-        handleScore.addHighScore(7, "testplayer6");
-        handleScore.addHighScore(8, "testplayer7");
-        handleScore.addHighScore(9, "testplayer8");
-        handleScore.addHighScore(10, "testplayer9");
-        assertTrue(HandleScore.getLowestScore() == 1);
-        handleScore.addHighScore(11, "testplayer10");
-        assertTrue(HandleScore.loadScores().size()==10);
-        assertTrue(HandleScore.getLowestScore() == 2);
-        handleScore.rest();
-        assertTrue(HandleScore.loadScores().size()==0);
+        assertEquals((int) getL.invoke(handleScore, new Object[0]),0);
+        addH.invoke(handleScore,1, "testplayer");
+        addH.invoke(handleScore,2, "testplayer1");
+        addH.invoke(handleScore,3, "testplayer2");
+        addH.invoke(handleScore,4, "testplayer3");
+        addH.invoke(handleScore,5, "testplayer4");
+        addH.invoke(handleScore,6, "testplayer5");
+        addH.invoke(handleScore,7, "testplayer6");
+        addH.invoke(handleScore,8, "testplayer7");
+        addH.invoke(handleScore,9, "testplayer8");
+        addH.invoke(handleScore,10, "testplayer9");
+        assertEquals((int) getL.invoke(handleScore, new Object[0]),1);
+        addH.invoke(handleScore,11, "testplayer10");
+        assertEquals(((ArrayList) load.invoke(handleScore, new Object[0])).size(),10);
+        assertEquals((int) getL.invoke(handleScore, new Object[0]),2);
+        addH.invoke(handleScore,1, "testplayer");
+        assertEquals((int) getL.invoke(handleScore, new Object[0]),2);
+        reset.invoke(handleScore, new Object[0]);
+        assertEquals((int) getL.invoke(handleScore, new Object[0]),0);
     }
 }
