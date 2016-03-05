@@ -1,6 +1,7 @@
 package nl.tudelft.jpacman.score;
 
 import nl.tudelft.jpacman.game.Game;
+import nl.tudelft.jpacman.level.Player;
 
 /**
  * Builder to create a ScoreUI to show Hall of Fame
@@ -9,16 +10,18 @@ import nl.tudelft.jpacman.game.Game;
 public class ScoreUIBuilder {
     private Game game ;
     private ScoreUI instance = null;
+    private HandleScore hScore;
 
     public ScoreUIBuilder(final Game game ){
         assert game != null;
         this.game = game;
-
-
+        HandleScore.historyExist();
+        hScore=HandleScore.getInstance(game);
+        hScore.addHighScore();
     }
     public void createScoreUI(){
         if(instance == null){
-            instance = new ScoreUI();
+            instance = new ScoreUI(hScore);
         }
     }
     public ScoreUI getInstance(){
