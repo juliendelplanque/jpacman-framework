@@ -13,20 +13,23 @@ import nl.tudelft.jpacman.score.HandleScore;
 
 /**
  * HighScorePanel : load high scores and create a panel to show high scores
+ *
  * Created by Jannou on 4/03/16.
  */
 public class HighScorePanel extends JPanel {
     private static HandleScore hScore;
+    protected JPanel dismain;
+    protected ArrayList<JLabel> sLab ;
 
     public HighScorePanel(HandleScore _hScore){
         hScore = _hScore;
         setLayout(new BorderLayout(0,0));
         // haut,gauche,bas,droit
         setBorder(new EmptyBorder(new Insets(40, 60, 20, 60)));
-        JPanel dismain = new JPanel();
+        dismain = new JPanel();
         dismain.setLayout(new GridLayout(10,1));
-        ArrayList<JLabel> scores = getScores();
-        for(JLabel l : scores){
+        sLab = getScores();
+        for(JLabel l : sLab){
             dismain.add(l);
         }
         add(dismain,BorderLayout.CENTER);
@@ -38,5 +41,12 @@ public class HighScorePanel extends JPanel {
             retour.add(new JLabel(e.toString()));
         }
         return retour;
+    }
+    protected void reset(){
+        for(JLabel l : sLab){
+            dismain.remove(l);
+        }
+        dismain.updateUI();
+        this.updateUI();
     }
 }
