@@ -3,6 +3,7 @@ package nl.tudelft.jpacman.score;
 import nl.tudelft.jpacman.game.*;
 import nl.tudelft.jpacman.Launcher;
 
+import nl.tudelft.jpacman.jannou.score.HandleScore;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -63,9 +64,15 @@ public class HandleScoreTest {
      */
     @Test
     @SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
-    public void test2(){
-        assertFalse(HandleScore.historyExist());
-        assertTrue(HandleScore.historyExist());
+    public void test2()throws NoSuchMethodException, SecurityException,
+            IllegalAccessException, IllegalArgumentException,
+            InvocationTargetException{
+        Method hExist = HandleScore.class.getDeclaredMethod("historyExist()", new Class<?>[0]);
+        hExist.setAccessible(true);
+        HandleScore handleScore = HandleScore.getInstance(game1);
+        assertFalse((boolean) hExist.invoke(handleScore, new Object[0]));
+        //assertFalse(HandleScore.historyExist());
+        //assertTrue(HandleScore.historyExist());
     }
 
     /**
@@ -87,8 +94,10 @@ public class HandleScoreTest {
         load.setAccessible(true);
         Method reset = HandleScore.class.getDeclaredMethod("reset", new Class<?>[0]);
         reset.setAccessible(true);
+        Method hExist = HandleScore.class.getDeclaredMethod("historyExist()", new Class<?>[0]);
+        hExist.setAccessible(true);
         HandleScore handleScore = HandleScore.getInstance(game1);
-        HandleScore.historyExist();
+        hExist.invoke(handleScore, new Object[0]);
         assertEquals((int) getL.invoke(handleScore, new Object[0]),0);
         addH.invoke(handleScore,1, "testplayer");
         addH.invoke(handleScore,2, "testplayer1");
