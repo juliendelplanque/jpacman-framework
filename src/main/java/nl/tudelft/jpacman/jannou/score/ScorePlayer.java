@@ -1,4 +1,4 @@
-package nl.tudelft.jpacman.score;
+package nl.tudelft.jpacman.jannou.score;
 
 /**
  * Created by Jannou on 2/03/16.
@@ -10,9 +10,6 @@ public class ScorePlayer {
     public ScorePlayer(int score, String name){
         this.score = score;
         this.player = name;
-    }
-    public ScorePlayer copy(){
-        return new ScorePlayer(this.getScore(), this.getPlayer());
     }
     public int getScore(){
         return this.score;

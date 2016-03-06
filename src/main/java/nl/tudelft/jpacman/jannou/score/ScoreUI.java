@@ -1,16 +1,8 @@
-package nl.tudelft.jpacman.score;
+package nl.tudelft.jpacman.jannou.score;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.WindowConstants;
-import javax.swing.border.EmptyBorder;
-import javax.swing.BoxLayout;
-import javax.swing.JOptionPane;
 /**
  * JFrame Hall of Frame
  * Created by Jannou on 2/03/16.
@@ -49,7 +41,6 @@ public class ScoreUI extends JFrame{
             okButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-
                     frameScore.dispose();
                 }
             });
@@ -65,7 +56,7 @@ public class ScoreUI extends JFrame{
                             JOptionPane.QUESTION_MESSAGE, null, options,
                             options[1]);
                     if(n==0) {
-                        HandleScore.reset();
+                        hScore.reset();
                         highSP.reset();
                     }
                 }

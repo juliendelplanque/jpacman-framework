@@ -1,4 +1,4 @@
-package nl.tudelft.jpacman.profil;
+package nl.tudelft.jpacman.jannou.profil;
 
 /**
  * Created by Jannou on 5/03/16.

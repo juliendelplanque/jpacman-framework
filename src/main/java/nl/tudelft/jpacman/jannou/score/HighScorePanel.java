@@ -1,15 +1,8 @@
-package nl.tudelft.jpacman.score;
-import java.awt.Color;
-import javax.swing.JPanel;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.BorderLayout;
-import java.awt.Insets;
+package nl.tudelft.jpacman.jannou.score;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.util.ArrayList;
-import nl.tudelft.jpacman.score.HandleScore;
 
 /**
  * HighScorePanel : load high scores and create a panel to show high scores
@@ -36,7 +29,7 @@ public class HighScorePanel extends JPanel {
     }
     private static ArrayList<JLabel> getScores(){
         ArrayList<JLabel>  retour = new ArrayList<JLabel>();
-        ArrayList<ScorePlayer>  sp = hScore.loadScores();
+        ArrayList<ScorePlayer>  sp = hScore.getScores();
         for (ScorePlayer e : sp){
             retour.add(new JLabel(e.toString()));
         }
@@ -45,6 +38,10 @@ public class HighScorePanel extends JPanel {
     protected void reset(){
         for(JLabel l : sLab){
             dismain.remove(l);
+        }
+        sLab = getScores();
+        for(JLabel l : sLab){
+            dismain.add(l);
         }
         dismain.updateUI();
         this.updateUI();
