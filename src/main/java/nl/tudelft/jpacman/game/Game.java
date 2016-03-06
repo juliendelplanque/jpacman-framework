@@ -1,13 +1,11 @@
 package nl.tudelft.jpacman.game;
 
-import java.util.List;
-
 import nl.tudelft.jpacman.board.Direction;
+import nl.tudelft.jpacman.jannou.score.ScoreUIBuilder;
 import nl.tudelft.jpacman.level.Level;
 import nl.tudelft.jpacman.level.Level.LevelObserver;
 import nl.tudelft.jpacman.level.Player;
-
-import nl.tudelft.jpacman.score.ScoreUIBuilder;
+import java.util.List;
 /**
  * A basic implementation of a Pac-Man game.
  * 
@@ -97,8 +95,6 @@ public abstract class Game implements LevelObserver {
 	@Override
 	public void levelWon(){
 		stop();
-		ScoreUIBuilder scoB = new ScoreUIBuilder(this);
-		scoB.createScoreUI();
 	}
 	
 	@Override
