@@ -169,11 +169,11 @@ public class Launcher {
 	 */
 	public void launch() {
 		game = makeGame();
-		new ProfilUIBuilder(game).createScoreUI();
 		PacManUiBuilder builder = new PacManUiBuilder().withDefaultButtons();
 		addSinglePlayerKeys(builder, game);
 		pacManUI = builder.build(game);
-		pacManUI.start();
+		new ProfilUIBuilder(game, pacManUI).createScoreUI();
+		//pacManUI.start();
 	}
 
 	/**

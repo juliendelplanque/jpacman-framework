@@ -1,6 +1,7 @@
 package nl.tudelft.jpacman.jannou.profil;
 
 import nl.tudelft.jpacman.game.Game;
+import nl.tudelft.jpacman.ui.PacManUI;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -14,18 +15,23 @@ public class ProfilUI extends JFrame{
     private Game game;
     private JPanel mainContentPane ;
     private HandleProfil hProfil;
+    private ProfilPanel profilP;
+    private PacManUI pacManUI;
 
-    protected ProfilUI(HandleProfil hProfil){
-        initialize(hProfil);
+    protected ProfilUI(HandleProfil hProfil,PacManUI pacManUI){
+        initialize(hProfil, pacManUI);
     }
-    private void initialize(HandleProfil _hProfil) {
+    private void initialize(HandleProfil _hProfil,PacManUI _pacManUI) {
         hProfil = _hProfil;
-        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        pacManUI=_pacManUI;
+        profilP = new ProfilPanel(hProfil);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        //setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Profils");
         setSize(370,440);
         mainContentPane = new JPanel();
         mainContentPane.setLayout(new BoxLayout(mainContentPane, BoxLayout.Y_AXIS));
-        mainContentPane.add( new ProfilPanel(hProfil));
+        mainContentPane.add( profilP);
         mainContentPane.add( new ButtonPan(this));
         setContentPane(mainContentPane);
         setVisible(true);
@@ -38,7 +44,8 @@ public class ProfilUI extends JFrame{
             okButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println("yeahhhhh");
+                    System.out.println(profilP.getSelectedProfil());
+                    pacManUI.start();
                     profilFrame.dispose();
                 }
             });
@@ -46,19 +53,19 @@ public class ProfilUI extends JFrame{
             deleteButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println("oooooooow");
-                    hProfil.removeProfil("test");
-                    /*int n = 0;
-                    Object[] options = { "Yes", "Cancel" };
+                    String del = profilP.getSelectedProfil();
+                    int n = 0;
+                    Object[] options = { "Yes", "No" };
                     n = JOptionPane.showOptionDialog(frame,
-                            "Would you reset Hall of Fame ? all scores will be deleted  ",
+                            "Would you delete "+del+" ?",
                             "WARNING", JOptionPane.YES_NO_CANCEL_OPTION,
                             JOptionPane.QUESTION_MESSAGE, null, options,
                             options[1]);
                     if(n==0) {
-                        HandleScore.reset();
-                        highSP.reset();
-                    }*/
+                        System.out.println("oooooooow");
+                        System.out.println(hProfil.removeProfil(del));
+                        profilP.update(false,del);
+                    }
                 }
             });
             JButton newPButton = new JButton("New Profil");
@@ -66,7 +73,8 @@ public class ProfilUI extends JFrame{
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     System.out.println("yeahhhhh :D ");
-                    hProfil.addNewProfil("TEST2");
+                    hProfil.addNewProfil("TEST3");
+                    profilP.update(true,"");
                     /*int n = 0;
                     Object[] options = { "Yes", "Cancel" };
                     n = JOptionPane.showOptionDialog(frame,
