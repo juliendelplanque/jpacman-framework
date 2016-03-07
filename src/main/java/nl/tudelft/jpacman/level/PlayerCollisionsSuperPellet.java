@@ -43,6 +43,7 @@ public class PlayerCollisionsSuperPellet extends PlayerCollisions{
     public void playerVersusSuperPellet(Player player, SuperPellet superPellet) {
         superPellet.leaveSquare();
         player.addPoints(superPellet.getValue());
+        player.setHunterMode();
         level.startPacmanHunterMode();
         //add timer pour quitter le mode flee
     }

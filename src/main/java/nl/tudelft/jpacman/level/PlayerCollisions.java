@@ -63,7 +63,6 @@ public class PlayerCollisions implements CollisionMap {
 	public void playerVersusPellet(Player player, Pellet pellet) {
 		pellet.leaveSquare();
 		player.addPoints(pellet.getValue());
-		player.setHunterMode();
 	}
 
 
