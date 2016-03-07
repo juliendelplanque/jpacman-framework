@@ -46,7 +46,7 @@ public class LevelSuperPellet extends Level {
             for (Map.Entry<NPC, ScheduledExecutorService> e : this.getNpcs().entrySet()) {
                 changeSpeedNPCs(e.getKey(), 2);
                 ((Ghost) e.getKey()).setModeFlee();
-                //todo changer sprint fantomes
+                //todo ajouter timer pour quitter le mode après 7 secondes
             }
 
         }

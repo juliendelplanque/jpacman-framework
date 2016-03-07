@@ -43,8 +43,25 @@ public class PlayerCollisionsSuperPellet extends PlayerCollisions{
     public void playerVersusSuperPellet(Player player, SuperPellet superPellet) {
         superPellet.leaveSquare();
         player.addPoints(superPellet.getValue());
-        //todo changer le mode de jeu
         level.startFlee();
-        // todo deux classes une en mode fuite et l'autre en mode normal
+    }
+
+
+    /**
+     * Actual case of player bumping into ghost or vice versa.
+     *
+     * @param player The player involved in the collision.
+     * @param ghost The ghost involved in the collision.
+     */
+    @Override
+    public void playerVersusGhost(Player player, Ghost ghost) {
+        if(ghost.isModeHunt())
+            player.setAlive(false);
+        else if(ghost.isModeFlee()){
+            ghost.leaveSquare();
+            player.addHeatedGhost();
+            player.addPoints(player.getGhostHeatedScore());
+            //todo re-aad on the map after 5seconde
+        }
     }
 }
