@@ -169,11 +169,7 @@ public class Launcher {
 	 */
 	public void launch() {
 		game = makeGame();
-		// ici pour les profils.
 		new ProfilUIBuilder(game).createScoreUI();
-		//HandleProfil hProfil = HandleProfil.getInstance(game);
-		//hProfil.addNewProfil("test");
-		//System.out.println(hProfil.getProfil("test.xml"));
 		PacManUiBuilder builder = new PacManUiBuilder().withDefaultButtons();
 		addSinglePlayerKeys(builder, game);
 		pacManUI = builder.build(game);
