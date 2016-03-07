@@ -158,12 +158,12 @@ public class Player extends Unit {
 	 * Depends of the number of super pellet PacMan have heated.
 	 * 			For the first two time of HunterMode is 7 seconds,
 	 * 			for the next two time of HunterMode is 5 seconds.
-	 * @return Time of pacman hunter mode in second.
+	 * @return Time of pacman hunter mode in millisecond.
      */
 	public int getTimeHunterMode(){
 		if(superPelletHeated <=2)
-			return 7;
+			return 7000;
 		else
-			return 5;
+			return 5000;
 	}
 }

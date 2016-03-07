@@ -7,12 +7,16 @@ import nl.tudelft.jpacman.npc.ghost.Ghost;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.ScheduledExecutorService;
 
 /**
  * Created by Maximilien Charlier on 4/03/16.
  */
 public class LevelSuperPellet extends Level {
+
+    private Timer timerHunterMode;
 
     /**
      * The lock that ensures starting and stopping flee mode can't interfere with each
@@ -35,20 +39,60 @@ public class LevelSuperPellet extends Level {
     public LevelSuperPellet(Board b, List<NPC> ghosts, List<Square> startPositions,
                  CollisionMap collisionMap) {
         super(b, ghosts, startPositions, collisionMap);
+        timerHunterMode = null;
     }
 
 
     /**
      * Start Pacman Hunter Ghost mode.
+     *          Ghost speed is divided by two
+     *          Ghost can be heated by PacMan
+     *          Ghost was blue
+     *          Ghost move randomly
      */
-    public void startPacmanHunterMode() {
+    public void startPacmanHunterMode(Player player) {
         synchronized (startStopLock) {
+            /**
+             * Entering in PacmanHunterMode for 7 or 5 second.
+             * Time depends of player.getTimeHunterMode()
+             */
+            if(timerHunterMode == null) {
+                timerHunterMode = new Timer();
+            }
+            else {
+                timerHunterMode.cancel();
+            }
+            timerHunterMode = new Timer();
+            timerHunterMode.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    stopPacManHunterMode();
+                }
+            }, player.getTimeHunterMode());
+
+            /*
+                Change ghost to fleeing ghost.
+             */
             for (Map.Entry<NPC, ScheduledExecutorService> e : this.getNpcs().entrySet()) {
                 changeSpeedNPCs(e.getKey(), 2);
                 ((Ghost) e.getKey()).setModeFlee();
-                //todo ajouter timer pour quitter le mode après 7 secondes
             }
 
+        }
+    }
+
+
+    /**
+     * Stop PacMan hunter mode
+     *      Ghost speed reset to default
+     *      Ghost can heat PacMan
+     *      Ghost have the origin sprite
+     */
+    public void stopPacManHunterMode(){
+        timerHunterMode.cancel();
+        for (Map.Entry<NPC, ScheduledExecutorService> e : this.getNpcs().entrySet()) {
+            changeSpeedNPCs(e.getKey(), 1);
+            ((Ghost) e.getKey()).setModeHunt();
         }
     }
 }
