@@ -51,7 +51,14 @@ public class PlayerCollisions implements CollisionMap {
      * @param ghost The ghost involved in the collision.
 	 */
 	public void playerVersusGhost(Player player, Ghost ghost) {
-		player.setAlive(false);
+		if(ghost.isModeHunt())
+			player.setAlive(false);
+		else if(ghost.isModeFlee()){
+			ghost.leaveSquare();
+			player.addHeatedGhost();
+			player.addPoints(player.getGhostHeatedScore());
+			//todo re-aad on the map after 5seconde
+		}
 	}
 
 	/**
@@ -63,6 +70,7 @@ public class PlayerCollisions implements CollisionMap {
 	public void playerVersusPellet(Player player, Pellet pellet) {
 		pellet.leaveSquare();
 		player.addPoints(pellet.getValue());
+		player.setHunterMode();
 	}
 
 

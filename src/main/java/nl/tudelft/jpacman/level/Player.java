@@ -4,6 +4,7 @@ import java.util.Map;
 
 import nl.tudelft.jpacman.board.Direction;
 import nl.tudelft.jpacman.board.Unit;
+import nl.tudelft.jpacman.npc.ghost.Ghost;
 import nl.tudelft.jpacman.sprite.AnimatedSprite;
 import nl.tudelft.jpacman.sprite.Sprite;
 
@@ -35,6 +36,16 @@ public class Player extends Unit {
 	private boolean alive;
 
 	/**
+	 * <code>true</code> iff this player hunt ghost.
+	 */
+	private boolean hunter;
+
+	/**
+	 * Number of ghost heated by pacman (in the last ghost hunter mode)
+	 */
+	private int ghostHeated;
+
+	/**
 	 * Creates a new player with a score of 0 points.
 	 * 
 	 * @param spriteMap
@@ -48,6 +59,7 @@ public class Player extends Unit {
 		this.sprites = spriteMap;
 		this.deathSprite = deathAnimation;
 		deathSprite.setAnimating(false);
+		this.setDefaultMode();
 	}
 
 	/**
@@ -101,5 +113,44 @@ public class Player extends Unit {
 	 */
 	public void addPoints(int points) {
 		score += points;
+	}
+
+	/**
+	 * Defined that the game mode is standard.
+	 * 		Pacman are hunted by ghosts and reset value of number ghost heated.
+	 */
+	public void setDefaultMode(){
+		this.hunter = false;
+		this.ghostHeated = 0;
+	}
+
+	/**
+	 * Defined that the game mode is hunter.
+	 * 		Ghosts are hunted by Pacman and reset value of number ghost heated.
+	 */
+	public void setHunterMode(){
+		this.hunter = true;
+		this.ghostHeated = 0;
+	}
+
+	/**
+	 *	For the fisrt ghost hunted score is 200 points
+	 *		for the second ghost, score is 400 points
+	 *		for the third ghost, score is 800 points
+	 *		for the fourth ghost eated, score is 1600points.
+	 * @return the score value for the ghost hunted.
+     */
+	public int getGhostHeatedScore(){
+		if (ghostHeated > 4) {
+			return 0;
+		}
+		return Ghost.getScore() * (int) Math.pow(2, ghostHeated);
+	}
+
+	/**
+	 * Add one ghost in ghostHeated.
+	 */
+	public void addHeatedGhost(){
+		this.ghostHeated += 1;
 	}
 }
