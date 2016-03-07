@@ -36,12 +36,12 @@ public class Player extends Unit {
 	private boolean alive;
 
 	/**
-	 * <code>true</code> iff this player hunt ghost.
+	 * Number of superPellet heated by pacman.
 	 */
-	private boolean hunter;
+	private int superPelletHeated;
 
 	/**
-	 * Number of ghost heated by pacman (in the last ghost hunter mode)
+	 * Number of ghost heated by PacMan (in the last ghost hunter mode)
 	 */
 	private int ghostHeated;
 
@@ -60,6 +60,7 @@ public class Player extends Unit {
 		this.deathSprite = deathAnimation;
 		deathSprite.setAnimating(false);
 		this.setDefaultMode();
+		this.superPelletHeated = 0;
 	}
 
 	/**
@@ -120,7 +121,6 @@ public class Player extends Unit {
 	 * 		Pacman are hunted by ghosts and reset value of number ghost heated.
 	 */
 	public void setDefaultMode(){
-		this.hunter = false;
 		this.ghostHeated = 0;
 	}
 
@@ -129,8 +129,8 @@ public class Player extends Unit {
 	 * 		Ghosts are hunted by Pacman and reset value of number ghost heated.
 	 */
 	public void setHunterMode(){
-		this.hunter = true;
 		this.ghostHeated = 0;
+		this.superPelletHeated += 1;
 	}
 
 	/**
@@ -152,5 +152,18 @@ public class Player extends Unit {
 	 */
 	public void addHeatedGhost(){
 		this.ghostHeated += 1;
+	}
+
+	/**
+	 * Depends of the number of super pellet PacMan have heated.
+	 * 			For the first two time of HunterMode is 7 seconds,
+	 * 			for the next two time of HunterMode is 5 seconds.
+	 * @return Time of pacman hunter mode in second.
+     */
+	public int getTimeHunterMode(){
+		if(superPelletHeated <=2)
+			return 7;
+		else
+			return 5;
 	}
 }
