@@ -39,9 +39,9 @@ public class LevelSuperPellet extends Level {
 
 
     /**
-     * Start flee mode
+     * Start Pacman Hunter Ghost mode.
      */
-    public void startFlee() {
+    public void startPacmanHunterMode() {
         synchronized (startStopLock) {
             for (Map.Entry<NPC, ScheduledExecutorService> e : this.getNpcs().entrySet()) {
                 changeSpeedNPCs(e.getKey(), 2);
