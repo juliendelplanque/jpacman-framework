@@ -33,6 +33,7 @@ public class HandleScore {
      */
     public static HandleScore getInstance(final Game game){
         ScoreFactory(game);
+        instance.historyExist();
         return instance;
     }
 

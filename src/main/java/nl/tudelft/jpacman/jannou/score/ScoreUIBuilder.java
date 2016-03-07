@@ -15,7 +15,6 @@ public class ScoreUIBuilder {
         assert game != null;
         this.game = game;
         hScore=HandleScore.getInstance(game);
-        hScore.historyExist();
         hScore.addHighScore();
     }
     public void createScoreUI(){
@@ -23,7 +22,7 @@ public class ScoreUIBuilder {
             instance = new ScoreUI(hScore);
         }
     }
-    public ScoreUI getInstance(){
+    public ScoreUI getInstance(){ //maybe use to regroupe all Jframe into once
         return instance;
     }
 }

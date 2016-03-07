@@ -237,5 +237,12 @@ public class FileHelper {
         }
         return false;
     }
+    public static boolean deleteProfil( String path){
+        File f = new File(path);
+        if(f.exists() && f.isFile()){
+             return f.delete();
+        }
+        return false;
+    }
 
 }

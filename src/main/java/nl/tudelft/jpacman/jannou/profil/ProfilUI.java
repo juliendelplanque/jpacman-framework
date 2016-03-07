@@ -2,14 +2,9 @@ package nl.tudelft.jpacman.jannou.profil;
 
 import nl.tudelft.jpacman.game.Game;
 
-
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.WindowConstants;
-import javax.swing.BoxLayout;
 
 /**
  *
@@ -18,16 +13,19 @@ import javax.swing.BoxLayout;
 public class ProfilUI extends JFrame{
     private Game game;
     private JPanel mainContentPane ;
+    private HandleProfil hProfil;
 
-    public ProfilUI(Game game){
-        initialize(game);
+    protected ProfilUI(HandleProfil hProfil){
+        initialize(hProfil);
     }
-    private void initialize(Game game) {
+    private void initialize(HandleProfil _hProfil) {
+        hProfil = _hProfil;
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Profils");
         setSize(370,440);
         mainContentPane = new JPanel();
         mainContentPane.setLayout(new BoxLayout(mainContentPane, BoxLayout.Y_AXIS));
+        mainContentPane.add( new ProfilPanel(hProfil));
         mainContentPane.add( new ButtonPan(this));
         setContentPane(mainContentPane);
         setVisible(true);
@@ -49,6 +47,7 @@ public class ProfilUI extends JFrame{
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     System.out.println("oooooooow");
+                    hProfil.removeProfil("test");
                     /*int n = 0;
                     Object[] options = { "Yes", "Cancel" };
                     n = JOptionPane.showOptionDialog(frame,
@@ -67,6 +66,7 @@ public class ProfilUI extends JFrame{
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     System.out.println("yeahhhhh :D ");
+                    hProfil.addNewProfil("TEST2");
                     /*int n = 0;
                     Object[] options = { "Yes", "Cancel" };
                     n = JOptionPane.showOptionDialog(frame,

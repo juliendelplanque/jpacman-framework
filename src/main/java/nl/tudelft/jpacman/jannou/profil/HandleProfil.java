@@ -53,6 +53,15 @@ public class HandleProfil {
         Profil neW = new Profil(name);
         return FileHelper.writeProfil(neW,path+name+".xml");
     }
+    public boolean removeProfil(String name){
+        String fileName = name+".xml";
+        boolean retour = false;
+        if(getProfils().contains(fileName)){
+            retour = FileHelper.deleteProfil(path + fileName);
+        }
+        return retour;
+    }
+
     protected boolean repositExist(){
         return FileHelper.exist(path,false);
     }
