@@ -3,6 +3,7 @@ package nl.tudelft.jpacman.level;
 import nl.tudelft.jpacman.board.Board;
 import nl.tudelft.jpacman.board.Square;
 import nl.tudelft.jpacman.npc.NPC;
+import nl.tudelft.jpacman.npc.ghost.Ghost;
 
 import java.util.List;
 import java.util.Map;
@@ -44,7 +45,7 @@ public class LevelSuperPellet extends Level {
         synchronized (startStopLock) {
             for (Map.Entry<NPC, ScheduledExecutorService> e : this.getNpcs().entrySet()) {
                 e.getValue().shutdownNow(); //stop running ghost
-                //e.getKey().setFleeMode();
+                ((Ghost) e.getKey()).setModeFlee();
                 //todo changer sprint fantomes
             }
 

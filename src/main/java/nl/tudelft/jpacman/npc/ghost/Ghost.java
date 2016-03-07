@@ -23,6 +23,24 @@ public abstract class Ghost extends NPC {
 	private Map<Direction, Sprite> sprites;
 
 	/**
+	 * The sprite map of flee gost, one sprite for each direction.
+	 */
+	private static  Map<Direction, Sprite> spritesFlee;
+
+
+    /**
+     * Define if the ghost hunt pacman or flee pacman.
+     */
+    private static boolean MODE_FLEE = true;
+    private static boolean MODE_HUNT = false;
+    private boolean mode;
+
+    /**
+     * The default score value of a ghost.
+     */
+    private static final int SCORE = 200;
+
+	/**
 	 * Creates a new ghost.
 	 * 
 	 * @param spriteMap
@@ -30,11 +48,15 @@ public abstract class Ghost extends NPC {
 	 */
 	protected Ghost(Map<Direction, Sprite> spriteMap) {
 		this.sprites = spriteMap;
+        mode = false;
 	}
 
 	@Override
 	public Sprite getSprite() {
-		return sprites.get(getDirection());
+		if(mode == MODE_HUNT)
+            return sprites.get(getDirection());
+        // else mode = MODE_FLEE
+        return spritesFlee.get(getDirection());
 	}
 
 	/**
@@ -58,4 +80,43 @@ public abstract class Ghost extends NPC {
 		return directions.get(i);
 	}
 
+	 public static void setFleeSprite(Map<Direction, Sprite> spriteMap){
+		spritesFlee = spriteMap;
+	}
+
+    /**
+     * Set the ghost for hunt PacMan.
+     */
+    public void setModeHunt(){
+        this.mode = MODE_HUNT;
+    }
+
+    /**
+     * Set the ghost for flee PacMan.
+     */
+    public void setModeFlee(){
+        this.mode = MODE_FLEE;
+    }
+
+    /**
+     * @return if the Ghost flee Pacman.
+     */
+    public boolean isModeFlee(){
+        return this.mode == MODE_FLEE;
+    }
+
+    /**
+     * @return if the Ghost hunt Pacman.
+     */
+    public boolean isModeHunt(){
+        return this.mode == MODE_HUNT;
+    }
+
+    /**
+     *
+     * @return the default value for the score when a ghost are eated.
+     */
+    public static int getScore() {
+        return SCORE;
+    }
 }
