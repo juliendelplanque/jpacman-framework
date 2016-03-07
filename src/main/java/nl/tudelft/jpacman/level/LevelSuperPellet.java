@@ -44,7 +44,7 @@ public class LevelSuperPellet extends Level {
     public void startFlee() {
         synchronized (startStopLock) {
             for (Map.Entry<NPC, ScheduledExecutorService> e : this.getNpcs().entrySet()) {
-                e.getValue().shutdownNow(); //stop running ghost
+                changeSpeedNPCs(e.getKey(), 2);
                 ((Ghost) e.getKey()).setModeFlee();
                 //todo changer sprint fantomes
             }

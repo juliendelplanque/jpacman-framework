@@ -235,6 +235,23 @@ public class Level {
 		}
 	}
 
+
+	/**
+	 * Starts and change NPC movement scheduling.
+	 * @param npc a NPC (a ghost)
+	 * @param inverseFactor The inverse factor of speed (increase factor > decrease speed)
+	 *                      Typical value: 1 to default speed, 2 to half speed (fleeing ghost mode)
+	 */
+	public void changeSpeedNPCs(NPC npc, int inverseFactor) {
+		ScheduledExecutorService service = npcs.get(npc);
+		service.shutdownNow();
+		service = Executors
+				.newSingleThreadScheduledExecutor();
+		service.schedule(new NpcMoveTask(service, npc),
+				npc.getInterval() / 2 * inverseFactor, TimeUnit.MILLISECONDS);
+		npcs.replace(npc, service);
+	}
+
 	/**
 	 * Stops all NPC movement scheduling and interrupts any movements being
 	 * executed.
