@@ -1,12 +1,12 @@
 package nl.tudelft.jpacman.level;
 
 import nl.tudelft.jpacman.PacmanConfigurationException;
-import nl.tudelft.jpacman.board.Board;
 import nl.tudelft.jpacman.board.BoardFactory;
 import nl.tudelft.jpacman.board.Square;
+import nl.tudelft.jpacman.board.Unit;
 import nl.tudelft.jpacman.npc.NPC;
+import nl.tudelft.jpacman.npc.ghost.Ghost;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -68,6 +68,13 @@ public class MapParserSuperPellet extends MapParser {
             case 'G':
                 Square ghostSquare = makeGhostSquare(ghosts);
                 grid[x][y] = ghostSquare;
+
+                /* Set initial position of Ghost */
+                for (Unit g: ghostSquare.getOccupants()){
+                    if( g instanceof Ghost){
+                        ((Ghost) g).setInitialPosition(ghostSquare);
+                    }
+                }
                 break;
             case 'P':
                 Square playerSquare = boardCreator.createGround();

@@ -1,9 +1,6 @@
 package nl.tudelft.jpacman.npc.ghost;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 import nl.tudelft.jpacman.board.Direction;
 import nl.tudelft.jpacman.board.Square;
@@ -16,11 +13,6 @@ import nl.tudelft.jpacman.sprite.Sprite;
  * @author Jeroen Roosen 
  */
 public abstract class Ghost extends NPC {
-	
-	/**
-	 * The sprite map, one sprite for each direction.
-	 */
-	private Map<Direction, Sprite> sprites;
 
 	/**
 	 * The sprite map of flee gost, one sprite for each direction.
@@ -28,27 +20,37 @@ public abstract class Ghost extends NPC {
 	private static  Map<Direction, Sprite> spritesFlee;
 
 
-    /**
-     * Define if the ghost hunt pacman or flee pacman.
-     */
-    private static boolean MODE_FLEE = true;
-    private static boolean MODE_HUNT = false;
-    private boolean mode;
+	/**
+	 * Define if the ghost hunt pacman or flee pacman.
+	 */
+	private static boolean MODE_FLEE = true;
+	private static boolean MODE_HUNT = false;
+	private boolean mode;
 
-    /**
-     * The default score value of a ghost.
-     */
-    private static final int SCORE = 200;
+	/**
+	 * The default score value of a ghost.
+	 */
+	private static final int SCORE = 200;
+
+	/**
+	 * The sprite map, one sprite for each direction.
+	 */
+	private Map<Direction, Sprite> sprites;
+
+	/**
+	 * The initial position of the ghost, util for is respawn.
+	 */
+	private Square initialPosition;
 
 	/**
 	 * Creates a new ghost.
-	 * 
+	 *
 	 * @param spriteMap
 	 *            The sprites for every direction.
 	 */
 	protected Ghost(Map<Direction, Sprite> spriteMap) {
 		this.sprites = spriteMap;
-        mode = false;
+		mode = false;
 	}
 
 	@Override
@@ -119,4 +121,25 @@ public abstract class Ghost extends NPC {
     public static int getScore() {
         return SCORE;
     }
+
+	/**
+	 * Set the initial position of the ghost, util for is respawn.
+	 * @param position initial position of the ghost.
+     */
+	public void setInitialPosition(Square position){
+		this.initialPosition = position;
+	}
+	/**
+	 * Re aad ghost after 5seconds in is initial position.
+	 */
+	public void respawnGhost(){
+		Timer timer = new Timer();
+		timer.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				occupy(initialPosition);
+				setModeHunt();
+			}
+		}, 5000);
+	}
 }
