@@ -62,7 +62,7 @@ public class MultiPlayerLauncher extends Launcher {
         Direction[] directions = { Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST};
         for(int i = 0; i<keys.length; i++) {
             final int j = i;
-            builder.addKey(keys[j], () -> game.move(ghost, directions[j]));
+            builder.addKey(keys[j], () -> {if (ghost.isAlive()) game.move(ghost, directions[j]);});
         }
     }
 
