@@ -118,7 +118,7 @@ public class Player extends Unit {
 
 	/**
 	 * Defined that the game mode is standard.
-	 * 		Pacman are hunted by ghosts and reset value of number ghost heated.
+	 * 		PacMan are hunted by ghosts and reset value of number ghost heated.
 	 */
 	public void setDefaultMode(){
 		this.ghostHeated = 0;
@@ -155,10 +155,10 @@ public class Player extends Unit {
 	}
 
 	/**
-	 * Depends of the number of super pellet PacMan have heated.
+	 * Depends of the number of super pellet Pacman have heated.
 	 * 			For the first two time of HunterMode is 7 seconds,
 	 * 			for the next two time of HunterMode is 5 seconds.
-	 * @return Time of pacman hunter mode in millisecond.
+	 * @return Time of Pacman hunter mode in millisecond.
      */
 	public int getTimeHunterMode(){
 		if(superPelletHeated <=2)
