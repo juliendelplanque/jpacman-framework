@@ -120,10 +120,13 @@ public class MultiPlayerWithoutPacmanGame extends Game implements RespawnListene
     @Override
     public void hunterNeedRespawn(Hunter hunter) {
         Timer respawnTimer = new Timer("HunterPlayer respawner");
+        final Level finalLevel = this.level;
         respawnTimer.schedule(new TimerTask() {
             @Override
             public void run() {
                 hunter.respawn();
+                finalLevel.stop();
+                finalLevel.start();
             }
         }, WAIT_BEFORE_RESPAWN);
     }
