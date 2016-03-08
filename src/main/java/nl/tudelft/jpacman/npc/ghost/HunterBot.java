@@ -99,7 +99,6 @@ public class HunterBot extends Ghost implements Hunter {
 
     @Override
     public void respawn() {
-        this.leaveSquare();
         this.occupy(this.getInitialPosition());
         this.setAlive(true);
     }
@@ -107,6 +106,7 @@ public class HunterBot extends Ghost implements Hunter {
     @Override
     public void kill() {
         this.setAlive(false);
+        this.leaveSquare();
         this.informRespawnListeners();
     }
 

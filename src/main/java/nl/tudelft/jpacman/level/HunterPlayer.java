@@ -94,6 +94,7 @@ public class HunterPlayer extends Player implements Hunter {
      * Add a RespawnListener. It will be notified when the HunterPlayer has been
      * killed and needs to respawn.
      * @param respawnListener
+     *          A respawn listener.
      */
     @Override
     public void addRespawnListener(RespawnListener respawnListener){
@@ -114,7 +115,6 @@ public class HunterPlayer extends Player implements Hunter {
      */
     @Override
     public void respawn() {
-        this.leaveSquare();
         this.occupy(this.getInitialPosition());
         this.setAlive(true);
     }
@@ -125,6 +125,7 @@ public class HunterPlayer extends Player implements Hunter {
     @Override
     public void kill(){
         this.setAlive(false);
+        this.leaveSquare();
         this.informRespawnListeners();
     }
 

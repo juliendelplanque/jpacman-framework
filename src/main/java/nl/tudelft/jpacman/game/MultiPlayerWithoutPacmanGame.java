@@ -7,6 +7,7 @@ import nl.tudelft.jpacman.npc.NPC;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
+import java.util.TimerTask;
 import java.util.stream.Collectors;
 
 /**
@@ -19,6 +20,10 @@ public class MultiPlayerWithoutPacmanGame extends Game implements RespawnListene
      * players to be the hunter.
      */
     public static final int PERIOD = 10000;
+    /**
+     * Time to wait before respawn in millisec.
+     */
+    private static final long WAIT_BEFORE_RESPAWN = 3000;
     /**
      * The level of this game.
      */
@@ -114,6 +119,12 @@ public class MultiPlayerWithoutPacmanGame extends Game implements RespawnListene
      */
     @Override
     public void hunterNeedRespawn(Hunter hunter) {
-        hunter.respawn();
+        Timer respawnTimer = new Timer("HunterPlayer respawner");
+        respawnTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                hunter.respawn();
+            }
+        }, WAIT_BEFORE_RESPAWN);
     }
 }
