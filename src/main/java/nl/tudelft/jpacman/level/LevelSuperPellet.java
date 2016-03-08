@@ -56,10 +56,7 @@ public class LevelSuperPellet extends Level {
              * Entering in PacmanHunterMode for 7 or 5 second.
              * Time depends of player.getTimeHunterMode()
              */
-            if(timerHunterMode == null) {
-                timerHunterMode = new Timer();
-            }
-            else {
+            if(timerHunterMode != null) {
                 timerHunterMode.cancel();
             }
             timerHunterMode = new Timer();
