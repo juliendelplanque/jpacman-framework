@@ -142,4 +142,14 @@ public abstract class Ghost extends NPC {
 			}
 		}, 5000);
 	}
+
+	/**
+	 *
+	 * @return Speed of ghost
+     */
+	public float getSpeed(){
+		if(isModeFlee())
+			return 0.5f;
+		return 1;
+	}
 }

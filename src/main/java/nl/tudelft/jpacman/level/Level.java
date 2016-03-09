@@ -14,6 +14,7 @@ import nl.tudelft.jpacman.board.Direction;
 import nl.tudelft.jpacman.board.Square;
 import nl.tudelft.jpacman.board.Unit;
 import nl.tudelft.jpacman.npc.NPC;
+import nl.tudelft.jpacman.npc.ghost.Ghost;
 
 /**
  * A level of Pac-Man. A level consists of the board with the players and the
@@ -227,11 +228,7 @@ public class Level {
 	 */
 	private void startNPCs() {
 		for (final NPC npc : npcs.keySet()) {
-			ScheduledExecutorService service = Executors
-					.newSingleThreadScheduledExecutor();
-			service.schedule(new NpcMoveTask(service, npc),
-					npc.getInterval() / 2, TimeUnit.MILLISECONDS);
-			npcs.put(npc, service);
+			setSpeedNPCs(npc, ((Ghost) npc).getSpeed());
 		}
 	}
 
@@ -239,16 +236,17 @@ public class Level {
 	/**
 	 * Starts and change NPC movement scheduling.
 	 * @param npc a NPC (a ghost)
-	 * @param inverseFactor The inverse factor of speed (increase factor > decrease speed)
-	 *                      Typical value: 1 to default speed, 2 to half speed (fleeing ghost mode)
+	 * @param speedFactor The speed factor
+	 *                      Typical value: 1 to default speed, 0.5 to half speed (fleeing ghost mode)
 	 */
-	public void changeSpeedNPCs(NPC npc, int inverseFactor) {
+	public void setSpeedNPCs(NPC npc, float speedFactor) {
 		ScheduledExecutorService service = npcs.get(npc);
-		service.shutdownNow();
+		if(service != null)
+			service.shutdownNow();
 		service = Executors
 				.newSingleThreadScheduledExecutor();
 		service.schedule(new NpcMoveTask(service, npc),
-				npc.getInterval() / 2 * inverseFactor, TimeUnit.MILLISECONDS);
+				(int) ((npc.getInterval() / 2) * speedFactor), TimeUnit.MILLISECONDS);
 		npcs.replace(npc, service);
 	}
 

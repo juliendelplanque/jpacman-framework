@@ -71,8 +71,8 @@ public class LevelSuperPellet extends Level {
                 Change ghost to fleeing ghost.
              */
             for (Map.Entry<NPC, ScheduledExecutorService> e : this.getNpcs().entrySet()) {
-                changeSpeedNPCs(e.getKey(), 2);
                 ((Ghost) e.getKey()).setModeFlee();
+                setSpeedNPCs(e.getKey(), ((Ghost) e.getKey()).getSpeed());
             }
 
         }
@@ -88,8 +88,8 @@ public class LevelSuperPellet extends Level {
     public void stopPacManHunterMode(){
         timerHunterMode.cancel();
         for (Map.Entry<NPC, ScheduledExecutorService> e : this.getNpcs().entrySet()) {
-            changeSpeedNPCs(e.getKey(), 1);
             ((Ghost) e.getKey()).setModeHunt();
+            setSpeedNPCs(e.getKey(), ((Ghost) e.getKey()).getSpeed());
         }
     }
 }
