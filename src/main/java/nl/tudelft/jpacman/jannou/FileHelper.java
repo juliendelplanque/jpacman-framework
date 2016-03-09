@@ -17,26 +17,38 @@ public class FileHelper {
      * creat file at path if it doesn't exist an return false, return true otherwise
      * @return true if file exist false otherwise
      */
-    public static boolean exist(String path, boolean file){
+    public static boolean exist(String path){
         File f = new File(path);
-        if ( !f.exists() && file ) {
+        return f.exists();
+    }
+
+    /**
+     * create directory or file at path if it doesn't exist an return false
+     *
+     * @param path the path
+     * @param file create a file if true a directory otherwise
+     * @return true if file is created false otherwise
+     */
+    public static boolean init(String path, boolean file){
+        assert !exist(path);
+        File f = new File(path);
+        if (file ) {
             try {
-                boolean succes = f.createNewFile();
+                return f.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return false;
         }
-        else if ( !f.exists() && !file ) {
+        else{
             try {
-                boolean succes = f.mkdir();
+                return f.mkdir();
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            return false;
         }
-        return true;
+        return false;
     }
+
     /**
      * reset the file at given path
      * @param path
@@ -44,12 +56,9 @@ public class FileHelper {
      */
     public static boolean reset(String path, boolean file){
         File f = new File(path);
-        boolean succes = false;
         if(f.exists() && f.isFile()){
-            succes = f.delete();
-            if(succes){
-                return !exist(path, true);
-            }
+            f.delete();
+            return init(path,file);
         }
         return false;
     }
@@ -206,19 +215,6 @@ public class FileHelper {
             System.out.println ("Le fichier n'a pas été trouvé");
         }
         return retour;
-    }
-
-
-
-    /**
-     * add new high score
-     * @param toWrite something to be written
-     * @param path file's path
-     */
-    public static void writeProfils(ArrayList<Profil> toWrite, String path){
-        for (Profil p : toWrite) {
-            writeProfil(p,path);
-        }
     }
     /**
      * add new high score
