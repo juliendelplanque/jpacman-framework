@@ -4,8 +4,10 @@ import nl.tudelft.jpacman.board.Direction;
 import nl.tudelft.jpacman.game.Game;
 import nl.tudelft.jpacman.game.GameFactory;
 import nl.tudelft.jpacman.level.*;
+import nl.tudelft.jpacman.ui.MultiPlayerChooser;
 import nl.tudelft.jpacman.ui.PacManUiBuilder;
 
+import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.io.InputStream;
@@ -99,8 +101,8 @@ public class MultiPlayerLauncher extends Launcher {
     /**
      * Creates and starts a Multi-player Wihtout Pacman game.
      */
-    public void launchMultiPlayer(){
-        game = makeMultiPlayerGame(2);
+    public void launchMultiPlayer(int playerCount){
+        game = makeMultiPlayerGame(playerCount);
         PacManUiBuilder builder = new PacManUiBuilder().withDefaultButtons();
         addMultiPlayerKeys(builder, game);
         pacManUI = builder.build(game);
@@ -116,6 +118,6 @@ public class MultiPlayerLauncher extends Launcher {
      *             When a resource could not be read.
      */
     public static void main(String[] args) throws IOException {
-        new MultiPlayerLauncher().launchMultiPlayer();
+        SwingUtilities.invokeLater(() -> new MultiPlayerChooser().setVisible(true));
     }
 }
