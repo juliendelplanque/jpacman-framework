@@ -11,7 +11,7 @@ import java.util.TimerTask;
 import java.util.stream.Collectors;
 
 /**
- * A Game specialized to play multi-players without Pacman game.
+ * A Game specialized to play multi-players without Pac-Man game.
  * @author Julien Delplanque
  */
 public class MultiPlayerWithoutPacmanGame extends Game implements RespawnListener {
@@ -90,7 +90,7 @@ public class MultiPlayerWithoutPacmanGame extends Game implements RespawnListene
     }
 
     /**
-     * Override to start the time when the game starts.
+     * Override to start the timer when the game starts.
      */
     @Override
     public void start() {
@@ -113,7 +113,8 @@ public class MultiPlayerWithoutPacmanGame extends Game implements RespawnListene
 
     /**
      * Method called by the Hunters I am listening to.
-     * I make the hunter concerned respawn using its respawn() method.
+     * I make the hunter concerned respawn using its respawn() method after
+     * WAIT_BEFORE_RESPAWN milliseconds.
      * @param hunter
      *          The hunter to respawn.
      */
