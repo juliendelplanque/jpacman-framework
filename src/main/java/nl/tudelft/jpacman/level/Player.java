@@ -4,6 +4,7 @@ import java.util.Map;
 
 import nl.tudelft.jpacman.board.Direction;
 import nl.tudelft.jpacman.board.Unit;
+import nl.tudelft.jpacman.npc.ghost.EatableGhost;
 import nl.tudelft.jpacman.npc.ghost.Ghost;
 import nl.tudelft.jpacman.sprite.AnimatedSprite;
 import nl.tudelft.jpacman.sprite.Sprite;
@@ -144,7 +145,7 @@ public class Player extends Unit {
 		if (ghostHeated > 4) {
 			return 0;
 		}
-		return Ghost.getScore() * (int) Math.pow(2, ghostHeated);
+		return EatableGhost.SCORE * (int) Math.pow(2, ghostHeated);
 	}
 
 	/**

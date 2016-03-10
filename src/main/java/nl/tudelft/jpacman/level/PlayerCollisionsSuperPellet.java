@@ -1,19 +1,34 @@
 package nl.tudelft.jpacman.level;
 
 import nl.tudelft.jpacman.board.Unit;
+import nl.tudelft.jpacman.npc.ghost.EatableGhost;
 import nl.tudelft.jpacman.npc.ghost.Ghost;
 
 /**
- * Created by Maximilien Charlier on 3/03/16.
+ * A simple implementation of a collision map for the JPacman player.
+ * Whit support of collision with super pellet and eating Ghost.
+ *
+ * Created by Maximilien Charlier.
  */
 public class PlayerCollisionsSuperPellet extends PlayerCollisions{
 
     private LevelSuperPellet level;
 
     @Override
+    public void collide(Unit mover, Unit collidedOn) {
+
+        if (mover instanceof Player) {
+            playerColliding((Player) mover, collidedOn);
+        }
+        else if (mover instanceof Ghost) {
+            ghostColliding((EatableGhost) mover, collidedOn);
+        }
+    }
+
+    @Override
     protected void playerColliding(Player player, Unit collidedOn) {
         if (collidedOn instanceof Ghost) {
-            playerVersusGhost(player, (Ghost) collidedOn);
+            playerVersusGhost(player, (EatableGhost) collidedOn);
         }
 
         if (collidedOn instanceof Pellet) {
@@ -22,6 +37,12 @@ public class PlayerCollisionsSuperPellet extends PlayerCollisions{
 
         if (collidedOn instanceof SuperPellet) {
             playerVersusSuperPellet(player, (SuperPellet) collidedOn);
+        }
+    }
+
+    private void ghostColliding(EatableGhost ghost, Unit collidedOn) {
+        if (collidedOn instanceof Player) {
+            playerVersusGhost((Player) collidedOn, ghost);
         }
     }
 
@@ -55,8 +76,7 @@ public class PlayerCollisionsSuperPellet extends PlayerCollisions{
      * @param player The player involved in the collision.
      * @param ghost The ghost involved in the collision.
      */
-    @Override
-    public void playerVersusGhost(Player player, Ghost ghost) {
+    public void playerVersusGhost(Player player, EatableGhost ghost) {
         if(ghost.isModeHunt())
             player.setAlive(false);
         else if(ghost.isModeFlee()){

@@ -47,7 +47,7 @@ import nl.tudelft.jpacman.sprite.Sprite;
  * @author Jeroen Roosen 
  * 
  */
-public class Pinky extends Ghost {
+public class Pinky extends EatableGhost {
 
 	private static final int SQUARES_AHEAD = 4;
 

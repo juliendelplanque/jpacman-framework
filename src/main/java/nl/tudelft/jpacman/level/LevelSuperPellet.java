@@ -3,6 +3,7 @@ package nl.tudelft.jpacman.level;
 import nl.tudelft.jpacman.board.Board;
 import nl.tudelft.jpacman.board.Square;
 import nl.tudelft.jpacman.npc.NPC;
+import nl.tudelft.jpacman.npc.ghost.EatableGhost;
 import nl.tudelft.jpacman.npc.ghost.Ghost;
 
 import java.util.List;
@@ -70,8 +71,8 @@ public class LevelSuperPellet extends Level {
                 Change ghost to fleeing ghost.
              */
             for (Map.Entry<NPC, ScheduledExecutorService> e : this.getNpcs().entrySet()) {
-                ((Ghost) e.getKey()).setModeFlee();
-                setSpeedNPCs(e.getKey(), ((Ghost) e.getKey()).getSpeed());
+                ((EatableGhost) e.getKey()).setModeFlee();
+                setSpeedNPCs(e.getKey(), ((EatableGhost) e.getKey()).getSpeed());
             }
 
         }
@@ -86,8 +87,8 @@ public class LevelSuperPellet extends Level {
     public void stopPacManHunterMode(){
         timerHunterMode.cancel();
         for (Map.Entry<NPC, ScheduledExecutorService> e : this.getNpcs().entrySet()) {
-            ((Ghost) e.getKey()).setModeHunt();
-            setSpeedNPCs(e.getKey(), ((Ghost) e.getKey()).getSpeed());
+            ((EatableGhost) e.getKey()).setModeHunt();
+            setSpeedNPCs(e.getKey(), ((EatableGhost) e.getKey()).getSpeed());
         }
     }
 }

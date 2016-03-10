@@ -14,6 +14,7 @@ import nl.tudelft.jpacman.board.Direction;
 import nl.tudelft.jpacman.board.Square;
 import nl.tudelft.jpacman.board.Unit;
 import nl.tudelft.jpacman.npc.NPC;
+import nl.tudelft.jpacman.npc.ghost.EatableGhost;
 import nl.tudelft.jpacman.npc.ghost.Ghost;
 
 /**
@@ -228,7 +229,7 @@ public class Level {
 	 */
 	private void startNPCs() {
 		for (final NPC npc : npcs.keySet()) {
-			setSpeedNPCs(npc, ((Ghost) npc).getSpeed());
+			setSpeedNPCs(npc, ((EatableGhost) npc).getSpeed());
 		}
 	}
 

@@ -4,6 +4,8 @@ import nl.tudelft.jpacman.game.Game;
 import nl.tudelft.jpacman.level.Level;
 import nl.tudelft.jpacman.level.LevelFactorySuperPellet;
 import nl.tudelft.jpacman.level.MapParserSuperPellet;
+import nl.tudelft.jpacman.npc.ghost.EatableGhostFactory;
+import nl.tudelft.jpacman.npc.ghost.GhostFactory;
 import nl.tudelft.jpacman.ui.PacManUiBuilder;
 
 import java.io.IOException;
@@ -49,5 +51,13 @@ public class LauncherSuperPellet extends Launcher {
      */
     protected LevelFactorySuperPellet getLevelFactory() {
         return new LevelFactorySuperPellet(getSpriteStore(), getGhostFactory());
+    }
+
+    /**
+     * @return A new factory using the sprites from {@link #getSpriteStore()}.
+     */
+    @Override
+    protected GhostFactory getGhostFactory() {
+        return new EatableGhostFactory(getSpriteStore());
     }
 }

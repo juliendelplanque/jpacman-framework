@@ -22,7 +22,13 @@ public class GhostFactory {
 	 */
 	public GhostFactory(PacManSprites spriteStore) {
 		this.sprites = spriteStore;
-		Ghost.setFleeSprite(sprites.getGhostFleeSprite());
+	}
+
+	/**
+	 * @return a Sprite Store containing the classic Pac-Man sprites.
+     */
+	public PacManSprites getSprites(){
+		return sprites;
 	}
 
 	/**

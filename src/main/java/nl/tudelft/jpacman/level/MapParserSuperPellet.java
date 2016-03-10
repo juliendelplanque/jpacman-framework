@@ -5,6 +5,7 @@ import nl.tudelft.jpacman.board.BoardFactory;
 import nl.tudelft.jpacman.board.Square;
 import nl.tudelft.jpacman.board.Unit;
 import nl.tudelft.jpacman.npc.NPC;
+import nl.tudelft.jpacman.npc.ghost.EatableGhost;
 import nl.tudelft.jpacman.npc.ghost.Ghost;
 
 import java.util.List;
@@ -72,7 +73,7 @@ public class MapParserSuperPellet extends MapParser {
                 /* Set initial position of Ghost */
                 for (Unit g: ghostSquare.getOccupants()){
                     if( g instanceof Ghost){
-                        ((Ghost) g).setInitialPosition(ghostSquare);
+                        ((EatableGhost) g).setInitialPosition(ghostSquare);
                     }
                 }
                 break;

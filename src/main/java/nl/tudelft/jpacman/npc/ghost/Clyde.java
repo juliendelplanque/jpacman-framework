@@ -39,7 +39,7 @@ import nl.tudelft.jpacman.sprite.Sprite;
  * @author Jeroen Roosen 
  * 
  */
-public class Clyde extends Ghost {
+public class Clyde extends EatableGhost {
 
 	/**
 	 * The amount of cells Clyde wants to stay away from Pac Man.
