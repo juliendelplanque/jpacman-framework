@@ -14,7 +14,7 @@ public class ProfilPanel extends JPanel {
     protected ArrayList<JLabel> sLab ;
     private JList list;
     private HandleProfil hProfil;
-    private DefaultListModel<String> model;
+    private DefaultListModel<Profil> model;
 
     public ProfilPanel(HandleProfil _hProfil){
         hProfil = _hProfil;
@@ -23,7 +23,7 @@ public class ProfilPanel extends JPanel {
         setBorder(new EmptyBorder(new Insets(40, 60, 20, 60)));
         dismain = new JPanel();
         dismain.setLayout(new GridLayout(1,1));
-        model = new DefaultListModel<String>();
+        model = new DefaultListModel<Profil>();
         list = new JList(model);
         updateList();
         JScrollPane pane = new JScrollPane(list);
@@ -41,17 +41,19 @@ public class ProfilPanel extends JPanel {
     }
     protected void updateList(){
         for(String s : hProfil.getProfils()){
-            if(!model.contains(hProfil.getProfil(s).getName())){
-                model.addElement(hProfil.getProfil(s).getName());
-            }
+            if(!model.contains(hProfil.getProfil(s)))
+                model.addElement(hProfil.getProfil(s));
         }
     }
     protected void removeprofil(String name){
-        if(model.contains(name)){
-            model.removeElement(name);
+        for(int i =0; i<model.size();i++){
+            if (model.get(i).getName().equals(name)) {
+                hProfil.removeProfil(name);
+                model.remove(i);
+            }
         }
     }
-    protected String getSelectedProfil(){
-        return model.get(list.getSelectedIndex());
+    protected Profil getSelectedProfil(){
+        return hProfil.getProfil(model.get(list.getSelectedIndex()).getName()+".xml");
     }
 }
