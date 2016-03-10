@@ -5,6 +5,7 @@ import nl.tudelft.jpacman.ui.PacManUI;
 
 
 /**
+ * build the GUI of hall of fame and build the HandleScore
  * Created by Jannou on 6/03/16.
  */
 public class ProfilUIBuilder {
@@ -14,15 +15,13 @@ public class ProfilUIBuilder {
     private PacManUI pacManUI;
 
     public ProfilUIBuilder(final Game game , PacManUI pacManUI){
-        assert game != null;
+        this.hProfil =HandleProfil.getInstance();
         this.game = game;
         this.pacManUI=pacManUI;
-        hProfil =HandleProfil.getInstance(game);
-
     }
     public void createScoreUI(){
         if(instance == null){
-            instance = new ProfilUI(hProfil, pacManUI);
+            instance = new ProfilUI(hProfil, game, pacManUI);
         }
     }
     public ProfilUI getInstance(){ //maybe use to regroupe all Jframe into once
