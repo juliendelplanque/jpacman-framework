@@ -38,7 +38,7 @@ public class Launcher {
 
 	/**
 	 * Creates a new game using the level from {@link #makeLevel()}.
-	 * 
+	 *
 	 * @return a new Game.
 	 */
 	public Game makeGame() {

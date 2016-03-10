@@ -42,7 +42,6 @@ public class LevelSuperPellet extends Level {
         timerHunterMode = null;
     }
 
-
     /**
      * Start Pacman Hunter Ghost mode.
      *          Ghost speed is divided by two
@@ -77,7 +76,6 @@ public class LevelSuperPellet extends Level {
 
         }
     }
-
 
     /**
      * Stop PacMan hunter mode
