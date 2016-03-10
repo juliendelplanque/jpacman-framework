@@ -20,6 +20,11 @@ public abstract class EatableGhost extends Ghost {
 	public static final int SCORE = 200;
 
 	/**
+	 * Time in milli second before the respawn of a ghost.
+	 */
+	public static final long RESPAWN_TIME = 5000;
+
+	/**
 	 * The sprite map of flee ghost, one sprite for each direction.
 	 */
 	private static  Map<Direction, Sprite> spritesFlee;
@@ -33,17 +38,6 @@ public abstract class EatableGhost extends Ghost {
 	 * The initial position of the ghost, util for is respawn.
 	 */
 	private Square initialPosition;
-
-	/**
-	 * The timer use for automatically re-aad ghost in the map.
-	 */
-	private Timer respawn;
-
-	/**
-	 * When game is resume,
-	 * Time in milli second remaining before the respawn of ghost.
-	 */
-	private int respawnResume;
 
 	/**
 	 * Creates a new ghost.
@@ -108,30 +102,13 @@ public abstract class EatableGhost extends Ghost {
 		this.initialPosition = position;
 	}
 
-
 	/**
-	 * Re aad ghost after 5seconds in is initial position.
+	 * Re aad ghost in is initial position.
 	 */
-	public void respawnGhost(){
-		respawnGhost(5000);
+	public void respawn(){
+		occupy(initialPosition);
+		setModeHunt();
 	}
-
-	/**
-	 * Re add ghost in is initial position.
-	 * @param millisecond time before is re add.
-	 */
-	private void respawnGhost(int millisecond){
-		respawn = new Timer();
-		respawn.schedule(new TimerTask() {
-			@Override
-			public void run() {
-				occupy(initialPosition);
-				setModeHunt();
-
-			}
-		}, millisecond);
-	}
-
 
 	/**
 	 *

@@ -83,7 +83,7 @@ public class PlayerCollisionsSuperPellet extends PlayerCollisions{
             ghost.leaveSquare();
             player.addHeatedGhost();
             player.addPoints(player.getGhostHeatedScore());
-            ghost.respawnGhost();
+            level.addRespawnGhost(ghost);
             //todo re-aad on the map after 5seconde
         }
     }

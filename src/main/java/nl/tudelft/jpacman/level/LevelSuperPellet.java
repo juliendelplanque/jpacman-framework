@@ -4,12 +4,14 @@ import nl.tudelft.jpacman.board.Board;
 import nl.tudelft.jpacman.board.Square;
 import nl.tudelft.jpacman.npc.NPC;
 import nl.tudelft.jpacman.npc.ghost.EatableGhost;
+import nl.tudelft.jpacman.npc.ghost.Ghost;
 import nl.tudelft.jpacman.util.TimerBreakable;
 import nl.tudelft.jpacman.util.TimerTaskCloneable;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TimerTask;
+import java.util.Set;
 import java.util.concurrent.ScheduledExecutorService;
 
 /**
@@ -17,18 +19,21 @@ import java.util.concurrent.ScheduledExecutorService;
  */
 public class LevelSuperPellet extends Level {
 
-    private TimerBreakable timerHunterMode;
-
-    /**
-     * The NPCs of this level and, if they are running, their schedules.
-     */
-    // private final Map<NPC, TimerBreakable> ghostRespawn;
-
     /**
      * The lock that ensures starting and stopping flee mode can't interfere with each
      * other.
      */
     private final Object startStopLock = new Object();
+
+    /**
+     * Using for exiting PacMan Hunter mode.
+     */
+    private TimerBreakable hunterMode;
+
+    /**
+     * The ghost of this level and, if they are running, their timer with here respawn.
+     */
+    private Map<EatableGhost, TimerBreakable> ghostRespawn;
 
     /**
      * Creates a new level for the board.
@@ -45,7 +50,8 @@ public class LevelSuperPellet extends Level {
     public LevelSuperPellet(Board b, List<NPC> ghosts, List<Square> startPositions,
                  CollisionMap collisionMap) {
         super(b, ghosts, startPositions, collisionMap);
-        timerHunterMode = null;
+        hunterMode = null;
+        ghostRespawn = new HashMap<>();
     }
 
     /**
@@ -61,16 +67,16 @@ public class LevelSuperPellet extends Level {
              * Entering in PacManHunterMode for 7 or 5 second.
              * Time depends of player.getTimeHunterMode()
              */
-            if(timerHunterMode != null) {
-                timerHunterMode.cancel();
+            if(hunterMode != null) {
+                hunterMode.cancel();
             }
-            timerHunterMode = new TimerBreakable(new TimerTaskCloneable() {
+            hunterMode = new TimerBreakable(new TimerTaskCloneable() {
                 @Override
                 public void run() {
                     stopPacManHunterMode();
                 }
             });
-            timerHunterMode.schedule(player.getTimeHunterMode());
+            hunterMode.schedule(player.getTimeHunterMode());
 
             /*
                 Change ghost to fleeing ghost.
@@ -90,7 +96,7 @@ public class LevelSuperPellet extends Level {
      *      Ghost have the origin sprite
      */
     public void stopPacManHunterMode(){
-        timerHunterMode.cancel();
+        hunterMode.cancel();
         for (Map.Entry<NPC, ScheduledExecutorService> e : this.getNpcs().entrySet()) {
             ((EatableGhost) e.getKey()).setModeHunt();
             setSpeedNPCs(e.getKey(), ((EatableGhost) e.getKey()).getSpeed());
@@ -103,8 +109,11 @@ public class LevelSuperPellet extends Level {
      */
     @Override
     public void start() {
-        if(!isInProgress() && timerHunterMode != null){
-            timerHunterMode.resume();
+        if(!isInProgress() && hunterMode != null){
+            hunterMode.resume();
+            for (Map.Entry<EatableGhost, TimerBreakable> k : ghostRespawn.entrySet()){
+                k.getValue().resume();
+            }
         }
         super.start();
     }
@@ -115,9 +124,30 @@ public class LevelSuperPellet extends Level {
      */
     @Override
     public void stop() {
-        if(isInProgress() && timerHunterMode != null){
-            timerHunterMode.pause();
+        if(isInProgress() && hunterMode != null){
+            hunterMode.pause();
+            for (Map.Entry<EatableGhost, TimerBreakable> k : ghostRespawn.entrySet()){
+                k.getValue().pause();
+            }
         }
         super.stop();
+    }
+
+    /**
+     * Add a timer for respaning of death ghost.
+     * @param g a death ghost.
+     */
+    public void addRespawnGhost(EatableGhost g){
+        TimerBreakable t = new TimerBreakable(new TimerTaskCloneable() {
+            @Override
+            public void run() {
+                g.respawn();
+            }
+        });
+        t.schedule(EatableGhost.RESPAWN_TIME);
+        if(ghostRespawn.containsKey(g))
+            ghostRespawn.replace(g, t);
+        else
+            ghostRespawn.put(g, t);
     }
 }
