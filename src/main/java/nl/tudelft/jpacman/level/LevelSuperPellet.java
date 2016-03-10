@@ -44,16 +44,16 @@ public class LevelSuperPellet extends Level {
     }
 
     /**
-     * Start Pacman Hunter Ghost mode.
+     * Start PacMan Hunter Ghost mode.
      *          Ghost speed is divided by two
      *          Ghost can be heated by PacMan
      *          Ghost was blue
      *          Ghost move randomly
      */
-    public void startPacmanHunterMode(Player player) {
+    public void startPacManHunterMode(Player player) {
         synchronized (startStopLock) {
             /**
-             * Entering in PacmanHunterMode for 7 or 5 second.
+             * Entering in PacManHunterMode for 7 or 5 second.
              * Time depends of player.getTimeHunterMode()
              */
             if(timerHunterMode != null) {
