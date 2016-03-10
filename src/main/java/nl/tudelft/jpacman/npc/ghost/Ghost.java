@@ -15,17 +15,15 @@ import nl.tudelft.jpacman.sprite.Sprite;
 public abstract class Ghost extends NPC {
 
 	/**
-	 * The sprite map of flee gost, one sprite for each direction.
+	 * The sprite map of flee ghost, one sprite for each direction.
 	 */
 	private static  Map<Direction, Sprite> spritesFlee;
 
 
 	/**
-	 * Define if the ghost hunt pacman or flee pacman.
+	 * Define if the ghost hunt PacMan or flee PacMan.
 	 */
-	private static boolean MODE_FLEE = true;
-	private static boolean MODE_HUNT = false;
-	private boolean mode;
+	private GhostMode mode;
 
 	/**
 	 * The default score value of a ghost.
@@ -50,14 +48,14 @@ public abstract class Ghost extends NPC {
 	 */
 	protected Ghost(Map<Direction, Sprite> spriteMap) {
 		this.sprites = spriteMap;
-		mode = false;
+		mode = GhostMode.HUNT;
 	}
 
 	@Override
 	public Sprite getSprite() {
-		if(mode == MODE_HUNT)
+		if(mode == GhostMode.HUNT)
             return sprites.get(getDirection());
-        // else mode = MODE_FLEE
+        /* else mode == GhostMode.FLEE */
         return spritesFlee.get(getDirection());
 	}
 
@@ -90,28 +88,28 @@ public abstract class Ghost extends NPC {
      * Set the ghost for hunt PacMan.
      */
     public void setModeHunt(){
-        this.mode = MODE_HUNT;
+        this.mode = GhostMode.HUNT;
     }
 
     /**
      * Set the ghost for flee PacMan.
      */
     public void setModeFlee(){
-        this.mode = MODE_FLEE;
+        this.mode = GhostMode.FLEE;
     }
 
     /**
      * @return if the Ghost flee Pacman.
      */
     public boolean isModeFlee(){
-        return this.mode == MODE_FLEE;
+        return this.mode == GhostMode.FLEE;
     }
 
     /**
      * @return if the Ghost hunt Pacman.
      */
     public boolean isModeHunt(){
-        return this.mode == MODE_HUNT;
+        return this.mode == GhostMode.HUNT;
     }
 
     /**
