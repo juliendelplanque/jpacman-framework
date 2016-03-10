@@ -1,18 +1,11 @@
 package nl.tudelft.jpacman.jannou.score;
 
 import nl.tudelft.jpacman.game.Game;
-import nl.tudelft.jpacman.level.Player;
 import nl.tudelft.jpacman.jannou.FileHelper;
+import nl.tudelft.jpacman.jannou.profil.HandleProfil;
+import nl.tudelft.jpacman.level.Player;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.io.FileReader;
-import java.io.BufferedReader;
 /**
  * manipuler le fichier scoreH
  * recuperer score jouer
@@ -23,7 +16,7 @@ public class HandleScore {
     private static final String path = "./src/main/resources/scores.txt";
 
     private static HandleScore instance = null;
-
+    private static HandleProfil instance2 = null;
     private Game game;
 
     /**
@@ -33,7 +26,7 @@ public class HandleScore {
      */
     public static HandleScore getInstance(final Game game){
         ScoreFactory(game);
-        instance.historyExist();
+        instance.init();
         return instance;
     }
 
@@ -54,18 +47,23 @@ public class HandleScore {
         assert game != null ;
         if(instance == null)
             instance = new HandleScore(game) ;
+        if(instance2 == null)
+            instance2 = HandleProfil.getInstance() ;
     }
     private static boolean nullInstance(){
         return instance == null;
     }
-    /**
-     * new HandleScore
-     * @param game  /Game
-     */
 
+    /**
+     * check if there is new high score
+     */
     protected void addHighScore(){
-        for(Player e : game.getPlayers()){
-            addHighScores(e.getScore(), "Jannou"); // changer jannou par e.getProfil().getName()
+        for(Player e : game.getPlayers()) {
+            if (e.getProfil().getBestScore()< e.getScore()){
+                e.getProfil().setBestScore(e.getScore());
+                instance2.updateProfil(e.getProfil());
+            }
+            addHighScores(e.getScore(), e.getProfil().getName());
         }
     }
 
@@ -95,8 +93,7 @@ public class HandleScore {
     }
 
     protected static ArrayList<ScorePlayer> getScores() {
-        ArrayList<ScorePlayer> retour = FileHelper.loadScores(path);
-        return retour;
+        return FileHelper.loadScores(path);
     }
     /**
      * get lowest high score
@@ -108,10 +105,10 @@ public class HandleScore {
             return -1;
         }
         return retour.get(retour.size()-1).getScore();
-
     }
+
     protected boolean historyExist(){
-        return FileHelper.exist(path,true );
+        return FileHelper.exist(path);
     }
     protected void reset(){
         FileHelper.reset(path, true);
@@ -119,6 +116,12 @@ public class HandleScore {
     }
     private static void writeDevsScore(){
         addHighScores(1780,"Dev1");
+    }
+    private void init(){
+        if(!instance.historyExist()){
+            FileHelper.init(path, true);
+            writeDevsScore();
+        }
     }
 
 }
