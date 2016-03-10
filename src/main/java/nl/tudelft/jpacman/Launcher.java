@@ -1,24 +1,28 @@
 package nl.tudelft.jpacman;
 
+import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+
 import nl.tudelft.jpacman.board.BoardFactory;
 import nl.tudelft.jpacman.board.Direction;
 import nl.tudelft.jpacman.game.Game;
 import nl.tudelft.jpacman.game.GameFactory;
-import nl.tudelft.jpacman.jannou.profil.ProfilUIBuilder;
-import nl.tudelft.jpacman.level.*;
+import nl.tudelft.jpacman.level.Level;
+import nl.tudelft.jpacman.level.LevelFactory;
+import nl.tudelft.jpacman.level.MapParser;
+import nl.tudelft.jpacman.level.Player;
+import nl.tudelft.jpacman.level.PlayerFactory;
 import nl.tudelft.jpacman.npc.ghost.GhostFactory;
 import nl.tudelft.jpacman.sprite.PacManSprites;
 import nl.tudelft.jpacman.ui.Action;
 import nl.tudelft.jpacman.ui.PacManUI;
 import nl.tudelft.jpacman.ui.PacManUiBuilder;
 
-import java.awt.event.KeyEvent;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.List;
 /**
  * Creates and launches the JPacMan UI.
- * 
+ *
  * @author Jeroen Roosen 
  */
 public class Launcher {
@@ -38,7 +42,7 @@ public class Launcher {
 
 	/**
 	 * Creates a new game using the level from {@link #makeLevel()}.
-	 * 
+	 *
 	 * @return a new Game.
 	 */
 	public Game makeGame() {
@@ -50,7 +54,7 @@ public class Launcher {
 	/**
 	 * Creates a new level. By default this method will use the map parser to
 	 * parse the default board stored in the <code>board.txt</code> resource.
-	 * 
+	 *
 	 * @return A new level.
 	 */
 	public Level makeLevel() {
@@ -117,14 +121,14 @@ public class Launcher {
 
 	/**
 	 * Adds key events UP, DOWN, LEFT and RIGHT to a game.
-	 * 
+	 *
 	 * @param builder
 	 *            The {@link PacManUiBuilder} that will provide the UI.
 	 * @param game
 	 *            The game that will process the events.
 	 */
 	protected void addSinglePlayerKeys(final PacManUiBuilder builder,
-			final Game game) {
+									   final Game game) {
 		final Player p1 = getSinglePlayer(game);
 
 		builder.addKey(KeyEvent.VK_UP, new Action() {
@@ -172,8 +176,7 @@ public class Launcher {
 		PacManUiBuilder builder = new PacManUiBuilder().withDefaultButtons();
 		addSinglePlayerKeys(builder, game);
 		pacManUI = builder.build(game);
-		new ProfilUIBuilder(game, pacManUI).createScoreUI();
-		//pacManUI.start();
+		pacManUI.start();
 	}
 
 	/**
@@ -185,7 +188,7 @@ public class Launcher {
 
 	/**
 	 * Main execution method for the Launcher.
-	 * 
+	 *
 	 * @param args
 	 *            The command line arguments - which are ignored.
 	 * @throws IOException
