@@ -1,46 +1,37 @@
 package nl.tudelft.jpacman.jannou.profil;
 
-import nl.tudelft.jpacman.game.Game;
 import nl.tudelft.jpacman.jannou.FileHelper;
 
 import java.util.ArrayList;
 
 /**
+ * Handle profils load create  write delete etc
  * Created by Jannou on 6/03/16.
  */
 public class HandleProfil {
     private static final String path = "./src/main/resources/Profils/";
     private static HandleProfil instance = null;
-    private Game game;
 
     /**
      * getInstance
      * @return HandleScore instance
      */
-    public static HandleProfil getInstance(Game game){
-        HandleProfilFactory(game);
-        instance.repositExist();
+    public static HandleProfil getInstance(){
+        HandleProfilFactory();
+        instance.init();
         return instance;
     }
 
-    private HandleProfil(Game _game){
-        game = _game;
+    private HandleProfil(){
     }
 
-    /*public boolean equals(HandleScore handleScore){
-        return instance == handleScore;
-    }*/
-
-    /**
-     */
-    private static void HandleProfilFactory(Game game){
+    private static void HandleProfilFactory(){
         if(instance == null)
-            instance = new HandleProfil(game) ;
+            instance = new HandleProfil() ;
     }
 
     protected ArrayList<String> getProfils(){
-        ArrayList<String> retour = FileHelper.loadProfils(path);
-        return retour;
+        return FileHelper.loadProfils(path);
     }
     public Profil getProfil(String fileName){
         Profil retour = null;
@@ -63,8 +54,17 @@ public class HandleProfil {
     }
 
     protected boolean repositExist(){
-        return FileHelper.exist(path,false);
+        return FileHelper.exist(path);
+    }
+    private void init(){
+        if(!instance.repositExist())
+            FileHelper.init(path, false);
     }
 
 
+    public void updateProfil(Profil profil) {
+        removeProfil(profil.getName());
+        FileHelper.writeProfil(profil,path+profil.getName()+".xml");
+
+    }
 }
