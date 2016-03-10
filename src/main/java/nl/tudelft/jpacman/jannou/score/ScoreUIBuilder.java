@@ -11,11 +11,10 @@ public class ScoreUIBuilder {
     private ScoreUI instance = null;
     private HandleScore hScore;
 
-    public ScoreUIBuilder(final Game game ){
-        assert game != null;
-        this.game = game;
+    public ScoreUIBuilder(final Game _game ){
+        this.game = _game;
         hScore=HandleScore.getInstance(game);
-        hScore.addHighScore();
+        updateScore();
     }
     public void createScoreUI(){
         if(instance == null){
@@ -24,5 +23,9 @@ public class ScoreUIBuilder {
     }
     public ScoreUI getInstance(){ //maybe use to regroupe all Jframe into once
         return instance;
+    }
+    public void updateScore(){
+        //profilup;
+        hScore.addHighScore();
     }
 }
