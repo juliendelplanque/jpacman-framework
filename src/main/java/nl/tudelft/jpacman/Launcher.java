@@ -22,7 +22,7 @@ import nl.tudelft.jpacman.ui.PacManUiBuilder;
 
 /**
  * Creates and launches the JPacMan UI.
- *
+ * 
  * @author Jeroen Roosen 
  */
 public class Launcher {
@@ -42,7 +42,7 @@ public class Launcher {
 
 	/**
 	 * Creates a new game using the level from {@link #makeLevel()}.
-	 *
+	 * 
 	 * @return a new Game.
 	 */
 	public Game makeGame() {
@@ -54,7 +54,7 @@ public class Launcher {
 	/**
 	 * Creates a new level. By default this method will use the map parser to
 	 * parse the default board stored in the <code>board.txt</code> resource.
-	 *
+	 * 
 	 * @return A new level.
 	 */
 	public Level makeLevel() {
@@ -121,14 +121,14 @@ public class Launcher {
 
 	/**
 	 * Adds key events UP, DOWN, LEFT and RIGHT to a game.
-	 *
+	 * 
 	 * @param builder
 	 *            The {@link PacManUiBuilder} that will provide the UI.
 	 * @param game
 	 *            The game that will process the events.
 	 */
 	protected void addSinglePlayerKeys(final PacManUiBuilder builder,
-									   final Game game) {
+			final Game game) {
 		final Player p1 = getSinglePlayer(game);
 
 		builder.addKey(KeyEvent.VK_UP, new Action() {
@@ -188,7 +188,7 @@ public class Launcher {
 
 	/**
 	 * Main execution method for the Launcher.
-	 *
+	 * 
 	 * @param args
 	 *            The command line arguments - which are ignored.
 	 * @throws IOException
