@@ -4,18 +4,22 @@ import nl.tudelft.jpacman.board.Board;
 import nl.tudelft.jpacman.board.Square;
 import nl.tudelft.jpacman.npc.NPC;
 import nl.tudelft.jpacman.npc.ghost.EatableGhost;
-import nl.tudelft.jpacman.npc.ghost.Ghost;
 import nl.tudelft.jpacman.util.TimerBreakable;
 import nl.tudelft.jpacman.util.TimerTaskCloneable;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ScheduledExecutorService;
 
 /**
- * Created by Maximilien Charlier on 4/03/16.
+ * A level of Pac-Man. A level consists of the board with the players and the
+ * AIs on it.
+ *
+ * Ghost can be eated for this reason a timer by ghost is necessary for his re apparition
+ * same thing for the pac man hunter mode.
+ *
+ * Created by Maximilien Charlier.
  */
 public class LevelSuperPellet extends Level {
 

@@ -15,7 +15,6 @@ import nl.tudelft.jpacman.board.Square;
 import nl.tudelft.jpacman.board.Unit;
 import nl.tudelft.jpacman.npc.NPC;
 import nl.tudelft.jpacman.npc.ghost.EatableGhost;
-import nl.tudelft.jpacman.npc.ghost.Ghost;
 
 /**
  * A level of Pac-Man. A level consists of the board with the players and the
