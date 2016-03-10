@@ -39,7 +39,7 @@ public class Level {
 	 * The lock that ensures starting and stopping can't interfere with each
 	 * other.
 	 */
-	private final Object startStopLock = new Object();
+	protected final Object startStopLock = new Object();
 
 	/**
 	 * The NPCs of this level and, if they are running, their schedules.

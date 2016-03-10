@@ -127,6 +127,7 @@ public abstract class EatableGhost extends Ghost {
 			public void run() {
 				occupy(initialPosition);
 				setModeHunt();
+
 			}
 		}, millisecond);
 	}

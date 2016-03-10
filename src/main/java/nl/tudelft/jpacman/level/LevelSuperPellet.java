@@ -4,11 +4,11 @@ import nl.tudelft.jpacman.board.Board;
 import nl.tudelft.jpacman.board.Square;
 import nl.tudelft.jpacman.npc.NPC;
 import nl.tudelft.jpacman.npc.ghost.EatableGhost;
-import nl.tudelft.jpacman.npc.ghost.Ghost;
+import nl.tudelft.jpacman.util.TimerBreakable;
+import nl.tudelft.jpacman.util.TimerTaskCloneable;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -17,7 +17,12 @@ import java.util.concurrent.ScheduledExecutorService;
  */
 public class LevelSuperPellet extends Level {
 
-    private Timer timerHunterMode;
+    private TimerBreakable timerHunterMode;
+
+    /**
+     * The NPCs of this level and, if they are running, their schedules.
+     */
+    // private final Map<NPC, TimerBreakable> ghostRespawn;
 
     /**
      * The lock that ensures starting and stopping flee mode can't interfere with each
@@ -59,13 +64,13 @@ public class LevelSuperPellet extends Level {
             if(timerHunterMode != null) {
                 timerHunterMode.cancel();
             }
-            timerHunterMode = new Timer();
-            timerHunterMode.schedule(new TimerTask() {
+            timerHunterMode = new TimerBreakable(new TimerTaskCloneable() {
                 @Override
                 public void run() {
                     stopPacManHunterMode();
                 }
-            }, player.getTimeHunterMode());
+            });
+            timerHunterMode.schedule(player.getTimeHunterMode());
 
             /*
                 Change ghost to fleeing ghost.
@@ -90,5 +95,29 @@ public class LevelSuperPellet extends Level {
             ((EatableGhost) e.getKey()).setModeHunt();
             setSpeedNPCs(e.getKey(), ((EatableGhost) e.getKey()).getSpeed());
         }
+    }
+
+    /**
+     * Starts or resumes this level, allowing movement and (re)starting the
+     * NPCs.
+     */
+    @Override
+    public void start() {
+        if(!isInProgress() && timerHunterMode != null){
+            timerHunterMode.resume();
+        }
+        super.start();
+    }
+
+    /**
+     * Stops or pauses this level, no longer allowing any movement on the board
+     * and stopping all NPCs.
+     */
+    @Override
+    public void stop() {
+        if(isInProgress() && timerHunterMode != null){
+            timerHunterMode.pause();
+        }
+        super.stop();
     }
 }
