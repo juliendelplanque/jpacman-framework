@@ -2,8 +2,15 @@ package nl.tudelft.jpacman.jannou;
 
 import nl.tudelft.jpacman.jannou.profil.Profil;
 import nl.tudelft.jpacman.jannou.score.ScorePlayer;
-import nl.tudelft.jpacman.jannou.score.feat.BeatDev1;
+import nl.tudelft.jpacman.jannou.score.feat.Feat;
+import nl.tudelft.jpacman.jannou.score.feat.HandleFeat;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.*;
 import java.util.ArrayList;
 
@@ -147,72 +154,30 @@ public class FileHelper {
      */
     public static Profil loadProfil(String path) {
         Profil retour = new Profil("");
-        try{
+        try {
             File f = new File (path);
-            FileReader fr = new FileReader (f);
-            BufferedReader br = new BufferedReader (fr);
-            try
-            {
-                String line = br.readLine();
-                boolean player = false;
-                boolean name = false;
-                boolean score = false;
-                String namE = "";
-                String[] featS= new String[0] ;
-                String temp ;
-                int scorE =0;
-                while (line != null)
-                {
-                    if(line.contains("</player>")) {
-                        player = true;
-                    }
-                    if(line.contains("<name>")){
-                        String[] data = line.split(" : ");
-                        if(data[1].contains("</name>")){
-                            temp =data[1].replace(" </name>","");
-                            if(temp.length()>0){
-                                namE = temp.toString();
-                                name=true;
-                            }
-                        }
-                    }
-                    if(line.contains("<bestScore>")){
-                        String[] data = line.split(" : ");
-                        if(data[1].contains("</bestScore>")){
-                            temp =data[1].replace(" </bestScore>","");
-                            if(temp.length()>0){
-                                scorE = Integer.parseInt(temp);
-                                score=true;
-                            }
-                        }
-                    }
-                    if(line.contains("<feats>")){
-                        String[] data = line.split(" : ");
-                        if(data[1].contains("</feats>")){
-                            temp =data[1].replace(" </feats>","");
-                            if(temp.length()>0){
-                                featS = temp.split(" & ");
-                            }
-                        }
-                    }
-                    line = br.readLine();
-                }
-                br.close();
-                fr.close();
-                if(player && name && score){
-                    retour = new Profil(namE);
-                    retour.setBestScore(scorE);
-                    for(int i = 0; i<featS.length;i++){
-                        retour.addFeat(new BeatDev1(featS[i]));
-                    }
+            DocumentBuilderFactory dbFactory= DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(f);
+            doc.getDocumentElement().normalize();
+            retour = new Profil(doc.getElementsByTagName("name").item(0).getTextContent());
+            retour.setBestScore(Integer.parseInt(doc.getElementsByTagName("bestScore").item(0).getTextContent()));
+            NodeList nList = doc.getElementsByTagName("feat");
+            for (int temp = 0; temp < nList.getLength(); temp++) {
+                Node nNode = nList.item(temp);
+                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+                    Element eElement = (Element) nNode;
+                    Feat tempp = HandleFeat.createFeat(eElement.getElementsByTagName("name").item(0).getTextContent());
+                    tempp.setDesc(eElement.getElementsByTagName("description").item(0).getTextContent());
+                    tempp.setValue(Integer.parseInt(eElement.getElementsByTagName("value").item(0).getTextContent()));
+                    tempp.setRealised(Boolean.valueOf(eElement.getElementsByTagName("realised").item(0).getTextContent()));
+                    tempp.setState(Integer.parseInt(eElement.getElementsByTagName("state").item(0).getTextContent()));
+                    retour.addFeat(tempp);
                 }
             }
-            catch (IOException exception)
-            {
-                System.out.println ("Erreur lors de la lecture : " + exception.getMessage());
-            }
-        }catch (FileNotFoundException exception){
-            System.out.println ("Le fichier n'a pas été trouvé");
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return retour;
     }
@@ -233,12 +198,13 @@ public class FileHelper {
         }
         return false;
     }
-    public static boolean deleteProfil( String path){
+    public static boolean deleteProfil(String path){
         File f = new File(path);
         if(f.exists() && f.isFile()){
              return f.delete();
         }
         return false;
     }
+
 
 }
