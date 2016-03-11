@@ -5,16 +5,14 @@ package nl.tudelft.jpacman.jannou.score.feat;
  * Created by Jannou on 5/03/16.
  */
 public abstract  class Feat {
-        private int value;
         private String name;
         private String description;
+        private int value;
         private boolean realised;
+        private int state = 0;
 
         protected Feat(){
                 realised = false;
-        }
-        public int getValue(){
-                return value;
         }
         public String getName(){
                 return name;
@@ -22,14 +20,34 @@ public abstract  class Feat {
         public String getDesc(){
                 return description;
         }
+        public int getValue(){
+                return value;
+        }
         public boolean isRealised(){
                 return realised;
         }
-        protected void setName(String _name){
+        public int getState(){
+                return state;
+        }
+        public void setName(String _name){
                 name = _name;
         }
-
+        public void setDesc(String _desc){
+                description = _desc;
+        }
+        public void setValue(int _value){
+                value = _value;
+        }
+        public void setRealised(boolean _realised){
+                realised = _realised;
+        }
+        public void setState(int i){
+                state = i;
+        }
         public String toString() {
                 return  getName() ;
         }
+        public abstract String toMaps();
+        public abstract boolean condition(int i,int j);
+        public abstract void updatestate(int i);
 }
