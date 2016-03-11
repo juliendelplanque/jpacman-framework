@@ -5,7 +5,23 @@ package nl.tudelft.jpacman.jannou.score.feat;
  */
 public class BeatDev1 extends  Feat {
 
-    public BeatDev1(String _name){
-        setName( _name);
+    public BeatDev1(){
+        setName("BeatDev1");
+        setValue(100);
+        setDesc("beat Dev1's score");
+        setRealised(true);
+    }
+    public String toMaps(){
+        return  "<feat>\n\t<name>"+getName() + "</name>\n\t<description>" + getDesc() +  "</description>\n\t<value>" + getValue() +
+                "</value>\n\t<realised>" +isRealised() +"<realised>\n</feat>" ;
+    }
+    public boolean condition(int i,int j){
+        if(i>=1780)
+            return true;
+        return false;
+    }
+
+    @Override
+    public void updatestate(int i) {
     }
 }
