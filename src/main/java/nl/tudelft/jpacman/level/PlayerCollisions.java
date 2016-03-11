@@ -1,6 +1,7 @@
 package nl.tudelft.jpacman.level;
 
 import nl.tudelft.jpacman.board.Unit;
+import nl.tudelft.jpacman.jannou.score.feat.HandleFeat;
 import nl.tudelft.jpacman.npc.ghost.Ghost;
 
 /**
@@ -62,7 +63,8 @@ public class PlayerCollisions implements CollisionMap {
 	 */
 	public void playerVersusPellet(Player player, Pellet pellet) {
 		pellet.leaveSquare();
-		player.addPoints(pellet.getValue());		
+		player.addPoints(pellet.getValue());
+		HandleFeat.trigger(player.getScore(),0,player);
 	}
 
 }
