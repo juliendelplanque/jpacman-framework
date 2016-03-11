@@ -146,6 +146,9 @@ public class LevelSuperPellet extends Level {
             @Override
             public void run() {
                 g.respawn();
+                /* stop and start is using for avoid sheduler ghost not start */
+                stop();
+                start();
             }
         });
         t.schedule(EatableGhost.RESPAWN_TIME);
