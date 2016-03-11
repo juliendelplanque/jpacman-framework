@@ -49,14 +49,18 @@ public class ProfilUI extends JFrame{
             okButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    game.getPlayers().get(0).setProfil(profilP.getSelectedProfil());
-                    try {
-                        LauncherJ.main2();
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
+                    if(profilP.getSelectedProfil() != null){
+                        game.getPlayers().get(0).setProfil(profilP.getSelectedProfil());
+                        try {
+                            LauncherJ.main2();
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
+                        profilFrame.dispose();
                     }
-                    //pacManUI.start();
-                    profilFrame.dispose();
+                    else{
+                        JOptionPane.showMessageDialog(frame,"Please select a profile ","WARNING", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             });
             JButton deleteButton = new JButton("Delete");
