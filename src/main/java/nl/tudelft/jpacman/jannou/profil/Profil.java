@@ -37,19 +37,19 @@ public class Profil {
     }
 
     public String toMaps() {
-        String featsName = "";
+        String feat = "";
         for(Feat f :getFeats()){
-            if(f != getFeats().get(getFeats().size()-1))
-                featsName += (f+ " & ");
+            if(f != getFeats().get(getFeats().size()-1)){
+                feat += f.toMaps()+" \n";
+            }
             else{
-                featsName += f;
+                feat += f.toMaps();
             }
         }
-        return  "<player>\n\t<name> : "+getName() + " </name>\n\t<bestScore> : " + getBestScore() + " </bestScore>\n\t<feats> : " + featsName +" </feats>\n</player>" ;
+        return  "<player>\n\t<name>"+getName() + "</name>\n\t<bestScore>" + getBestScore() + "</bestScore>\n\t"+feat+"\n</player>";
     }
 
     public String toString() {
-        return  "Name : "+getName() + " bestScore : " + getBestScore() + " number or feats  : " + getFeats().size() ;
+        return  getName() + "  (Best score : " + getBestScore() + ", Feats  : " + getFeats().size()+")" ;
     }
-
 }
