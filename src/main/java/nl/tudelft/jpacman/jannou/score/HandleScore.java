@@ -74,7 +74,7 @@ public class HandleScore {
         if(size == 0){
             retour.add(0 ,new ScorePlayer(score,name));
         }
-        else if(size<9){
+        else if(size<10){
             int i = 0;
             while((i<=size-1) && (retour.get(i).getScore() >= score)){
                 i+=1;
