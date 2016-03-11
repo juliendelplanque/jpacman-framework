@@ -54,6 +54,8 @@ public class ProfilPanel extends JPanel {
         }
     }
     protected Profil getSelectedProfil(){
-        return hProfil.getProfil(model.get(list.getSelectedIndex()).getName()+".xml");
+        if(list.getSelectedIndex() != -1)
+            return hProfil.getProfil(model.get(list.getSelectedIndex()).getName()+".xml");
+        return null;
     }
 }
