@@ -48,7 +48,7 @@ public class ScoreUI extends JFrame{
             resetButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    int n = 0;
+                    int n ;
                     Object[] options = { "Yes", "Cancel" };
                     n = JOptionPane.showOptionDialog(frame,
                             "Would you reset Hall of Fame ? all scores will be deleted  ",
