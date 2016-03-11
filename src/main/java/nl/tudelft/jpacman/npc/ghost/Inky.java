@@ -100,6 +100,9 @@ public class Inky extends EatableGhost {
 	// CHECKSTYLE:OFF To keep this more readable.
 	@Override
 	public Direction nextMove() {
+		if(isModeFlee()){
+			return nextMoveFleeMode();
+		}
 		Unit blinky = Navigation.findNearest(Blinky.class, getSquare());
 		if (blinky == null) {
 			Direction d = randomMove();

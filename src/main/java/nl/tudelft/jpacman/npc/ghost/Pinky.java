@@ -93,6 +93,9 @@ public class Pinky extends EatableGhost {
 	 */
 	@Override
 	public Direction nextMove() {
+		if(isModeFlee()){
+			return nextMoveFleeMode();
+		}
 		Unit player = Navigation.findNearest(Player.class, getSquare());
 		if (player == null) {
 			Direction d = randomMove();
@@ -114,4 +117,5 @@ public class Pinky extends EatableGhost {
 		Direction d = randomMove();
 		return d;
 	}
+
 }

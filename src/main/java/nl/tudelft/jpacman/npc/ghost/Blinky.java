@@ -83,6 +83,9 @@ public class Blinky extends EatableGhost {
 	 */
 	@Override
 	public Direction nextMove() {
+		if(isModeFlee()){
+			return nextMoveFleeMode();
+		}
 		// TODO Blinky should patrol his corner every once in a while
 		// TODO Implement his actual behaviour instead of simply chasing.
 		Square target = Navigation.findNearest(Player.class, getSquare())

@@ -4,6 +4,7 @@ import java.util.*;
 
 import nl.tudelft.jpacman.board.Direction;
 import nl.tudelft.jpacman.board.Square;
+import nl.tudelft.jpacman.level.Player;
 import nl.tudelft.jpacman.npc.NPC;
 import nl.tudelft.jpacman.sprite.Sprite;
 
@@ -119,4 +120,50 @@ public abstract class EatableGhost extends Ghost {
 			return 0.5f;
 		return 1;
 	}
+
+	/**
+	 * A map of opposite directions.
+	 */
+	protected static final Map<Direction, Direction> OPPOSITES = new EnumMap<Direction, Direction>(
+			Direction.class);
+	{
+		OPPOSITES.put(Direction.NORTH, Direction.SOUTH);
+		OPPOSITES.put(Direction.SOUTH, Direction.NORTH);
+		OPPOSITES.put(Direction.WEST, Direction.EAST);
+		OPPOSITES.put(Direction.EAST, Direction.WEST);
+	}
+
+	/**
+	 * Ghost
+	 *
+	 * @return the direction of the ghost in flee mode.
+     */
+	public Direction nextMoveFleeMode() {
+		Square square = getSquare();
+		List<Direction> directions = new ArrayList<>();
+		for (Direction d : Direction.values()) {
+			if (square.getSquareAt(d).isAccessibleTo(this)) {
+				directions.add(d);
+			}
+		}
+		if (directions.isEmpty()) {
+			return null;
+		}
+		/* Branching */
+		if(directions.size() > 2){
+			directions.remove(OPPOSITES.get(getDirection()));
+			int i = new Random().nextInt(directions.size());
+			return directions.get(i);
+		}
+		else if (directions.size() == 2){
+			directions.remove(OPPOSITES.get(getDirection()));
+			int i = new Random().nextInt(directions.size());
+			return directions.get(i);
+		}
+		else{
+			return directions.get(0);
+		}
+	}
+
+
 }
