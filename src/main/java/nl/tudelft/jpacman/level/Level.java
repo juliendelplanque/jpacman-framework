@@ -203,7 +203,6 @@ public class Level {
 			if (isInProgress()) {
 				return;
 			}
-			startNPCs();
 			inProgress = true;
 			updateObservers();
 		}
@@ -218,7 +217,6 @@ public class Level {
 			if (!isInProgress()) {
 				return;
 			}
-			stopNPCs();
 			inProgress = false;
 		}
 	}
@@ -226,7 +224,7 @@ public class Level {
 	/**
 	 * Starts all NPC movement scheduling.
 	 */
-	private void startNPCs() {
+	protected void startNPCs() {
 		for (final NPC npc : npcs.keySet()) {
 			setSpeedNPCs(npc, ((EatableGhost) npc).getSpeed());
 		}
@@ -239,7 +237,7 @@ public class Level {
 	 * @param speedFactor The speed factor
 	 *                      Typical value: 1 to default speed, 0.5 to half speed (fleeing ghost mode)
 	 */
-	public void setSpeedNPCs(NPC npc, float speedFactor) {
+	protected void setSpeedNPCs(NPC npc, float speedFactor) {
 		ScheduledExecutorService service = npcs.get(npc);
 		if(service != null)
 			service.shutdownNow();
@@ -254,7 +252,7 @@ public class Level {
 	 * Stops all NPC movement scheduling and interrupts any movements being
 	 * executed.
 	 */
-	private void stopNPCs() {
+	protected void stopNPCs() {
 		for (Entry<NPC, ScheduledExecutorService> e : npcs.entrySet()) {
 			e.getValue().shutdownNow();
 		}

@@ -119,6 +119,8 @@ public class LevelSuperPellet extends Level {
                 k.getValue().resume();
             }
         }
+        if(!isInProgress())
+            startNPCs();
         super.start();
     }
 
@@ -134,6 +136,8 @@ public class LevelSuperPellet extends Level {
                 k.getValue().pause();
             }
         }
+        if(isInProgress())
+            stopNPCs();
         super.stop();
     }
 
