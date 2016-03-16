@@ -52,6 +52,8 @@ public class PlayerCollisions implements CollisionMap {
      * @param ghost The ghost involved in the collision.
 	 */
 	public void playerVersusGhost(Player player, Ghost ghost) {
+		// ATTENTION
+		HandleFeat.trigger(0,ghost,player);
 		player.setAlive(false);
 	}
 	
@@ -64,7 +66,8 @@ public class PlayerCollisions implements CollisionMap {
 	public void playerVersusPellet(Player player, Pellet pellet) {
 		pellet.leaveSquare();
 		player.addPoints(pellet.getValue());
-		HandleFeat.trigger(player.getScore(),0,player);
+		// ATTENTION
+		HandleFeat.trigger(player.getScore(),null,player);
 	}
 
 }
