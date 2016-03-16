@@ -48,7 +48,13 @@ public class MapParserSuperPellet extends MapParser {
      */
     @Override
     public Level parseMap(char[][] map) {
-        return super.parseMap(map);
+        Level l = super.parseMap(map);
+        if(!checkSuperPellet()){
+            throw new PacmanConfigurationException("Unable to create correct level.\n" +
+                    Integer.toString(getNbSuperPellet())+ " super pellet\n" +
+                    "Exepted: 0 or 4.");
+        }
+        return l;
     }
 
     @Override
@@ -92,5 +98,19 @@ public class MapParserSuperPellet extends MapParser {
                 throw new PacmanConfigurationException("Invalid character at "
                         + x + "," + y + ": " + c);
         }
+    }
+
+    /**
+     * @return if there are 0 or 4 Super Pellet.
+     */
+    public boolean checkSuperPellet(){
+        return nbSuperPellet == 0 | nbSuperPellet == 4;
+    }
+
+    /**
+     * @return the number of Super Pellet in the board.
+     */
+    public int getNbSuperPellet(){
+        return nbSuperPellet;
     }
 }
