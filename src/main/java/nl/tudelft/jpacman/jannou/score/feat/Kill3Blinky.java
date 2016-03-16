@@ -4,7 +4,7 @@ import nl.tudelft.jpacman.npc.ghost.Blinky;
 import nl.tudelft.jpacman.npc.ghost.Ghost;
 
 /**
- * Created by Jannou on 10/03/16.
+ * Kill3Blinky
  */
 public class Kill3Blinky extends  Feat {
 
@@ -13,10 +13,18 @@ public class Kill3Blinky extends  Feat {
         setValue(100);
         setDesc("Kill 3 Blinky : "+getValue()+" bonus points ");
     }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public String toMaps(){
         return  "<feat>\n\t<name>"+getName() + "</name>\n\t<description>" + getDesc() +  "</description>\n\t<value>" + getValue() +
-                "</value>\n\t<realised>" +isRealised() +"</realised>\n\t\t<state>"+getState()+"</state>\n\t</feat>" ;
+                "</value>\n\t<realised>" +isRealised() +"</realised>\n\t<state>"+getState()+"</state>\n\t</feat>" ;
     }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public boolean condition(int i, Ghost g){
         if(g instanceof Blinky){
             setState(getState()+1);
@@ -25,6 +33,9 @@ public class Kill3Blinky extends  Feat {
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void updatestate() {
         if(getState() == 3)

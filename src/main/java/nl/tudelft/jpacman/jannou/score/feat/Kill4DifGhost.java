@@ -3,7 +3,7 @@ package nl.tudelft.jpacman.jannou.score.feat;
 import nl.tudelft.jpacman.npc.ghost.*;
 
 /**
- * Created by Jannou on 6/03/16.
+ * Kill4DifGhost
  */
 public class Kill4DifGhost extends  Feat {
 
@@ -12,22 +12,31 @@ public class Kill4DifGhost extends  Feat {
         setValue(200);
         setDesc("Kill 4 Different Ghost : "+getValue()+" bonus points ");
     }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public String toMaps(){
         return  "<feat>\n\t\t<name>"+getName() + "</name>\n\t\t<description>" + getDesc() +  "</description>\n\t\t<value>" + getValue() +
-                "</value>\n\t\t<realised>" +isRealised() +"</realised>\n\t\t<state>"+getState()+"</state>\n\t</feat>" ;
+                "</value>\n\t\t<realised>" +isRealised() +"</realised>\n\t<state>"+getState()+"</state>\n\t</feat>" ;
     }
-    public boolean condition(int i, Ghost g){
-        if(g instanceof Blinky)
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean condition(int i, Ghost g) {
+        if (g instanceof Blinky)
             return up(1);
-        if(g instanceof Clyde)
+        if (g instanceof Clyde)
             return up(3);
-        if(g instanceof Inky)
+        if (g instanceof Inky)
             return up(5);
-        if(g instanceof Pinky)
-            return up(11);
-        return false;
+        return g instanceof Pinky && up(11);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void updatestate() {
         if (getState() == 20)
