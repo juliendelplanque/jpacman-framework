@@ -16,7 +16,6 @@ public class PlayerCollisionsSuperPellet extends PlayerCollisions{
 
     @Override
     public void collide(Unit mover, Unit collidedOn) {
-
         if (mover instanceof Player) {
             playerColliding((Player) mover, collidedOn);
         }
@@ -31,12 +30,11 @@ public class PlayerCollisionsSuperPellet extends PlayerCollisions{
             playerVersusGhost(player, (EatableGhost) collidedOn);
         }
 
-        if (collidedOn instanceof Pellet) {
-            playerVersusPellet(player, (Pellet) collidedOn);
-        }
-
         if (collidedOn instanceof SuperPellet) {
             playerVersusSuperPellet(player, (SuperPellet) collidedOn);
+        }
+        else if (collidedOn instanceof Pellet) {
+            playerVersusPellet(player, (Pellet) collidedOn);
         }
     }
 
@@ -66,7 +64,6 @@ public class PlayerCollisionsSuperPellet extends PlayerCollisions{
         player.addPoints(superPellet.getValue());
         player.setHunterMode();
         level.startPacManHunterMode(player);
-        //add timer pour quitter le mode flee
     }
 
 
@@ -81,10 +78,9 @@ public class PlayerCollisionsSuperPellet extends PlayerCollisions{
             player.setAlive(false);
         else if(ghost.isModeFlee()){
             ghost.leaveSquare();
-            player.addHeatedGhost();
             player.addPoints(player.getGhostHeatedScore());
+            player.addHeatedGhost();
             level.addRespawnGhost(ghost);
-            //todo re-aad on the map after 5seconde
         }
     }
 }
