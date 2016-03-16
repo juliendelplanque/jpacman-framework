@@ -28,4 +28,12 @@ public class ScoreUIBuilder {
         //profilup;
         hScore.addHighScore();
     }
+
+    /**
+     * created for test
+     * @return
+     */
+    public HandleScore gethScore(){
+        return hScore;
+    }
 }

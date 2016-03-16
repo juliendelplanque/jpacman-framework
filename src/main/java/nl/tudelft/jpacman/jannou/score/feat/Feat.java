@@ -1,14 +1,16 @@
 package nl.tudelft.jpacman.jannou.score.feat;
 
+import nl.tudelft.jpacman.npc.ghost.Ghost;
+
 /**
  * A feat represents a particular action performed by a player
  * Created by Jannou on 5/03/16.
  */
 public abstract  class Feat {
-        private String name;
-        private String description;
-        private int value;
-        private boolean realised;
+        private String name = "";
+        private String description = "";
+        private int value = 0;
+        private boolean realised = false;
         private int state = 0;
 
         protected Feat(){
@@ -48,6 +50,6 @@ public abstract  class Feat {
                 return  getName() ;
         }
         public abstract String toMaps();
-        public abstract boolean condition(int i,int j);
-        public abstract void updatestate(int i);
+        public abstract boolean condition(int i, Ghost g);
+        public abstract void updatestate();
 }

@@ -1,5 +1,6 @@
 package nl.tudelft.jpacman.jannou.profil;
 import nl.tudelft.jpacman.jannou.score.feat.Feat;
+import nl.tudelft.jpacman.jannou.score.feat.HandleFeat;
 
 import java.util.ArrayList;
 
@@ -48,8 +49,26 @@ public class Profil {
         }
         return  "<player>\n\t<name>"+getName() + "</name>\n\t<bestScore>" + getBestScore() + "</bestScore>\n\t"+feat+"\n</player>";
     }
-
+    public ArrayList<Feat> proposeFeats() {
+        ArrayList<Feat> propose = HandleFeat.feats();
+        for(int j = 0; j<propose.size();j++){
+            for(Feat f :getFeats()){
+                if(propose.get(j).getName().equals(f.getName())){
+                    propose.add(j,f);
+                    propose.remove(j+1);
+                }
+            }
+            if(propose.get(j).isRealised())
+                propose.remove(j);
+        }
+        return propose;
+    }
     public String toString() {
-        return  getName() + "  (Best score : " + getBestScore() + ", Feats  : " + getFeats().size()+")" ;
+        int k=0;
+        for(Feat t: getFeats()){
+            if(t.isRealised())
+                k+=1;
+        }
+        return  getName() + "  (Best score : " + getBestScore() + ", Feats  : " + k+")" ;
     }
 }

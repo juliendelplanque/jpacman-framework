@@ -40,9 +40,27 @@ public class ProfilPanel extends JPanel {
         }
     }
     protected void updateList(){
-        for(String s : hProfil.getProfils()){
-            if(!model.contains(hProfil.getProfil(s)))
-                model.addElement(hProfil.getProfil(s));
+        ArrayList<Profil> prof= new ArrayList<Profil>();
+        for(String name : hProfil.getProfils()){
+            prof.add(hProfil.getProfil(name));
+        }
+        if(model.size()==0) {
+            for (Profil p : prof){
+                model.addElement(p);
+            }
+        }
+        else{
+            for (Profil p : prof){
+                int size = 0;
+                boolean found = false;
+                while(!found && size<model.size()){
+                    found = model.get(size).getName().equals(p.getName());
+                    size +=1;
+                }
+                if (found == false){
+                    model.add(0,p);
+                }
+            }
         }
     }
     protected void removeprofil(String name){

@@ -6,7 +6,7 @@ package nl.tudelft.jpacman.jannou.score;
 public class ScorePlayer {
     private int score ;
     private String player; //profil par la suite ?
-    public ScorePlayer(){}
+    public ScorePlayer(){} // createur vide
     public ScorePlayer(int score, String name){
         this.score = score;
         this.player = name;
@@ -16,12 +16,6 @@ public class ScorePlayer {
     }
     public String getPlayer(){
         return this.player;
-    }
-    public void setScore(int sco){
-        this.score = sco;
-    }
-    public void setPlayer(String pa){
-        this.player= pa;
     }
     public String toString() {
         return  getPlayer() + " has scored " + getScore() ;

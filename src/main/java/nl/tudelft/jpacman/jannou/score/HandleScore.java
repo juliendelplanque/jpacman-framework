@@ -59,18 +59,20 @@ public class HandleScore {
      */
     protected void addHighScore(){
         for(Player e : game.getPlayers()) {
-            if (e.getProfil().getBestScore()< e.getScore()){
-                e.getProfil().setBestScore(e.getScore());
-                instance2.updateProfil(e.getProfil());
+            if (e.getProfil() != null) {
+                if (e.getProfil().getBestScore() < e.getScore()) {
+                    e.getProfil().setBestScore(e.getScore());
+                    instance2.updateProfil(e.getProfil());
+                }
+                addHighScores(e.getScore(), e.getProfil().getName());
             }
-            addHighScores(e.getScore(), e.getProfil().getName());
         }
     }
 
-    private static void addHighScores(int score,String name){
+    public static void addHighScores(int score,String name){
         ArrayList<ScorePlayer> retour =getScores();
         int size =retour.size();
-        assert size<=0;
+        assert size>=0;
         if(size == 0){
             retour.add(0 ,new ScorePlayer(score,name));
         }

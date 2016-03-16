@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.Random;
 
 /**
  *
@@ -50,12 +51,17 @@ public class ProfilUI extends JFrame{
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if(profilP.getSelectedProfil() != null){
+
                         game.getPlayers().get(0).setProfil(profilP.getSelectedProfil());
                         try {
                             LauncherJ.main2();
                         } catch (IOException e1) {
                             e1.printStackTrace();
                         }
+                        String prop1 = profilP.getSelectedProfil().proposeFeats().get(new Random().nextInt(profilP.getSelectedProfil().proposeFeats().size())).getDesc();
+                        prop1 +="\n"+ profilP.getSelectedProfil().proposeFeats().get(new Random().nextInt(profilP.getSelectedProfil().proposeFeats().size())).getDesc();
+                        prop1 +="\n"+ profilP.getSelectedProfil().proposeFeats().get(new Random().nextInt(profilP.getSelectedProfil().proposeFeats().size())).getDesc();
+                        JOptionPane.showMessageDialog(frame,prop1,"FEATS", JOptionPane.INFORMATION_MESSAGE);
                         profilFrame.dispose();
                     }
                     else{
@@ -67,16 +73,18 @@ public class ProfilUI extends JFrame{
             deleteButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    String del = profilP.getSelectedProfil().getName();
-                    int n ;
-                    Object[] options = { "Yes", "No" };
-                    n = JOptionPane.showOptionDialog(frame,
-                            "Would you delete "+del+" ?",
-                            "WARNING", JOptionPane.YES_NO_CANCEL_OPTION,
-                            JOptionPane.QUESTION_MESSAGE, null, options,
-                            options[1]);
-                    if(n==0) {
-                        profilP.update(false,del);
+                    if(profilP.getSelectedProfil() != null) {
+                        String del = profilP.getSelectedProfil().getName();
+                        int n;
+                        Object[] options = {"Yes", "No"};
+                        n = JOptionPane.showOptionDialog(frame,
+                                "Would you delete " + del + " ?",
+                                "WARNING", JOptionPane.YES_NO_CANCEL_OPTION,
+                                JOptionPane.QUESTION_MESSAGE, null, options,
+                                options[1]);
+                        if (n == 0) {
+                            profilP.update(false, del);
+                        }
                     }
                 }
             });
@@ -92,8 +100,13 @@ public class ProfilUI extends JFrame{
                             JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
                             null, options, options[0]);
                     if(n==0) {
-                        hProfil.addNewProfil(textField.getText());
-                        profilP.update(true,"");
+                        if(!hProfil.getProfils().contains(textField.getText()+".xml")){
+                            hProfil.addNewProfil(textField.getText());
+                            profilP.update(true,"");
+                        }
+                        else{
+                            JOptionPane.showMessageDialog(frame,"This name is already taken,choose another name please","WARNING", JOptionPane.ERROR_MESSAGE);
+                        }
                     }
                 }
             });
