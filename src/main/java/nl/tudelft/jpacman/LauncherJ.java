@@ -170,7 +170,7 @@ public class LauncherJ {
     public void launch() {
         game = makeGame();
         profilUB = new ProfilUIBuilder(game, pacManUI);
-        profilUB.createScoreUI();
+        profilUB.createProfilUI();
     }
 
     public void run(){
