@@ -5,38 +5,66 @@ import nl.tudelft.jpacman.jannou.score.feat.HandleFeat;
 import java.util.ArrayList;
 
 /**
- * object to represent a player's profil
+ * Object representant un profil
  * Created by Jannou on 5/03/16.
  */
 public class Profil {
     private final String name;
     private int bestScore  = 0;
-    private ArrayList<Feat> feats = new ArrayList<Feat>();
+    private ArrayList<Feat> feats = new ArrayList<>();
 
+    /**
+     * Constructeur de Profil
+     * @param _name le nom du profil
+     */
     public Profil(String _name){
         name = _name;
     }
 
+    /**
+     * Retourne le nom associe au profil
+     * @return le nom associe au profil
+     */
     public String getName(){
         return name;
     }
 
+    /**
+     * Retourne le meilleur score associe au profil
+     * @return le meilleur score asssocie au profil
+     */
     public int getBestScore(){
         return bestScore;
     }
 
+    /**
+     * Retourne l ensemble des exploits associe au profil
+     * @return l ensemble des exploits associe au profil
+     */
     public ArrayList<Feat> getFeats(){
         return feats ;
     }
 
+    /**
+     * Modifie le meilleur score associe au profil
+     * @param score le nouveau meilleur score associe au profil
+     */
     public void setBestScore(int score){
         bestScore = score;
     }
 
+    /**
+     * Ajoute un exploit a associe au profil
+     * @param feat l exploit a associe au profil
+     */
     public void addFeat(Feat feat){
         feats.add(feat);
     }
 
+    /**
+     * Retourne un String represantant le profil
+     * @return un String representant le profil
+     */
     public String toMaps() {
         String feat = "";
         for(Feat f :getFeats()){
@@ -49,6 +77,11 @@ public class Profil {
         }
         return  "<player>\n\t<name>"+getName() + "</name>\n\t<bestScore>" + getBestScore() + "</bestScore>\n\t"+feat+"\n</player>";
     }
+
+    /**
+     * Retourne une ArrayList contenant les exploits qui ne sont pas encore realise pour ce profil
+     * @return une ArrayList contenant les exploits qui ne sont pas encore realise pour ce profil
+     */
     public ArrayList<Feat> proposeFeats() {
         ArrayList<Feat> propose = HandleFeat.feats();
         for(int j = 0; j<propose.size();j++){
@@ -63,6 +96,11 @@ public class Profil {
         }
         return propose;
     }
+
+    /**
+     * toString()
+     * @return toString()
+     */
     public String toString() {
         int k=0;
         for(Feat t: getFeats()){

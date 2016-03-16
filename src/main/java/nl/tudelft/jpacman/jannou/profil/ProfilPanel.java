@@ -6,7 +6,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 /**
- * panel to show existing profils
+ * JPanel pour afficher les profils existants.
  * Created by Jannou on 5/03/16.
  */
 public class ProfilPanel extends JPanel {
@@ -16,6 +16,10 @@ public class ProfilPanel extends JPanel {
     private HandleProfil hProfil;
     private DefaultListModel<Profil> model;
 
+    /**
+     * Constructe ProfilPanel
+     * @param _hProfil instance de HandleProfil
+     */
     public ProfilPanel(HandleProfil _hProfil){
         hProfil = _hProfil;
         setLayout(new BorderLayout(0,0));
@@ -23,7 +27,7 @@ public class ProfilPanel extends JPanel {
         setBorder(new EmptyBorder(new Insets(40, 60, 20, 60)));
         dismain = new JPanel();
         dismain.setLayout(new GridLayout(1,1));
-        model = new DefaultListModel<Profil>();
+        model = new DefaultListModel<>();
         list = new JList(model);
         updateList();
         JScrollPane pane = new JScrollPane(list);
@@ -31,6 +35,12 @@ public class ProfilPanel extends JPanel {
         add(dismain,BorderLayout.CENTER);
 
     }
+
+    /**
+     * Ajout ou supprime un profil de l affichage
+     * @param add true si on a ajoute un profil, false si on a supprime
+     * @param name le nom du profil supprime
+     */
     protected void update(boolean add, String name){
         if(add){
             updateList();
@@ -39,8 +49,12 @@ public class ProfilPanel extends JPanel {
             removeprofil(name);
         }
     }
+
+    /**
+     * Met a jour la liste des profils a l affichage
+     */
     protected void updateList(){
-        ArrayList<Profil> prof= new ArrayList<Profil>();
+        ArrayList<Profil> prof= new ArrayList<>();
         for(String name : hProfil.getProfils()){
             prof.add(hProfil.getProfil(name));
         }
@@ -57,12 +71,17 @@ public class ProfilPanel extends JPanel {
                     found = model.get(size).getName().equals(p.getName());
                     size +=1;
                 }
-                if (found == false){
+                if (!found){
                     model.add(0,p);
                 }
             }
         }
     }
+
+    /**
+     * Comportement associe a la suppression d un profil
+     * @param name le nom du profil a supprimer
+     */
     protected void removeprofil(String name){
         for(int i =0; i<model.size();i++){
             if (model.get(i).getName().equals(name)) {
@@ -71,6 +90,11 @@ public class ProfilPanel extends JPanel {
             }
         }
     }
+
+    /**
+     * Retourne le profil selectionne a l affichage par l utilisateur
+     * @return un profil
+     */
     protected Profil getSelectedProfil(){
         if(list.getSelectedIndex() != -1)
             return hProfil.getProfil(model.get(list.getSelectedIndex()).getName()+".xml");

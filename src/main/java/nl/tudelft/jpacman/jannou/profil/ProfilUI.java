@@ -5,13 +5,11 @@ import nl.tudelft.jpacman.game.Game;
 import nl.tudelft.jpacman.ui.PacManUI;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.Random;
 
 /**
- *
+ * JFrame de l affichage des profils et des boutons
  * Created by Jannou on 5/03/16.
  */
 public class ProfilUI extends JFrame{
@@ -21,9 +19,22 @@ public class ProfilUI extends JFrame{
     private ProfilPanel profilP;
     private PacManUI pacManUI;
 
+    /**
+     * Constructeur ProfilUI
+     * @param hProfil instance de HandleProfil
+     * @param game intance de Game
+     * @param pacManUI instance de PacManUI
+     */
     protected ProfilUI(HandleProfil hProfil,Game game,PacManUI pacManUI){
         initialize(hProfil,game, pacManUI);
     }
+
+    /**
+     * Initialisation de la JFrame
+     * @param _hProfil instance de HandleProfil
+     * @param _game intance de Game
+     * @param _pacManUI instance de PacManUI
+     */
     private void initialize(HandleProfil _hProfil,Game _game,PacManUI _pacManUI) {
         hProfil = _hProfil;
         pacManUI=_pacManUI;
@@ -39,74 +50,71 @@ public class ProfilUI extends JFrame{
         setContentPane(mainContentPane);
         setVisible(true);
     }
+
+    /**
+     * Met a jour la variable pacManUI de ProfilUI
+     * @param _pacManUI instance e PacManUI
+     */
     public void setPacManUI(PacManUI _pacManUI){
         pacManUI = _pacManUI;
     }
+
     private class ButtonPan extends JPanel{
         private JFrame profilFrame;
         public ButtonPan(JFrame frame){
             this.profilFrame = frame;
             JButton okButton = new JButton("Play !");
-            okButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if(profilP.getSelectedProfil() != null){
+            okButton.addActionListener(e -> {
+                if(profilP.getSelectedProfil() != null){
 
-                        game.getPlayers().get(0).setProfil(profilP.getSelectedProfil());
-                        try {
-                            LauncherJ.main2();
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
-                        String prop1 = profilP.getSelectedProfil().proposeFeats().get(new Random().nextInt(profilP.getSelectedProfil().proposeFeats().size())).getDesc();
-                        prop1 +="\n"+ profilP.getSelectedProfil().proposeFeats().get(new Random().nextInt(profilP.getSelectedProfil().proposeFeats().size())).getDesc();
-                        prop1 +="\n"+ profilP.getSelectedProfil().proposeFeats().get(new Random().nextInt(profilP.getSelectedProfil().proposeFeats().size())).getDesc();
-                        JOptionPane.showMessageDialog(frame,prop1,"FEATS", JOptionPane.INFORMATION_MESSAGE);
-                        profilFrame.dispose();
+                    game.getPlayers().get(0).setProfil(profilP.getSelectedProfil());
+                    try {
+                        LauncherJ.main2();
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
                     }
-                    else{
-                        JOptionPane.showMessageDialog(frame,"Please select a profile ","WARNING", JOptionPane.ERROR_MESSAGE);
-                    }
+                    String prop1 = profilP.getSelectedProfil().proposeFeats().get(new Random().nextInt(profilP.getSelectedProfil().proposeFeats().size())).getDesc();
+                    prop1 +="\n"+ profilP.getSelectedProfil().proposeFeats().get(new Random().nextInt(profilP.getSelectedProfil().proposeFeats().size())).getDesc();
+                    prop1 +="\n"+ profilP.getSelectedProfil().proposeFeats().get(new Random().nextInt(profilP.getSelectedProfil().proposeFeats().size())).getDesc();
+                    JOptionPane.showMessageDialog(frame,prop1,"FEATS", JOptionPane.INFORMATION_MESSAGE);
+                    profilFrame.dispose();
+                }
+                else{
+                    JOptionPane.showMessageDialog(frame,"Please select a profile ","WARNING", JOptionPane.ERROR_MESSAGE);
                 }
             });
             JButton deleteButton = new JButton("Delete");
-            deleteButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if(profilP.getSelectedProfil() != null) {
-                        String del = profilP.getSelectedProfil().getName();
-                        int n;
-                        Object[] options = {"Yes", "No"};
-                        n = JOptionPane.showOptionDialog(frame,
-                                "Would you delete " + del + " ?",
-                                "WARNING", JOptionPane.YES_NO_CANCEL_OPTION,
-                                JOptionPane.QUESTION_MESSAGE, null, options,
-                                options[1]);
-                        if (n == 0) {
-                            profilP.update(false, del);
-                        }
+            deleteButton.addActionListener(e -> {
+                if(profilP.getSelectedProfil() != null) {
+                    String del = profilP.getSelectedProfil().getName();
+                    int n;
+                    Object[] options = {"Yes", "No"};
+                    n = JOptionPane.showOptionDialog(frame,
+                            "Would you delete " + del + " ?",
+                            "WARNING", JOptionPane.YES_NO_CANCEL_OPTION,
+                            JOptionPane.QUESTION_MESSAGE, null, options,
+                            options[1]);
+                    if (n == 0) {
+                        profilP.update(false, del);
                     }
                 }
             });
             JButton newPButton = new JButton("New Profil");
-            newPButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    JPanel panel = new JPanel();
-                    JTextField textField = new JTextField(10);
-                    panel.add(textField);
-                    Object[] options = { "Ok", "Cancel" };
-                    int n = JOptionPane.showOptionDialog(null, panel, "Enter your name ",
-                            JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
-                            null, options, options[0]);
-                    if(n==0) {
-                        if(!hProfil.getProfils().contains(textField.getText()+".xml")){
-                            hProfil.addNewProfil(textField.getText());
-                            profilP.update(true,"");
-                        }
-                        else{
-                            JOptionPane.showMessageDialog(frame,"This name is already taken,choose another name please","WARNING", JOptionPane.ERROR_MESSAGE);
-                        }
+            newPButton.addActionListener(e -> {
+                JPanel panel = new JPanel();
+                JTextField textField = new JTextField(10);
+                panel.add(textField);
+                Object[] options = { "Ok", "Cancel" };
+                int n = JOptionPane.showOptionDialog(null, panel, "Enter your name ",
+                        JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
+                        null, options, options[0]);
+                if(n==0) {
+                    if(!hProfil.getProfils().contains(textField.getText()+".xml")){
+                        hProfil.addNewProfil(textField.getText());
+                        profilP.update(true,"");
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(frame,"This name is already taken,choose another name please","WARNING", JOptionPane.ERROR_MESSAGE);
                     }
                 }
             });
