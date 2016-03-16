@@ -1,18 +1,18 @@
 package nl.tudelft.jpacman;
 
-import nl.tudelft.jpacman.game.Game;
 import nl.tudelft.jpacman.level.Level;
 import nl.tudelft.jpacman.level.LevelFactorySuperPellet;
 import nl.tudelft.jpacman.level.MapParserSuperPellet;
 import nl.tudelft.jpacman.npc.ghost.EatableGhostFactory;
 import nl.tudelft.jpacman.npc.ghost.GhostFactory;
-import nl.tudelft.jpacman.ui.PacManUiBuilder;
 
 import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * Created by Maximilien Charlier on 3/03/16.
+ * Creates and launches the JPacMan UI.
+ *
+ * @author Maximilien Charlier (maximilien.charlier@student.umons.ac.be).
  */
 public class LauncherSuperPellet extends Launcher {
 

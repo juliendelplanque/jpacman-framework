@@ -8,12 +8,18 @@ import nl.tudelft.jpacman.npc.ghost.Ghost;
  * A simple implementation of a collision map for the JPacman player.
  * Whit support of collision with super pellet and eating Ghost.
  *
- * Created by Maximilien Charlier.
+ * @author Maximilien Charlier (maximilien.charlier@student.umons.ac.be).
  */
 public class PlayerCollisionsSuperPellet extends PlayerCollisions{
 
     private LevelSuperPellet level;
 
+    /**
+     * Collision between two unit.
+     *
+     * @param mover a mover: ghost or player.
+     * @param collidedOn a ghost, a pellet, a player or a super pellet.
+     */
     @Override
     public void collide(Unit mover, Unit collidedOn) {
         if (mover instanceof Player) {
@@ -24,6 +30,12 @@ public class PlayerCollisionsSuperPellet extends PlayerCollisions{
         }
     }
 
+    /**
+     * Collision between two unit.
+     *
+     * @param player a player.
+     * @param collidedOn a ghost, a pellet, a player or a super pellet.
+     */
     @Override
     protected void playerColliding(Player player, Unit collidedOn) {
         if (collidedOn instanceof Ghost) {
@@ -38,6 +50,12 @@ public class PlayerCollisionsSuperPellet extends PlayerCollisions{
         }
     }
 
+    /**
+     * Collision between two unit.
+     *
+     * @param ghost  a ghost.
+     * @param collidedOn a ghost, a pellet, a player or a super pellet.
+     */
     private void ghostColliding(EatableGhost ghost, Unit collidedOn) {
         if (collidedOn instanceof Player) {
             playerVersusGhost((Player) collidedOn, ghost);

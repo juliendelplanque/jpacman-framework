@@ -9,7 +9,9 @@ import nl.tudelft.jpacman.sprite.PacManSprites;
 import java.util.List;
 
 /**
- * Created by Maximilien Charlier on 3/03/16.
+ * Factory that creates levels and units.
+ *
+ * @author Maximilien Charlier (maximilien.charlier@student.umons.ac.be).
  */
 public class LevelFactorySuperPellet extends LevelFactory {
 

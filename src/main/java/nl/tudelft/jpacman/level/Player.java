@@ -12,7 +12,7 @@ import nl.tudelft.jpacman.sprite.Sprite;
 /**
  * A player operated unit in our game.
  * 
- * @author Jeroen Roosen 
+ * @author Jeroen Roosen, Maximilien Charlier (maximilien.charlier@student.umons.ac.be).
  */
 public class Player extends Unit {
 
@@ -127,7 +127,7 @@ public class Player extends Unit {
 
 	/**
 	 * Defined that the game mode is hunter.
-	 * 		Ghosts are hunted by Pacman and reset value of number ghost heated.
+	 * 		Ghosts are hunted by PacMan and reset value of number ghost heated.
 	 */
 	public void setHunterMode(){
 		this.ghostHeated = 0;
@@ -135,10 +135,10 @@ public class Player extends Unit {
 	}
 
 	/**
-	 *	For the fisrt ghost hunted score is 200 points
+	 *	For the first ghost hunted score is 200 points
 	 *		for the second ghost, score is 400 points
 	 *		for the third ghost, score is 800 points
-	 *		for the fourth ghost eated, score is 1600points.
+	 *		for the fourth ghost eated, score is 1600 points.
 	 * @return the score value for the ghost hunted.
      */
 	public int getGhostHeatedScore(){

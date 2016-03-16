@@ -4,9 +4,7 @@ import com.google.common.collect.Lists;
 import nl.tudelft.jpacman.board.Board;
 import nl.tudelft.jpacman.board.Square;
 import nl.tudelft.jpacman.npc.NPC;
-import nl.tudelft.jpacman.npc.ghost.EatableGhost;
 import nl.tudelft.jpacman.npc.ghost.EatableGhostFactory;
-import nl.tudelft.jpacman.npc.ghost.Ghost;
 import nl.tudelft.jpacman.sprite.PacManSprites;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,12 +16,11 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 
 /**
  * Tests various aspects of Super Pellet level.
  *
- * Created by Maximilien Charlier.
+ * @author Maximilien Charlier (maximilien.charlier@student.umons.ac.be).
  */
 public class LevelSuperPelletTest {
 
@@ -110,6 +107,4 @@ public class LevelSuperPelletTest {
         level.stop();
         assertFalse(level.isInProgress());
     }
-
-
 }

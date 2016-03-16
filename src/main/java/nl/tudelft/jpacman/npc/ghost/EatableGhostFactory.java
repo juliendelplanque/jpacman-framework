@@ -1,10 +1,11 @@
 package nl.tudelft.jpacman.npc.ghost;
 
 import nl.tudelft.jpacman.sprite.PacManSprites;
+
 /**
  * Factory that creates eatable ghosts.
  *
- * Created by Maximilien Charlier on 10/03/16.
+ * @author Maximilien Charlier (maximilien.charlier@student.umons.ac.be).
  */
 public class EatableGhostFactory extends GhostFactory {
 

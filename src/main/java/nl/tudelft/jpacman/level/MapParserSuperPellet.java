@@ -11,7 +11,9 @@ import nl.tudelft.jpacman.npc.ghost.Ghost;
 import java.util.List;
 
 /**
- * Created by neosw on 3/03/16.
+ * Creates new {@link Level}s from text representations.
+ *
+ * @author Maximilien Charlier (maximilien.charlier@student.umons.ac.be).
  */
 public class MapParserSuperPellet extends MapParser {
 

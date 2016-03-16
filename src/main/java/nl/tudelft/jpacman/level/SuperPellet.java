@@ -3,7 +3,11 @@ package nl.tudelft.jpacman.level;
 import nl.tudelft.jpacman.sprite.Sprite;
 
 /**
- * Created by Maximilien on 3/03/16.
+ * A super pellet, one of the little dots Pac-Man has to collect.
+ * This dots gives PacMan super power: pacman can eat ghost.
+ * Ghost was scary and flee PacMan.
+ *
+ * @author Maximilien Charlier (maximilien.charlier@student.umons.ac.be).
  */
 public class SuperPellet extends Pellet {
     /**

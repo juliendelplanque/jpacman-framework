@@ -16,10 +16,10 @@ import java.util.concurrent.ScheduledExecutorService;
  * A level of Pac-Man. A level consists of the board with the players and the
  * AIs on it.
  *
- * Ghost can be eated for this reason a timer by ghost is necessary for his re apparition
- * same thing for the pac man hunter mode.
+ * Ghost can be eated for this reason a timer by ghost is necessary for his respawn
+ * same thing for the PacMan hunter mode.
  *
- * Created by Maximilien Charlier.
+ * @author Maximilien Charlier (maximilien.charlier@student.umons.ac.be).
  */
 public class LevelSuperPellet extends Level {
 
@@ -142,7 +142,7 @@ public class LevelSuperPellet extends Level {
     }
 
     /**
-     * Add a timer for respaning of death ghost.
+     * Add a timer for respawning of death ghost.
      * @param g a death ghost.
      */
     public void addRespawnGhost(EatableGhost g){

@@ -65,7 +65,4 @@ public class PlayerCollisions implements CollisionMap {
 		pellet.leaveSquare();
 		player.addPoints(pellet.getValue());
 	}
-
-
-
 }

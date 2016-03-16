@@ -10,8 +10,9 @@ import nl.tudelft.jpacman.sprite.Sprite;
 
 /**
  * An antagonist in the game of Pac-Man, a ghost.
- * 
- * @author Jeroen Roosen 
+ * This ghost can bee eated when pacman eat a super pellet.
+ *
+ * @author Maximilien Charlier (maximilien.charlier@student.umons.ac.be).
  */
 public abstract class EatableGhost extends Ghost {
 
@@ -112,7 +113,6 @@ public abstract class EatableGhost extends Ghost {
 	}
 
 	/**
-	 *
 	 * @return Speed of ghost
      */
 	public float getSpeed(){
@@ -164,6 +164,4 @@ public abstract class EatableGhost extends Ghost {
 			return directions.get(0);
 		}
 	}
-
-
 }
