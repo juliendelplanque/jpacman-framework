@@ -15,14 +15,15 @@ import java.io.*;
 import java.util.ArrayList;
 
 /**
- * Handle files
+ * Classe charge de la gestion des fichiers et dossier
  * Created by Jannou on 6/03/16.
  */
 public class FileHelper {
 
     /**
-     * creat file at path if it doesn't exist an return false, return true otherwise
-     * @return true if file exist false otherwise
+     * Verifie si un File existe
+     * @param path le chemin du File qu on veut verifier
+     * @return true si le File existe false sinon
      */
     public static boolean exist(String path){
         File f = new File(path);
@@ -30,11 +31,10 @@ public class FileHelper {
     }
 
     /**
-     * create directory or file at path if it doesn't exist an return false
-     *
-     * @param path the path
-     * @param file create a file if true a directory otherwise
-     * @return true if file is created false otherwise
+     * Cree un File
+     * @param path le chemin du File
+     * @param file true si on veut creer un fichier, false si on veut creer un dossier
+     * @return true si le File a ete cree false sinon
      */
     public static boolean init(String path, boolean file){
         assert !exist(path);
@@ -57,9 +57,10 @@ public class FileHelper {
     }
 
     /**
-     * reset the file at given path
-     * @param path
-     * @return
+     * Supprime et recree un File
+     * @param path le chemin du File
+     * @param file true si File est un fichier false si File est un dossier
+     * @return true si le File a ete cree false sinon
      */
     public static boolean reset(String path, boolean file){
         File f = new File(path);
@@ -69,12 +70,14 @@ public class FileHelper {
         }
         return false;
     }
+
     /**
-     * load all high scores
-     * @return ArrayList<ScorePlayer> of player's and player's score
+     * Lis le fichier score.txt et retourne les scores enregistes
+     * @param path le chemin du fichier
+     * @return ArrayList<ScorePlayer> les scores enregistes
      */
     public static ArrayList<ScorePlayer> loadScores(String path) {
-        ArrayList<ScorePlayer> retour = new ArrayList<ScorePlayer>();
+        ArrayList<ScorePlayer> retour = new ArrayList<>();
         try{
             File f = new File (path);
             FileReader fr = new FileReader (f);
@@ -103,10 +106,11 @@ public class FileHelper {
         }
         return retour;
     }
+
     /**
-     * add new high score
-     * @param toWrite something to be written
-     * @param path file's path
+     * Ecris des scores dans un fichier
+     * @param toWrite l ensemble des scores a ecrire
+     * @param path le chemin du fichier
      */
     public static void writeScores(ArrayList<ScorePlayer> toWrite, String path){
         File f = new File(path);
@@ -122,12 +126,12 @@ public class FileHelper {
     }
 
     /**
-     * load all file's name contained into path
-     * @param path path of repertory
-     * @return all file's name contained into path
+     * Ouvre un dossier et un retourne un ensemble contenant le nom de chaque fichier present dans le dossier
+     * @param path le chemin du dossier
+     * @return ArrayList<String> l ensemble contenant le nom de chaque fichier present dans le dossier
      */
     public static ArrayList<String> loadProfils(String path) {
-        ArrayList<String> retour = new ArrayList<String>();
+        ArrayList<String> retour = new ArrayList<>();
         try{
             File f = new File(path);
             String [] files;
@@ -148,9 +152,9 @@ public class FileHelper {
     }
 
     /**
-     * laod a profil from a repertory
-     * @param path of a profil
-     * @return a profil
+     * Lis un fichier et charge le profil enregistre dans le fichier
+     * @param path le chemin du fichier ou se trouve le profil
+     * @return le profil enregistre dans le fichier
      */
     public static Profil loadProfil(String path) {
         Profil retour = new Profil("");
@@ -168,6 +172,7 @@ public class FileHelper {
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                     Element eElement = (Element) nNode;
                     Feat tempp = HandleFeat.createFeat(eElement.getElementsByTagName("name").item(0).getTextContent());
+                    assert tempp != null;
                     tempp.setDesc(eElement.getElementsByTagName("description").item(0).getTextContent());
                     tempp.setValue(Integer.parseInt(eElement.getElementsByTagName("value").item(0).getTextContent()));
                     tempp.setRealised(Boolean.valueOf(eElement.getElementsByTagName("realised").item(0).getTextContent()));
@@ -181,10 +186,12 @@ public class FileHelper {
         }
         return retour;
     }
+
     /**
-     * add new high score
-     * @param toWrite something to be written
-     * @param path file's path
+     * Ecris un profil dans un fichier
+     * @param toWrite le profil a enregistrer
+     * @param path le chemin du fichier ou sera enregistre le profil
+     * @return true si le profil a ete enregistre false sinon
      */
     public static boolean writeProfil(Profil toWrite, String path){
         File f = new File(path);
@@ -198,12 +205,15 @@ public class FileHelper {
         }
         return false;
     }
-    public static boolean deleteProfil(String path){
+
+    /**
+     * Supprime un fichier
+     * @param path le chemin du fichier a supprimer
+     * @return true si le fichier a ete supprime false sinon
+     */
+    public static boolean deleteProfil(String path) {
         File f = new File(path);
-        if(f.exists() && f.isFile()){
-             return f.delete();
-        }
-        return false;
+        return f.exists() && f.isFile() && f.delete();
     }
 
 
