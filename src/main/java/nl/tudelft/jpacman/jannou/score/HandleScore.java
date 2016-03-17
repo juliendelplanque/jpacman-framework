@@ -40,7 +40,7 @@ public class HandleScore {
      * @param handleScore instance a tester
      * @return true si les deux instance sont les meme false sinon
      */
-    public boolean equals(HandleScore handleScore){
+    public boolean equals(final HandleScore handleScore){
         return instance == handleScore;
     }
 
@@ -76,7 +76,7 @@ public class HandleScore {
      * @param score le score a ajouter
      * @param name le nom a associer au score
      */
-    public static void addHighScores(int score,String name){
+    public static void addHighScores(final int score,final String name){
         ArrayList<ScorePlayer> retour =getScores();
         int size =retour.size();
         assert size>=0;
@@ -85,7 +85,7 @@ public class HandleScore {
         }
         else if(size<10){
             int i = 0;
-            while((i<=size-1) && (retour.get(i).getScore() >= score)){
+            while(i<=size-1 && retour.get(i).getScore() >= score){
                 i+=1;
             }
             retour.add(i, new ScorePlayer(score,name));

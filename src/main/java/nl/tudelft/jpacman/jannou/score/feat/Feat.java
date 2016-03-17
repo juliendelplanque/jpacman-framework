@@ -62,7 +62,7 @@ public abstract  class Feat {
      * Met a jour le nom de l exploit
      * @param _name le nouveau nom de l exploit
      */
-    public void setName(String _name){
+    public void setName(final String _name){
                 name = _name;
         }
 
@@ -70,7 +70,7 @@ public abstract  class Feat {
      * Met a jour la description de l exploit
      * @param _desc la nouvelle description de l exploit
      */
-    public void setDesc(String _desc){
+    public void setDesc(final String _desc){
                 description = _desc;
         }
 
@@ -78,7 +78,7 @@ public abstract  class Feat {
      * Met a jour la valeur de l exploit
      * @param _value la nouvelle valeur de l exploit
      */
-    public void setValue(int _value){
+    public void setValue(final int _value){
                 value = _value;
         }
 
@@ -86,7 +86,7 @@ public abstract  class Feat {
      * Met a jour l etat de realisation de l exploit
      * @param _realised le nouveau etat de realisation de l exploit
      */
-    public void setRealised(boolean _realised){
+    public void setRealised(final boolean _realised){
                 realised = _realised;
         }
 
@@ -94,7 +94,7 @@ public abstract  class Feat {
      * Met a jour l etat de l exploit
      * @param i le nouveau ete de l exploit
      */
-    public void setState(int i){
+    public void setState(final int i){
                 state = i;
         }
 

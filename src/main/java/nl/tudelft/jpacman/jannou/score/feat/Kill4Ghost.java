@@ -25,7 +25,7 @@ public class Kill4Ghost extends  Feat {
      */
     @Override
     public boolean condition(int i, Ghost g){
-        if((g instanceof Blinky) || (g instanceof Clyde) || (g instanceof Inky) || (g instanceof Pinky)){
+        if(g instanceof Blinky || g instanceof Clyde || g instanceof Inky || g instanceof Pinky){
             setState(getState()+1);
             return true;
         }

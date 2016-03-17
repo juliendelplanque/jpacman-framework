@@ -17,7 +17,7 @@ public class ScoreUI extends JFrame{
      * Constructeur ScoreUI
      * @param hScore instance de HandleScore
      */
-    protected ScoreUI(HandleScore hScore){
+    protected ScoreUI(final HandleScore hScore){
         initialize(hScore);
     }
 
@@ -25,13 +25,13 @@ public class ScoreUI extends JFrame{
      * Initialisation de la JFrame
      * @param hscore instance de HandleScore
      */
-    private void initialize(HandleScore hscore) {
+    private void initialize(final HandleScore hscore) {
         hScore = hscore;
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Hall of Fame");
         setSize(370,440);
         mainContentPane = new JPanel();
-        highSP = new HighScorePanel(hScore);
+        highSP = new HighScorePanel();
         mainContentPane.setLayout(new BoxLayout(mainContentPane, BoxLayout.Y_AXIS));
         mainContentPane.add(highSP);//add new HighScorePanel
         mainContentPane.add( new ButtonPan(this));
@@ -41,7 +41,7 @@ public class ScoreUI extends JFrame{
 
     private class ButtonPan extends JPanel{
         private JFrame frameScore;
-        public ButtonPan(JFrame frame){
+        public ButtonPan(final JFrame frame){
             this.frameScore = frame;
 
             JButton okButton = new JButton("OK");

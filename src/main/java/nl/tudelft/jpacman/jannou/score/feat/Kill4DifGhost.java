@@ -25,13 +25,15 @@ public class Kill4DifGhost extends  Feat {
      */
     @Override
     public boolean condition(int i, Ghost g) {
-        if (g instanceof Blinky)
-            return up(1);
         if (g instanceof Clyde)
             return up(3);
         if (g instanceof Inky)
             return up(5);
-        return g instanceof Pinky && up(11);
+        if (g instanceof Pinky)
+            up(11);
+        if (g instanceof Blinky)
+            return up(1);
+        return false;
     }
 
     /**
@@ -43,49 +45,14 @@ public class Kill4DifGhost extends  Feat {
             setRealised(true);
     }
     private boolean up(int i){
-        if(i ==11){
-            if(getState()<9)
+        if(i ==11 && getState()<10)
                 setState(getState()+11);
-        }
-        if(i ==5) {
-            if (getState() ==15)
+        if(i ==5 &&  (getState() ==15 || getState() < 5 || getState() == 12 || getState() == 11 ||getState() == 14))
                 setState(getState() + 5);
-            if (getState() < 5)
-                setState(getState() + 5);
-            if (getState() == 12)
-                setState(getState() + 5);
-            if (getState() == 11)
-                setState(getState() + 5);
-            if (getState() == 14)
-                setState(getState() + 5);
-        }
-        if(i ==3) {
-            if (getState() ==17)
+        if(i ==3 && (getState() ==17 || getState() ==16 || getState() == 12 || getState() ==11 || getState() == 6 || getState() <3))
                 setState(getState() + 3);
-            if (getState() ==16)
-                setState(getState() + 3);
-            if (getState() == 12)
-                setState(getState() + 3);
-            if (getState() ==11)
-                setState(getState() + 3);
-            if (getState() == 6)
-                setState(getState() + 3);
-            if (getState() <3)
-                setState(getState() + 3);
-        }
-        if(i ==1) {
-            if (getState() ==0)
-                setState(getState() + 1);
-            if (getState() ==11)
-                setState(getState() + 1);
-            if (getState() ==8)
-                setState(getState() + 1);
-            if (getState() == 14)
-                setState(getState() + 1);
-            if (getState() == 16)
-                setState(getState() + 1);
-            if (getState() == 19)
-                setState(getState() + 1);
+        if(i ==1 && (getState() ==0 || getState() ==11 || getState() ==8 || getState() == 14 || getState() == 16 || getState() == 19)) {
+            setState(getState() + 1);
         }
         return true;
     }

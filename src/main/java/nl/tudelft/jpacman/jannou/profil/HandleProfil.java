@@ -49,7 +49,7 @@ public class HandleProfil {
      * @param fileName le nom du fichier ou est enregistre le profil
      * @return un profil
      */
-    public Profil getProfil(String fileName){
+    public Profil getProfil(final  String fileName){
         Profil retour = null;
         if(getProfils().contains(fileName)){
             retour = FileHelper.loadProfil(path + fileName);
@@ -62,7 +62,7 @@ public class HandleProfil {
      * @param name le nom du nouveau profil
      * @return true si le profil a ete enregistre false sinon
      */
-    public boolean addNewProfil(String name){
+    public boolean addNewProfil(final  String name){
         Profil neW = new Profil(name);
         return FileHelper.writeProfil(neW,path+name+".xml");
     }
@@ -72,7 +72,7 @@ public class HandleProfil {
      * @param name le nom du profil a supprimer
      * @return true si fichier a ete supprime false sinon
      */
-    public boolean removeProfil(String name){
+    public boolean removeProfil(final String name){
         String fileName = name+".xml";
         boolean retour = false;
         if(getProfils().contains(fileName)){
@@ -101,7 +101,7 @@ public class HandleProfil {
      * Permet de mettre a jour un profil
      * @param profil le profil a mettre a jour
      */
-    public void updateProfil(Profil profil) {
+    public void updateProfil(final Profil profil) {
         removeProfil(profil.getName());
         FileHelper.writeProfil(profil,path+profil.getName()+".xml");
 

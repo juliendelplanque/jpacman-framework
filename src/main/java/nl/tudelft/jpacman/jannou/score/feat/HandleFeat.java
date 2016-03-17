@@ -40,23 +40,19 @@ public class HandleFeat {
      * @param player le joueur
      * @param _feat l exploit a mettre a jour
      */
-    private static void updateFeat(Player player, Feat _feat){
+    private static void updateFeat(final Player player, final Feat _feat){
         boolean old = false;
         if(player.getProfil() != null){ // pour les tests, normalement on ne peut pas commencer game si on n'a pas
             // selectionner de profil or a ce stade le game est en cours donc on a forcement un profil.
             /*if(player.getProfil().getFeats().contains(_feat)){
                 old= true;
             }*/
-
             for(Feat f :player.getProfil().getFeats()){  //recuperer feat du player
-                if(f.getName().equals(_feat.getName())) { //si player a deja commencer exploit _feat
-                    //feat = f;
+                if(f.getName().equals(_feat.getName())) //si player a deja commencer exploit _feat
                     old= true;
-                }
             }
             _feat.updatestate();
             if(_feat.isRealised()) {
-                System.out.println(_feat.getName());
                 updateScore(player, _feat);
                 player.getProfil().proposeFeats().remove(_feat);
             }
@@ -71,10 +67,10 @@ public class HandleFeat {
      * @param player le joueur
      * @param _feat l exploit realise
      */
-    private static void updateScore(Player player, Feat _feat){
+    private static void updateScore(final Player player, final Feat _feat){
         player.addPoints(_feat.getValue());
     }
-    public static void trigger(int score, Ghost kill, Player player){
+    public static void trigger(int score, final Ghost kill, Player player){
         if( player.getProfil() !=null) {
             for (Feat f : player.getProfil().proposeFeats()) { //on ne regarde que les feat qui n'ont pas encore ete realisee
                 if (f.condition(score, kill))

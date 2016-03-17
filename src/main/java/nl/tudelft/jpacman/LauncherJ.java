@@ -8,7 +8,6 @@ import nl.tudelft.jpacman.jannou.profil.ProfilUIBuilder;
 import nl.tudelft.jpacman.level.*;
 import nl.tudelft.jpacman.npc.ghost.GhostFactory;
 import nl.tudelft.jpacman.sprite.PacManSprites;
-import nl.tudelft.jpacman.ui.Action;
 import nl.tudelft.jpacman.ui.PacManUI;
 import nl.tudelft.jpacman.ui.PacManUiBuilder;
 
@@ -127,31 +126,7 @@ public class LauncherJ {
                                        final Game game) {
         final Player p1 = getSinglePlayer(game);
 
-        builder.addKey(KeyEvent.VK_UP, new Action() {
-
-            @Override
-            public void doAction() {
-                game.move(p1, Direction.NORTH);
-            }
-        }).addKey(KeyEvent.VK_DOWN, new Action() {
-
-            @Override
-            public void doAction() {
-                game.move(p1, Direction.SOUTH);
-            }
-        }).addKey(KeyEvent.VK_LEFT, new Action() {
-
-            @Override
-            public void doAction() {
-                game.move(p1, Direction.WEST);
-            }
-        }).addKey(KeyEvent.VK_RIGHT, new Action() {
-
-            @Override
-            public void doAction() {
-                game.move(p1, Direction.EAST);
-            }
-        });
+        builder.addKey(KeyEvent.VK_UP, () -> game.move(p1, Direction.NORTH)).addKey(KeyEvent.VK_DOWN, () -> game.move(p1, Direction.SOUTH)).addKey(KeyEvent.VK_LEFT, () -> game.move(p1, Direction.WEST)).addKey(KeyEvent.VK_RIGHT, () -> game.move(p1, Direction.EAST));
 
     }
 
@@ -169,7 +144,7 @@ public class LauncherJ {
      */
     public void launch() {
         game = makeGame();
-        profilUB = new ProfilUIBuilder(game, pacManUI);
+        profilUB = new ProfilUIBuilder(game);
         profilUB.createProfilUI();
     }
 
@@ -177,7 +152,7 @@ public class LauncherJ {
         PacManUiBuilder builder = new PacManUiBuilder().withDefaultButtons();
         addSinglePlayerKeys(builder, game);
         pacManUI = builder.build(game);
-        profilUB.getInstance().setPacManUI(pacManUI);
+        profilUB.getInstance();
         pacManUI.start();
     }
 

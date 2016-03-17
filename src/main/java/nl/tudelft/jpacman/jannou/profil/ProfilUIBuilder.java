@@ -1,7 +1,6 @@
 package nl.tudelft.jpacman.jannou.profil;
 
 import nl.tudelft.jpacman.game.Game;
-import nl.tudelft.jpacman.ui.PacManUI;
 
 
 /**
@@ -13,17 +12,14 @@ public class ProfilUIBuilder {
     private Game game ;
     private ProfilUI instance = null;
     private HandleProfil hProfil;
-    private PacManUI pacManUI;
 
     /**
      * Constucteur ProfilUIBuilder
      * @param game instance de Game
-     * @param pacManUI instance de PacManUI
      */
-    public ProfilUIBuilder(final Game game , PacManUI pacManUI){
+    public ProfilUIBuilder(final Game game ){
         this.hProfil =HandleProfil.getInstance();
         this.game = game;
-        this.pacManUI=pacManUI;
     }
 
     /**
@@ -31,7 +27,7 @@ public class ProfilUIBuilder {
      */
     public void createProfilUI(){
         if(instance == null){
-            instance = new ProfilUI(hProfil, game, pacManUI);
+            instance = new ProfilUI(hProfil, game);
         }
     }
 
@@ -41,5 +37,12 @@ public class ProfilUIBuilder {
      */
     public ProfilUI getInstance(){ //maybe use to regroupe all Jframe into once
         return instance;
+    }
+    /**
+     * created for test
+     * @return instance HandleScore
+     */
+    public HandleProfil gethProfil(){
+        return hProfil;
     }
 }

@@ -25,7 +25,7 @@ public class FileHelper {
      * @param path le chemin du File qu on veut verifier
      * @return true si le File existe false sinon
      */
-    public static boolean exist(String path){
+    public static boolean exist(final String path){
         File f = new File(path);
         return f.exists();
     }
@@ -36,7 +36,7 @@ public class FileHelper {
      * @param file true si on veut creer un fichier, false si on veut creer un dossier
      * @return true si le File a ete cree false sinon
      */
-    public static boolean init(String path, boolean file){
+    public static boolean init(final String path, final  boolean file){
         assert !exist(path);
         File f = new File(path);
         if (file ) {
@@ -62,7 +62,7 @@ public class FileHelper {
      * @param file true si File est un fichier false si File est un dossier
      * @return true si le File a ete cree false sinon
      */
-    public static boolean reset(String path, boolean file){
+    public static boolean reset(final String path, final boolean file){
         File f = new File(path);
         if(f.exists() && f.isFile()){
             f.delete();
@@ -76,7 +76,7 @@ public class FileHelper {
      * @param path le chemin du fichier
      * @return ArrayList<ScorePlayer> les scores enregistes
      */
-    public static ArrayList<ScorePlayer> loadScores(String path) {
+    public static ArrayList<ScorePlayer> loadScores(final String path) {
         ArrayList<ScorePlayer> retour = new ArrayList<>();
         try{
             File f = new File (path);
@@ -89,8 +89,7 @@ public class FileHelper {
                 {
                     String[] data = line.split(" :: ");
                     if (data.length == 2) {
-                        ScorePlayer tp = new ScorePlayer(Integer.parseInt(data[0]),data[1]);
-                        retour.add(tp);
+                        retour.add(new ScorePlayer(Integer.parseInt(data[0]),data[1]));
                     }
                     line = br.readLine();
                 }
@@ -112,13 +111,12 @@ public class FileHelper {
      * @param toWrite l ensemble des scores a ecrire
      * @param path le chemin du fichier
      */
-    public static void writeScores(ArrayList<ScorePlayer> toWrite, String path){
+    public static void writeScores(final ArrayList<ScorePlayer> toWrite, final String path){
         File f = new File(path);
         try {
             PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(f)));
-            for (ScorePlayer p : toWrite) {
+            for (ScorePlayer p : toWrite)
                 pw.println("" + p.getScore() + " :: " + p.getPlayer());
-            }
             pw.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -130,7 +128,7 @@ public class FileHelper {
      * @param path le chemin du dossier
      * @return ArrayList<String> l ensemble contenant le nom de chaque fichier present dans le dossier
      */
-    public static ArrayList<String> loadProfils(String path) {
+    public static ArrayList<String> loadProfils(final String path) {
         ArrayList<String> retour = new ArrayList<>();
         try{
             File f = new File(path);
@@ -156,7 +154,7 @@ public class FileHelper {
      * @param path le chemin du fichier ou se trouve le profil
      * @return le profil enregistre dans le fichier
      */
-    public static Profil loadProfil(String path) {
+    public static Profil loadProfil(final String path) {
         Profil retour = new Profil("");
         try {
             File f = new File (path);
@@ -193,7 +191,7 @@ public class FileHelper {
      * @param path le chemin du fichier ou sera enregistre le profil
      * @return true si le profil a ete enregistre false sinon
      */
-    public static boolean writeProfil(Profil toWrite, String path){
+    public static boolean writeProfil(Profil toWrite, final  String path){
         File f = new File(path);
         try {
             PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(f)));
@@ -211,7 +209,7 @@ public class FileHelper {
      * @param path le chemin du fichier a supprimer
      * @return true si le fichier a ete supprime false sinon
      */
-    public static boolean deleteProfil(String path) {
+    public static boolean deleteProfil(final String path) {
         File f = new File(path);
         return f.exists() && f.isFile() && f.delete();
     }

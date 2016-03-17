@@ -13,7 +13,7 @@ public class ScorePlayer {
      * @param score le score associe au joueur
      * @param name le nom associe au joueur
      */
-    public ScorePlayer(int score, String name){
+    public ScorePlayer(final int score, final String name){
         this.score = score;
         this.player = name;
     }

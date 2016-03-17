@@ -24,7 +24,7 @@ public class Eat5Cherry extends  Feat {
      * {@inheritDoc}
      */
     @Override
-    public boolean condition(int i, Ghost g){
+    public boolean condition(final int i, final Ghost g){
         return false;
     }
 

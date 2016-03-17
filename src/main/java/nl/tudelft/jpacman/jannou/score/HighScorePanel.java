@@ -9,16 +9,13 @@ import java.util.ArrayList;
  * Created by Jannou on 4/03/16.
  */
 public class HighScorePanel extends JPanel {
-    private static HandleScore hScore;
     protected JPanel dismain;
     protected ArrayList<JLabel> sLab ;
 
     /**
      * Contructeur HighScorePanel
-     * @param _hScore instance de HandleScore
      */
-    public HighScorePanel(HandleScore _hScore){
-        hScore = _hScore;
+    public HighScorePanel(){
         setLayout(new BorderLayout(0,0));
         // haut,gauche,bas,droit
         setBorder(new EmptyBorder(new Insets(40, 60, 20, 60)));

@@ -49,7 +49,7 @@ public class Profil {
      * Modifie le meilleur score associe au profil
      * @param score le nouveau meilleur score associe au profil
      */
-    public void setBestScore(int score){
+    public void setBestScore(final int score){
         bestScore = score;
     }
 
@@ -57,7 +57,7 @@ public class Profil {
      * Ajoute un exploit a associe au profil
      * @param feat l exploit a associe au profil
      */
-    public void addFeat(Feat feat){
+    public void addFeat(final Feat feat){
         feats.add(feat);
     }
 

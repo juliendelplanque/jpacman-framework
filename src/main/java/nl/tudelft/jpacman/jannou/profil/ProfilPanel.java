@@ -20,7 +20,7 @@ public class ProfilPanel extends JPanel {
      * Constructe ProfilPanel
      * @param _hProfil instance de HandleProfil
      */
-    public ProfilPanel(HandleProfil _hProfil){
+    public ProfilPanel(final HandleProfil _hProfil){
         hProfil = _hProfil;
         setLayout(new BorderLayout(0,0));
         // haut,gauche,bas,droit
@@ -82,7 +82,7 @@ public class ProfilPanel extends JPanel {
      * Comportement associe a la suppression d un profil
      * @param name le nom du profil a supprimer
      */
-    protected void removeprofil(String name){
+    protected void removeprofil(final String name){
         for(int i =0; i<model.size();i++){
             if (model.get(i).getName().equals(name)) {
                 hProfil.removeProfil(name);

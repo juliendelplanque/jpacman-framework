@@ -2,7 +2,6 @@ package nl.tudelft.jpacman.jannou.profil;
 
 import nl.tudelft.jpacman.LauncherJ;
 import nl.tudelft.jpacman.game.Game;
-import nl.tudelft.jpacman.ui.PacManUI;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -17,27 +16,23 @@ public class ProfilUI extends JFrame{
     private JPanel mainContentPane ;
     private HandleProfil hProfil;
     private ProfilPanel profilP;
-    private PacManUI pacManUI;
 
     /**
      * Constructeur ProfilUI
      * @param hProfil instance de HandleProfil
      * @param game intance de Game
-     * @param pacManUI instance de PacManUI
      */
-    protected ProfilUI(HandleProfil hProfil,Game game,PacManUI pacManUI){
-        initialize(hProfil,game, pacManUI);
+    protected ProfilUI(final HandleProfil hProfil,final Game game){
+        initialize(hProfil,game);
     }
 
     /**
      * Initialisation de la JFrame
      * @param _hProfil instance de HandleProfil
      * @param _game intance de Game
-     * @param _pacManUI instance de PacManUI
      */
-    private void initialize(HandleProfil _hProfil,Game _game,PacManUI _pacManUI) {
+    private void initialize(final HandleProfil _hProfil,final Game _game) {
         hProfil = _hProfil;
-        pacManUI=_pacManUI;
         game = _game;
         profilP = new ProfilPanel(hProfil);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -51,17 +46,9 @@ public class ProfilUI extends JFrame{
         setVisible(true);
     }
 
-    /**
-     * Met a jour la variable pacManUI de ProfilUI
-     * @param _pacManUI instance e PacManUI
-     */
-    public void setPacManUI(PacManUI _pacManUI){
-        pacManUI = _pacManUI;
-    }
-
     private class ButtonPan extends JPanel{
         private JFrame profilFrame;
-        public ButtonPan(JFrame frame){
+        public ButtonPan(final JFrame frame){
             this.profilFrame = frame;
             JButton okButton = new JButton("Play !");
             okButton.addActionListener(e -> {
