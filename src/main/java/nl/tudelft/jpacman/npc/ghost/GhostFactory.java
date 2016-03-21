@@ -16,11 +16,19 @@ public class GhostFactory {
 
 	/**
 	 * Creates a new ghost factory.
+	 * Set the Ghost Flee Sprite to the class Ghost.
 	 * 
 	 * @param spriteStore The sprite provider.
 	 */
 	public GhostFactory(PacManSprites spriteStore) {
 		this.sprites = spriteStore;
+	}
+
+	/**
+	 * @return a Sprite Store containing the classic Pac-Man sprites.
+     */
+	public PacManSprites getSprites(){
+		return sprites;
 	}
 
 	/**

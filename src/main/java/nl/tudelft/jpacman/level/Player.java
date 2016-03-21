@@ -4,13 +4,15 @@ import java.util.Map;
 
 import nl.tudelft.jpacman.board.Direction;
 import nl.tudelft.jpacman.board.Unit;
+import nl.tudelft.jpacman.npc.ghost.EatableGhost;
+import nl.tudelft.jpacman.npc.ghost.Ghost;
 import nl.tudelft.jpacman.sprite.AnimatedSprite;
 import nl.tudelft.jpacman.sprite.Sprite;
 
 /**
  * A player operated unit in our game.
  * 
- * @author Jeroen Roosen 
+ * @author Jeroen Roosen, Maximilien Charlier (maximilien.charlier@student.umons.ac.be).
  */
 public class Player extends Unit {
 
@@ -35,6 +37,16 @@ public class Player extends Unit {
 	private boolean alive;
 
 	/**
+	 * Number of superPellet heated by pacman.
+	 */
+	private int superPelletHeated;
+
+	/**
+	 * Number of ghost heated by PacMan (in the last ghost hunter mode)
+	 */
+	private int ghostHeated;
+
+	/**
 	 * Creates a new player with a score of 0 points.
 	 * 
 	 * @param spriteMap
@@ -48,6 +60,8 @@ public class Player extends Unit {
 		this.sprites = spriteMap;
 		this.deathSprite = deathAnimation;
 		deathSprite.setAnimating(false);
+		this.setDefaultMode();
+		this.superPelletHeated = 0;
 	}
 
 	/**
@@ -101,5 +115,56 @@ public class Player extends Unit {
 	 */
 	public void addPoints(int points) {
 		score += points;
+	}
+
+	/**
+	 * Defined that the game mode is standard.
+	 * 		PacMan are hunted by ghosts and reset value of number ghost heated.
+	 */
+	public void setDefaultMode(){
+		this.ghostHeated = 0;
+	}
+
+	/**
+	 * Defined that the game mode is hunter.
+	 * 		Ghosts are hunted by PacMan and reset value of number ghost heated.
+	 */
+	public void setHunterMode(){
+		this.ghostHeated = 0;
+		this.superPelletHeated += 1;
+	}
+
+	/**
+	 *	For the first ghost hunted score is 200 points
+	 *		for the second ghost, score is 400 points
+	 *		for the third ghost, score is 800 points
+	 *		for the fourth ghost eated, score is 1600 points.
+	 * @return the score value for the ghost hunted.
+     */
+	public int getGhostHeatedScore(){
+		if (ghostHeated > 4) {
+			return 0;
+		}
+		return EatableGhost.SCORE * (int) Math.pow(2, ghostHeated);
+	}
+
+	/**
+	 * Add one ghost in ghostHeated.
+	 */
+	public void addHeatedGhost(){
+		this.ghostHeated += 1;
+	}
+
+	/**
+	 * Depends of the number of super pellet Pacman have heated.
+	 * 			For the first two time of HunterMode is 7 seconds,
+	 * 			for the next two time of HunterMode is 5 seconds.
+	 * @return Time of Pacman hunter mode in millisecond.
+     */
+	public int getTimeHunterMode(){
+		if(superPelletHeated <=2)
+			return 7000;
+		else
+			return 5000;
 	}
 }

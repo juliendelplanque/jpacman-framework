@@ -41,7 +41,7 @@ import nl.tudelft.jpacman.sprite.Sprite;
  * @author Jeroen Roosen 
  * 
  */
-public class Inky extends Ghost {
+public class Inky extends EatableGhost {
 
 	private static final int SQUARES_AHEAD = 2;
 
@@ -100,6 +100,9 @@ public class Inky extends Ghost {
 	// CHECKSTYLE:OFF To keep this more readable.
 	@Override
 	public Direction nextMove() {
+		if(isModeFlee()){
+			return nextMoveFleeMode();
+		}
 		Unit blinky = Navigation.findNearest(Blinky.class, getSquare());
 		if (blinky == null) {
 			Direction d = randomMove();

@@ -121,7 +121,7 @@ public class LevelFactory {
 
 	/**
 	 * Creates a new pellet.
-	 * 
+	 *
 	 * @return The new pellet.
 	 */
 	public Pellet createPellet() {
@@ -134,6 +134,15 @@ public class LevelFactory {
      */
 	NPC createHunter() {
 		return ghostFact.createHunterBot();
+    }
+
+    /*
+	 * Creates a new superPellet.
+	 *
+	 * @return The new superPellet.
+	 */
+	public SuperPellet createSuperPellet() {
+		return new SuperPellet(sprites.getSuperPelletSprite());
 	}
 
 	/**

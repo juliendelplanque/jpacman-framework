@@ -11,6 +11,7 @@ import nl.tudelft.jpacman.board.Direction;
 import nl.tudelft.jpacman.board.Square;
 import nl.tudelft.jpacman.board.Unit;
 import nl.tudelft.jpacman.npc.NPC;
+import nl.tudelft.jpacman.npc.ghost.EatableGhost;
 
 /**
  * A level of Pac-Man. A level consists of the board with the players and the
@@ -34,7 +35,7 @@ public class Level {
 	 * The lock that ensures starting and stopping can't interfere with each
 	 * other.
 	 */
-	private final Object startStopLock = new Object();
+	protected final Object startStopLock = new Object();
 
 	public Set<NPC> getNpcs() {
 		return npcs.keySet();
@@ -203,7 +204,6 @@ public class Level {
 			if (isInProgress()) {
 				return;
 			}
-			startNPCs();
 			inProgress = true;
 			updateObservers();
 		}
@@ -218,7 +218,6 @@ public class Level {
 			if (!isInProgress()) {
 				return;
 			}
-			stopNPCs();
 			inProgress = false;
 		}
 	}
@@ -226,21 +225,35 @@ public class Level {
 	/**
 	 * Starts all NPC movement scheduling.
 	 */
-	private void startNPCs() {
+	protected void startNPCs() {
 		for (final NPC npc : npcs.keySet()) {
-			ScheduledExecutorService service = Executors
-					.newSingleThreadScheduledExecutor();
-			service.schedule(new NpcMoveTask(service, npc),
-					npc.getInterval() / 2, TimeUnit.MILLISECONDS);
-			npcs.put(npc, service);
+			setSpeedNPCs(npc, ((EatableGhost) npc).getSpeed());
 		}
+	}
+
+
+	/**
+	 * Starts and change NPC movement scheduling.
+	 * @param npc a NPC (a ghost)
+	 * @param speedFactor The speed factor
+	 *                      Typical value: 1 to default speed, 0.5 to half speed (fleeing ghost mode)
+	 */
+	protected void setSpeedNPCs(NPC npc, float speedFactor) {
+		ScheduledExecutorService service = npcs.get(npc);
+		if(service != null)
+			service.shutdownNow();
+		service = Executors
+				.newSingleThreadScheduledExecutor();
+		service.schedule(new NpcMoveTask(service, npc),
+				(int) ((npc.getInterval() / 2) * speedFactor), TimeUnit.MILLISECONDS);
+		npcs.replace(npc, service);
 	}
 
 	/**
 	 * Stops all NPC movement scheduling and interrupts any movements being
 	 * executed.
 	 */
-	private void stopNPCs() {
+	protected void stopNPCs() {
 		for (Entry<NPC, ScheduledExecutorService> e : npcs.entrySet()) {
 			e.getValue().shutdownNow();
 		}
@@ -286,6 +299,13 @@ public class Level {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * @return The NPCs of this level and, if they are running, their schedules.
+     */
+	public Map<NPC, ScheduledExecutorService> getNpcs() {
+		return npcs;
 	}
 
 	/**

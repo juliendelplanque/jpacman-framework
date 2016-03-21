@@ -47,7 +47,7 @@ import nl.tudelft.jpacman.sprite.Sprite;
  * @author Jeroen Roosen 
  * 
  */
-public class Pinky extends Ghost {
+public class Pinky extends EatableGhost {
 
 	private static final int SQUARES_AHEAD = 4;
 
@@ -93,6 +93,9 @@ public class Pinky extends Ghost {
 	 */
 	@Override
 	public Direction nextMove() {
+		if(isModeFlee()){
+			return nextMoveFleeMode();
+		}
 		Unit player = Navigation.findNearest(Player.class, getSquare());
 		if (player == null) {
 			Direction d = randomMove();
@@ -114,4 +117,5 @@ public class Pinky extends Ghost {
 		Direction d = randomMove();
 		return d;
 	}
+
 }
