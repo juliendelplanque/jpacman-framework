@@ -71,13 +71,6 @@ public class Launcher {
 		return new MapParser(getLevelFactory(), getBoardFactory());
 	}
 
-	/**
-	 * @return A new map parser object using the factories from
-	 *         {@link #getLevelFactory()} and {@link #getBoardFactory()}.
-	 */
-	protected MapParserSuperPellet getMapParserSuperPellet() {
-		return new MapParserSuperPellet(getLevelFactory(), getBoardFactory());
-	}
 
 	/**
 	 * @return A new board factory using the sprite store from
