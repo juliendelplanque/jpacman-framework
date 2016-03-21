@@ -119,9 +119,14 @@ public class LevelSuperPellet extends Level {
                 k.getValue().resume();
             }
         }
-        if(!isInProgress())
+        synchronized (startStopLock) {
+            if (isInProgress()) {
+                return;
+            }
             startNPCs();
-        super.start();
+            setInProgress(true);
+            updateObservers();
+        }
     }
 
     /**
@@ -136,9 +141,17 @@ public class LevelSuperPellet extends Level {
                 k.getValue().pause();
             }
         }
-        if(isInProgress())
-            stopNPCs();
         super.stop();
+    }
+
+
+    /**
+     * Starts all NPC movement scheduling.
+     */
+    protected void startNPCs() {
+        for (final NPC npc : getNpcs().keySet()) {
+            setSpeedNPCs(npc, ((EatableGhost) npc).getSpeed());
+        }
     }
 
     /**

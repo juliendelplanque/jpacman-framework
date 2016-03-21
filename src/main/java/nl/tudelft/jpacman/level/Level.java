@@ -12,6 +12,7 @@ import nl.tudelft.jpacman.board.Square;
 import nl.tudelft.jpacman.board.Unit;
 import nl.tudelft.jpacman.npc.NPC;
 import nl.tudelft.jpacman.npc.ghost.EatableGhost;
+import nl.tudelft.jpacman.npc.ghost.Ghost;
 
 /**
  * A level of Pac-Man. A level consists of the board with the players and the
@@ -204,6 +205,7 @@ public class Level {
 			if (isInProgress()) {
 				return;
 			}
+			startNPCs();
 			inProgress = true;
 			updateObservers();
 		}
@@ -218,6 +220,7 @@ public class Level {
 			if (!isInProgress()) {
 				return;
 			}
+			stopNPCs();
 			inProgress = false;
 		}
 	}
@@ -227,7 +230,7 @@ public class Level {
 	 */
 	protected void startNPCs() {
 		for (final NPC npc : npcs.keySet()) {
-			setSpeedNPCs(npc, ((EatableGhost) npc).getSpeed());
+			setSpeedNPCs(npc, 1); //default value of speed for ghost is 1
 		}
 	}
 
@@ -270,9 +273,19 @@ public class Level {
 	}
 
 	/**
+	 * Set whether this level is in progress, i.e. whether moves can be made
+	 * on the board.
+	 *
+	 * @param inProgress iff this level is in progress.
+	 */
+	protected void setInProgress(boolean inProgress) {
+		this.inProgress = inProgress;
+	}
+
+	/**
 	 * Updates the observers about the state of this level.
 	 */
-	private void updateObservers() {
+	protected void updateObservers() {
 		if (!isAnyPlayerAlive()) {
 			for (LevelObserver o : observers) {
 				o.levelLost();
