@@ -84,7 +84,7 @@ public class MapParser {
 		return levelCreator.createLevel(board, ghosts, startPositions, this.collisionMap);
 	}
 
-	private void makeGrid(char[][] map, int width, int height,
+	protected void makeGrid(char[][] map, int width, int height,
 			Square[][] grid, List<NPC> ghosts, List<Square> startPositions) {
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {

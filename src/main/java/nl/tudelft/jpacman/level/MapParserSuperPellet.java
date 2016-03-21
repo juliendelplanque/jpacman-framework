@@ -1,6 +1,7 @@
 package nl.tudelft.jpacman.level;
 
 import nl.tudelft.jpacman.PacmanConfigurationException;
+import nl.tudelft.jpacman.board.Board;
 import nl.tudelft.jpacman.board.BoardFactory;
 import nl.tudelft.jpacman.board.Square;
 import nl.tudelft.jpacman.board.Unit;
@@ -8,6 +9,7 @@ import nl.tudelft.jpacman.npc.NPC;
 import nl.tudelft.jpacman.npc.ghost.EatableGhost;
 import nl.tudelft.jpacman.npc.ghost.Ghost;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -50,7 +52,18 @@ public class MapParserSuperPellet extends MapParser {
      */
     @Override
     public Level parseMap(char[][] map) {
-        Level l = super.parseMap(map);
+        int width = map.length;
+        int height = map[0].length;
+
+        Square[][] grid = new Square[width][height];
+
+        List<NPC> ghosts = new ArrayList<>();
+        List<Square> startPositions = new ArrayList<>();
+
+        makeGrid(map, width, height, grid, ghosts, startPositions);
+
+        Board board = boardCreator.createBoard(grid);
+        Level l = levelCreator.createLevel(board, ghosts, startPositions);
         if(!checkSuperPellet()){
             throw new PacmanConfigurationException("Unable to create correct level.\n" +
                     Integer.toString(getNbSuperPellet())+ " super pellet\n" +

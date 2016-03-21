@@ -38,7 +38,7 @@ public class Level {
 	 */
 	protected final Object startStopLock = new Object();
 
-	public Set<NPC> getNpcs() {
+	public Set<NPC> getNpcsSet() {
 		return npcs.keySet();
 	}
 

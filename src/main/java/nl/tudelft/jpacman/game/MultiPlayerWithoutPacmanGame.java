@@ -50,7 +50,7 @@ public class MultiPlayerWithoutPacmanGame extends Game implements RespawnListene
             hunter.addRespawnListener(this);
             this.hunters.add(hunter);
         }
-        for(NPC npc : this.level.getNpcs()){
+        for(NPC npc : this.level.getNpcsSet()){
             Hunter hunter = (Hunter) npc;
             hunter.addRespawnListener(this);
             this.hunters.add(hunter);
