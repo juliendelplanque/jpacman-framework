@@ -9,11 +9,7 @@ import nl.tudelft.jpacman.board.BoardFactory;
 import nl.tudelft.jpacman.board.Direction;
 import nl.tudelft.jpacman.game.Game;
 import nl.tudelft.jpacman.game.GameFactory;
-import nl.tudelft.jpacman.level.Level;
-import nl.tudelft.jpacman.level.LevelFactory;
-import nl.tudelft.jpacman.level.MapParser;
-import nl.tudelft.jpacman.level.Player;
-import nl.tudelft.jpacman.level.PlayerFactory;
+import nl.tudelft.jpacman.level.*;
 import nl.tudelft.jpacman.npc.ghost.GhostFactory;
 import nl.tudelft.jpacman.sprite.PacManSprites;
 import nl.tudelft.jpacman.ui.Action;
@@ -42,7 +38,7 @@ public class Launcher {
 
 	/**
 	 * Creates a new game using the level from {@link #makeLevel()}.
-	 * 
+	 *
 	 * @return a new Game.
 	 */
 	public Game makeGame() {
@@ -74,6 +70,7 @@ public class Launcher {
 	protected MapParser getMapParser() {
 		return new MapParser(getLevelFactory(), getBoardFactory());
 	}
+
 
 	/**
 	 * @return A new board factory using the sprite store from

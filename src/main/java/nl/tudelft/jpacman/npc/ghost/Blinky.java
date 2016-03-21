@@ -38,7 +38,7 @@ import nl.tudelft.jpacman.sprite.Sprite;
  * @author Jeroen Roosen 
  * 
  */
-public class Blinky extends Ghost {
+public class Blinky extends EatableGhost {
 
 	/**
 	 * The variation in intervals, this makes the ghosts look more dynamic and
@@ -83,6 +83,9 @@ public class Blinky extends Ghost {
 	 */
 	@Override
 	public Direction nextMove() {
+		if(isModeFlee()){
+			return nextMoveFleeMode();
+		}
 		// TODO Blinky should patrol his corner every once in a while
 		// TODO Implement his actual behaviour instead of simply chasing.
 		Square target = Navigation.findNearest(Player.class, getSquare())

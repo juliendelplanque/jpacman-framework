@@ -6,11 +6,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import nl.tudelft.jpacman.PacmanConfigurationException;
 import nl.tudelft.jpacman.board.Board;
 import nl.tudelft.jpacman.board.BoardFactory;
 import nl.tudelft.jpacman.board.Square;
+import nl.tudelft.jpacman.board.Unit;
 import nl.tudelft.jpacman.npc.NPC;
 
 /**
@@ -92,7 +94,7 @@ public class MapParser {
 		}
 	}
 
-	private void addSquare(Square[][] grid, List<NPC> ghosts,
+	protected void addSquare(Square[][] grid, List<NPC> ghosts,
 			List<Square> startPositions, int x, int y, char c) {
 		switch (c) {
 		case ' ':

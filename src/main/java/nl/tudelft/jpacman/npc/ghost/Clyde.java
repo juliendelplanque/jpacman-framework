@@ -39,7 +39,7 @@ import nl.tudelft.jpacman.sprite.Sprite;
  * @author Jeroen Roosen 
  * 
  */
-public class Clyde extends Ghost {
+public class Clyde extends EatableGhost {
 
 	/**
 	 * The amount of cells Clyde wants to stay away from Pac Man.
@@ -56,18 +56,6 @@ public class Clyde extends Ghost {
 	 * The base movement interval.
 	 */
 	private static final int MOVE_INTERVAL = 250;
-
-	/**
-	 * A map of opposite directions.
-	 */
-	private static final Map<Direction, Direction> OPPOSITES = new EnumMap<Direction, Direction>(
-			Direction.class);
-	{
-		OPPOSITES.put(Direction.NORTH, Direction.SOUTH);
-		OPPOSITES.put(Direction.SOUTH, Direction.NORTH);
-		OPPOSITES.put(Direction.WEST, Direction.EAST);
-		OPPOSITES.put(Direction.EAST, Direction.WEST);
-	}
 
 	/**
 	 * Creates a new "Clyde", a.k.a. "Pokey".
@@ -103,6 +91,9 @@ public class Clyde extends Ghost {
 	 */
 	@Override
 	public Direction nextMove() {
+		if(isModeFlee()){
+			return nextMoveFleeMode();
+		}
 		Square target = Navigation.findNearest(Player.class, getSquare())
 				.getSquare();
 		if (target == null) {
