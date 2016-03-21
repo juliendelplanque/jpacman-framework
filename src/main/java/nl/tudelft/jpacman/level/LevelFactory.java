@@ -77,6 +77,23 @@ public class LevelFactory {
 		// We'll adopt the simple collision map for now.
 		CollisionMap collisionMap = new PlayerCollisions();
 		
+		return createLevel(board, ghosts, startPositions, collisionMap);
+	}
+
+	/**
+	 * Creates a new level from the provided data.
+	 *
+	 * @param board
+	 *            The board with all ghosts and pellets occupying their squares.
+	 * @param ghosts
+	 *            A list of all ghosts on the board.
+	 * @param startPositions
+	 *            A list of squares from which players may start the game.
+	 * @param collisionMap
+	 * 			  A class implementing CollisionMap.
+	 * @return A new level for the board.
+	 */
+	public Level createLevel(Board board, List<NPC> ghosts, List<Square> startPositions, CollisionMap collisionMap) {
 		return new Level(board, ghosts, startPositions, collisionMap);
 	}
 
@@ -109,6 +126,14 @@ public class LevelFactory {
 	 */
 	public Pellet createPellet() {
 		return new Pellet(PELLET_VALUE, sprites.getPelletSprite());
+	}
+
+	/**
+	 * Creates a new hunter.
+	 * @return A new hunter.
+     */
+	NPC createHunter() {
+		return ghostFact.createHunterBot();
 	}
 
 	/**

@@ -62,4 +62,13 @@ public class GhostFactory {
 	public Ghost createClyde() {
 		return new Clyde(sprites.getGhostSprite(GhostColor.ORANGE));
 	}
+
+	/**
+	 * Creates a new Hunter.
+	 *
+	 * @return A new Hunter.
+     */
+	public Ghost createHunterBot() {
+		return new HunterBot(sprites.getGhostSprite(GhostColor.RED), sprites.getPacmanSprites());
+	}
 }

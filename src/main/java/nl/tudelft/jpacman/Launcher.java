@@ -29,8 +29,8 @@ public class Launcher {
 
 	private static final PacManSprites SPRITE_STORE = new PacManSprites();
 
-	private PacManUI pacManUI;
-	private Game game;
+	protected PacManUI pacManUI;
+	protected Game game;
 
 	/**
 	 * @return The game object this launcher will start when {@link #launch()}

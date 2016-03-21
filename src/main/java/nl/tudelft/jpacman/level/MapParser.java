@@ -23,12 +23,17 @@ public class MapParser {
 	/**
 	 * The factory that creates the levels.
 	 */
-	private final LevelFactory levelCreator;
+	protected final LevelFactory levelCreator;
 
 	/**
 	 * The factory that creates the squares and board.
 	 */
-	private final BoardFactory boardCreator;
+	protected final BoardFactory boardCreator;
+
+	/**
+	 * The collision map to create levels.
+	 */
+	protected CollisionMap collisionMap;
 
 	/**
 	 * Creates a new map parser.
@@ -41,6 +46,8 @@ public class MapParser {
 	public MapParser(LevelFactory levelFactory, BoardFactory boardFactory) {
 		this.levelCreator = levelFactory;
 		this.boardCreator = boardFactory;
+		// By default use PlayerCollision
+		this.collisionMap = new PlayerCollisions();
 	}
 
 	/**
@@ -72,7 +79,7 @@ public class MapParser {
 		makeGrid(map, width, height, grid, ghosts, startPositions);
 		
 		Board board = boardCreator.createBoard(grid);
-		return levelCreator.createLevel(board, ghosts, startPositions);
+		return levelCreator.createLevel(board, ghosts, startPositions, this.collisionMap);
 	}
 
 	private void makeGrid(char[][] map, int width, int height,
@@ -114,7 +121,7 @@ public class MapParser {
 		}
 	}
 
-	private Square makeGhostSquare(List<NPC> ghosts) {
+	protected Square makeGhostSquare(List<NPC> ghosts) {
 		Square ghostSquare = boardCreator.createGround();
 		NPC ghost = levelCreator.createGhost();
 		ghosts.add(ghost);

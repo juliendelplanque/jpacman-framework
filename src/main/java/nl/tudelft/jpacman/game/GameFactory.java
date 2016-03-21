@@ -1,7 +1,11 @@
 package nl.tudelft.jpacman.game;
 
 import nl.tudelft.jpacman.level.Level;
+import nl.tudelft.jpacman.level.Player;
 import nl.tudelft.jpacman.level.PlayerFactory;
+import nl.tudelft.jpacman.npc.ghost.GhostColor;
+
+import java.util.ArrayList;
 
 /**
  * Factory that provides Game objects.
@@ -43,4 +47,24 @@ public class GameFactory {
 	protected PlayerFactory getPlayerFactory() {
 		return playerFact;
 	}
+
+	/**
+	 * Returns a game for a single level multi-player without Pacman game.
+	 *
+     * @param level - The level to create a fame for.
+	 * @return A new multi-player without Pacman game.
+     */
+	public Game createMultiPlayerWithoutPacmanGame(int numberOfPlayers, Level level){
+        ArrayList<Player> players = new ArrayList<>();
+        switch (numberOfPlayers) {
+            case 4: players.add(playerFact.createGhost(GhostColor.RED));
+            case 3: players.add(playerFact.createGhost(GhostColor.CYAN));
+            case 2:
+                players.add(playerFact.createGhost(GhostColor.ORANGE));
+                players.add(playerFact.createGhost(GhostColor.PINK));
+                break;
+            default:
+                throw new BadNumberOfPlayersException();
+        }
+        return new MultiPlayerWithoutPacmanGame(players, level); }
 }
