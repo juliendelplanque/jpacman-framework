@@ -1,14 +1,12 @@
 package nl.tudelft.jpacman.ui;
 
-import java.awt.GridLayout;
+import nl.tudelft.jpacman.level.Player;
+
+import javax.swing.*;
+import java.awt.*;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
-import nl.tudelft.jpacman.level.Player;
 
 /**
  * A panel consisting of a column for each player, with the numbered players on
@@ -59,7 +57,11 @@ public class ScorePanel extends JPanel {
 		setLayout(new GridLayout(2, players.size()));
 
 		for (int i = 1; i <= players.size(); i++) {
-			add(new JLabel("Player " + i, JLabel.CENTER));
+			//ATTENTION
+			if(players.get(i-1).getProfil() != null)
+				add(new JLabel(players.get(i-1).getProfil().getName(), JLabel.CENTER));
+			else
+				add(new JLabel("Player " + i, JLabel.CENTER));
 		}
 		scoreLabels = new LinkedHashMap<>();
 		for (Player p : players) {

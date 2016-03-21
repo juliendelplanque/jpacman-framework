@@ -8,6 +8,7 @@ import nl.tudelft.jpacman.npc.ghost.EatableGhost;
 import nl.tudelft.jpacman.npc.ghost.Ghost;
 import nl.tudelft.jpacman.sprite.AnimatedSprite;
 import nl.tudelft.jpacman.sprite.Sprite;
+import nl.tudelft.jpacman.jannou.profil.Profil;
 
 /**
  * A player operated unit in our game.
@@ -45,6 +46,10 @@ public class Player extends Unit {
 	 * Number of ghost heated by PacMan (in the last ghost hunter mode)
 	 */
 	private int ghostHeated;
+    /*
+	 * The profil associated to the player.
+	 */
+	private Profil profil;
 
 	/**
 	 * Creates a new player with a score of 0 points.
@@ -166,5 +171,19 @@ public class Player extends Unit {
 			return 7000;
 		else
 			return 5000;
+    /*
+	 * Set the profil associated to this player
+	 * @param _profil the new profil associated to this player
+     */
+	public void setProfil(Profil _profil){
+		profil = _profil;
+	}
+
+	/**
+	 * Returns the profil of this player
+	 * @return The profil of this player
+     */
+	public Profil getProfil(){
+		return profil;
 	}
 }
