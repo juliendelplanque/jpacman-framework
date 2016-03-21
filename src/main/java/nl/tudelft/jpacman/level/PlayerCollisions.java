@@ -2,6 +2,7 @@ package nl.tudelft.jpacman.level;
 
 import nl.tudelft.jpacman.board.Unit;
 import nl.tudelft.jpacman.npc.ghost.EatableGhost;
+import nl.tudelft.jpacman.jannou.score.feat.HandleFeat;
 import nl.tudelft.jpacman.npc.ghost.Ghost;
 
 /**
@@ -52,6 +53,8 @@ public class PlayerCollisions implements CollisionMap {
      * @param ghost The ghost involved in the collision.
 	 */
 	public void playerVersusGhost(Player player, Ghost ghost) {
+		// ATTENTION
+		HandleFeat.trigger(0,ghost,player);
 		player.setAlive(false);
 	}
 
@@ -64,5 +67,7 @@ public class PlayerCollisions implements CollisionMap {
 	public void playerVersusPellet(Player player, Pellet pellet) {
 		pellet.leaveSquare();
 		player.addPoints(pellet.getValue());
+		// ATTENTION
+		HandleFeat.trigger(player.getScore(),null,player);
 	}
 }
