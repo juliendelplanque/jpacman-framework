@@ -219,8 +219,6 @@ public class HandleProfilTest {
         hProfil.updateProfil(ptest);
         Boolean found = false;
         for(Feat f : hProfil.getProfil("Test.xml").getFeats()){
-            //f.updatestate();
-            System.out.println(f+" "+f.getState());
             if(f.getName().equals("Kill4DifGhost") && f.isRealised())
                 found = true;
         }
