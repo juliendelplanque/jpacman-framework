@@ -1,10 +1,12 @@
 package nl.tudelft.jpacman;
 
+import nl.tudelft.jpacman.jannou.profil.ProfilUIBuilder;
 import nl.tudelft.jpacman.level.Level;
 import nl.tudelft.jpacman.level.LevelFactorySuperPellet;
 import nl.tudelft.jpacman.level.MapParserSuperPellet;
 import nl.tudelft.jpacman.npc.ghost.EatableGhostFactory;
 import nl.tudelft.jpacman.npc.ghost.GhostFactory;
+import nl.tudelft.jpacman.ui.PacManUiBuilder;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,6 +17,21 @@ import java.io.InputStream;
  * @author Maximilien Charlier (maximilien.charlier@student.umons.ac.be).
  */
 public class LauncherSuperPellet extends Launcher {
+    private static LauncherSuperPellet soleInstance;
+
+    protected ProfilUIBuilder profilUB ;
+
+    /**
+     * Returns the sole instance of this class.
+     * @return The sole instance of this class.
+     */
+    public static LauncherSuperPellet soleInstance(){
+        if(soleInstance == null)
+            soleInstance = new LauncherSuperPellet();
+        return soleInstance;
+    }
+
+    private LauncherSuperPellet(){}
 
     /**
      * Main execution method for the Launcher.
@@ -67,5 +84,19 @@ public class LauncherSuperPellet extends Launcher {
      */
     protected MapParserSuperPellet getMapParserSuperPellet() {
         return new MapParserSuperPellet(getLevelFactory(), getBoardFactory());
+    }
+
+    public void launch() {
+        game = makeGame();
+        profilUB = new ProfilUIBuilder(game);
+        profilUB.createProfilUI();
+    }
+
+    public void run(){
+        PacManUiBuilder builder = new PacManUiBuilder().withDefaultButtons();
+        addSinglePlayerKeys(builder, game);
+        pacManUI = builder.build(game);
+        profilUB.getInstance();
+        pacManUI.start();
     }
 }

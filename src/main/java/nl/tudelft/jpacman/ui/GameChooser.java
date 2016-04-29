@@ -7,6 +7,7 @@ import nl.tudelft.jpacman.MultiPlayerLauncher;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.io.IOException;
 
 /**
  * A simple JFrame with radio buttons to choose the game mode.
@@ -90,7 +91,7 @@ public class GameChooser extends JFrame {
             if(this.numberOfPlayers == 0)
                 new Launcher().launch();
             else if(this.numberOfPlayers == 1)
-                new LauncherSuperPellet().launch();
+                LauncherSuperPellet.soleInstance().launch();
             else
                 new MultiPlayerLauncher().launchMultiPlayer(this.numberOfPlayers); });
         return acceptButton;
@@ -133,5 +134,14 @@ public class GameChooser extends JFrame {
                         "Bottom left: z, q, s & d<br>" +
                         "Bottom right: i, j, k & l</html>"
         };
+    }
+
+    /**
+     * Start the GameChooser.
+     * @param args - The command line arguments.
+     * @throws IOException
+     */
+    public static void main(String[] args) throws IOException {
+        SwingUtilities.invokeLater(() -> new GameChooser().setVisible(true));
     }
 }

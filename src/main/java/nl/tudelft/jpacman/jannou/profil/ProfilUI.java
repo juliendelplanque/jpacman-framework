@@ -1,10 +1,9 @@
 package nl.tudelft.jpacman.jannou.profil;
 
-import nl.tudelft.jpacman.LauncherJ;
+import nl.tudelft.jpacman.LauncherSuperPellet;
 import nl.tudelft.jpacman.game.Game;
 
 import javax.swing.*;
-import java.io.IOException;
 import java.util.Random;
 
 /**
@@ -35,7 +34,7 @@ public class ProfilUI extends JFrame{
         hProfil = _hProfil;
         game = _game;
         profilP = new ProfilPanel(hProfil);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle("Profils");
         setSize(500,440);
         mainContentPane = new JPanel();
@@ -55,11 +54,7 @@ public class ProfilUI extends JFrame{
                 if(profilP.getSelectedProfil() != null){
 
                     game.getPlayers().get(0).setProfil(profilP.getSelectedProfil());
-                    try {
-                        LauncherJ.main2();
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
-                    }
+                    LauncherSuperPellet.soleInstance().run();
                     String prop1 = profilP.getSelectedProfil().proposeFeats().get(new Random().nextInt(profilP.getSelectedProfil().proposeFeats().size())).getDesc();
                     prop1 +="\n"+ profilP.getSelectedProfil().proposeFeats().get(new Random().nextInt(profilP.getSelectedProfil().proposeFeats().size())).getDesc();
                     prop1 +="\n"+ profilP.getSelectedProfil().proposeFeats().get(new Random().nextInt(profilP.getSelectedProfil().proposeFeats().size())).getDesc();

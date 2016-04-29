@@ -108,16 +108,4 @@ public class MultiPlayerLauncher extends Launcher {
         pacManUI = builder.build(game);
         pacManUI.start();
     }
-
-    /**
-     * Main execution method for the MultiPlayerLauncher.
-     *
-     * @param args
-     *            The command line arguments - which are ignored.
-     * @throws IOException
-     *             When a resource could not be read.
-     */
-    public static void main(String[] args) throws IOException {
-        SwingUtilities.invokeLater(() -> new GameChooser().setVisible(true));
-    }
 }

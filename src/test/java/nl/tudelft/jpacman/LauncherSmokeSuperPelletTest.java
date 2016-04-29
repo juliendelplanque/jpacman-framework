@@ -43,7 +43,7 @@ public class LauncherSmokeSuperPelletTest extends LauncherSmokeTest{
     @Before
     @Override
     public void setUpPacman() {
-        launcher = new LauncherSuperPellet();
+        launcher = LauncherSuperPellet.soleInstance();
         launcher.launch();
     }
 
