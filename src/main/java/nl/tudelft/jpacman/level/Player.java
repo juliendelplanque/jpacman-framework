@@ -172,7 +172,7 @@ public class Player extends Unit {
 		else
 			return 5000;
 	}
-	
+
     /*
 	 * Set the profil associated to this player
 	 * @param _profil the new profil associated to this player

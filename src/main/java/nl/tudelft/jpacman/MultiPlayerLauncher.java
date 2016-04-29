@@ -4,7 +4,7 @@ import nl.tudelft.jpacman.board.Direction;
 import nl.tudelft.jpacman.game.Game;
 import nl.tudelft.jpacman.game.GameFactory;
 import nl.tudelft.jpacman.level.*;
-import nl.tudelft.jpacman.ui.MultiPlayerChooser;
+import nl.tudelft.jpacman.ui.PlayerChooser;
 import nl.tudelft.jpacman.ui.PacManUiBuilder;
 
 import javax.swing.*;
@@ -118,6 +118,6 @@ public class MultiPlayerLauncher extends Launcher {
      *             When a resource could not be read.
      */
     public static void main(String[] args) throws IOException {
-        SwingUtilities.invokeLater(() -> new MultiPlayerChooser().setVisible(true));
+        SwingUtilities.invokeLater(() -> new PlayerChooser().setVisible(true));
     }
 }
