@@ -11,6 +11,7 @@ import java.io.IOException;
 
 /**
  * A simple JFrame with radio buttons to choose the game mode.
+ * @author Julien Delplanque
  */
 public class GameChooser extends JFrame {
     public static final int MIN_PLAYERS = 1;

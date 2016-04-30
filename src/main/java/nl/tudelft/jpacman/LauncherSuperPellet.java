@@ -86,12 +86,19 @@ public class LauncherSuperPellet extends Launcher {
         return new MapParserSuperPellet(getLevelFactory(), getBoardFactory());
     }
 
+    /**
+     * Overrides launch to build the ProfilUI.
+     */
+    @Override
     public void launch() {
         game = makeGame();
         profilUB = new ProfilUIBuilder(game);
         profilUB.createProfilUI();
     }
 
+    /**
+     * Overrides to manage ProfilUI.
+     */
     public void run(){
         PacManUiBuilder builder = new PacManUiBuilder().withDefaultButtons();
         addSinglePlayerKeys(builder, game);
