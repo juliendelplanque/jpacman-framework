@@ -21,6 +21,9 @@ Main contributors:
 
 *	Arie van Deursen (versions 1.0-5.x, 2003-2013)
 *	Jeroen Roosen (major rewrite, version 6.0, 2014)
+*   Julien Delplanque (Multiplayer without pacman extension, 2016)
+*   Maximilien Charlier (Super pellet extension, 2016)
+*   Jannou Brohée (Scores extension, 2016)
 
 
 Getting Started
@@ -30,7 +33,7 @@ Getting Started
 2. If you use Eclipse:
 	1. Import
 	2. Right Click -> Configure -> Convert to Maven Project
-3. To see JPacman in action: run `nl.tudelft.jpacman.Launcher`
+3. To see JPacman in action: run `nl.tudelft.jpacman.ui.GameChooser`
 4. To run the test suite in maven: `mvn test`
 5. To run the test suite in Eclipse: right click -> run as -> JUnit Test.
 	 
